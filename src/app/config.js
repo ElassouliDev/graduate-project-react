@@ -1,5 +1,5 @@
 const dev = {
-    apiUrl: 'http://localhost:3000',
+    apiUrl: 'http://localhost:8000',
     webUrl: 'http://localhost:3000',
     logoutRedirectPage: '/login',
     environment: 'dev',
