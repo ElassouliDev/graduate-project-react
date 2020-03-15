@@ -43,6 +43,7 @@
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^2.1.0",
     "autoprefixer": "^9.7.4",
+    "cross-env": "^7.0.2",
     "tailwindcss": "^1.2.0",
     "tailwindcss-important": "^1.0.0"
   }
