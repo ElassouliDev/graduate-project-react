@@ -1,4 +1,3 @@
-@import 'tailwind.css';
 
 * {
     outline: none !important;
@@ -77,3 +76,4 @@ a[role=button] {
     }
 }
 
+@import 'tailwind.css';
