@@ -43,7 +43,7 @@ function BlogPost() {
             <Container>
                 <Grid container className={classes.root} spacing={2}>
                     <Grid item xs={12}>
-                        <h1>Now showing post {data.post.postTitle}</h1>
+                        <h1 className="text-blue-400 text-green-500">Now showing post {data.post.postTitle}</h1>
                     </Grid>
                     <Grid item>
                         <ClassCard />
