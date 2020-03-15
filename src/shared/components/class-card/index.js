@@ -7,6 +7,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import classnames from 'classnames';
+import ThreeDotsMenu from '../three-dots-menu';
 
 const useStyles = makeStyles({
     root: {
@@ -14,6 +16,21 @@ const useStyles = makeStyles({
     },
     media: {
         height: 140,
+        position: 'relative',
+    },
+    overlay: {
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+        top: '0',
+        left: '0',
+        color: 'black',
+        backgroundColor: '#C4C4C4',
+        opacity: 0.3,
+    },
+    reposition: {
+        width: '100%',
+        position: 'absolute'
     },
 });
 
@@ -25,13 +42,25 @@ export default function MediaCard() {
             <CardActionArea>
                 <CardMedia
                     className={classes.media}
-                    image="/static/images/cards/contemplative-reptile.jpg"
+                    image="./assets/images/backgrounds/engineering-bg.jpg"
                     title="Contemplative Reptile"
-                />
+                >
+                    <div className={classes.overlay}> </div>
+                    <CardContent className={classnames(classes.reposition, 'flex justify-between items-center')}>
+                        <ThreeDotsMenu />
+                        <Typography
+                            noWrap
+                            variant="h3"
+                            component="h2"
+                            align="right"
+                            className="!font-medium w-3/5 !text-4xl text-white"
+                        >
+                            Information Security
+                        </Typography>
+                    </CardContent>
+
+                </CardMedia>
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        Lizard
-                    </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
                         Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
                         across all continents except Antarctica
