@@ -26,7 +26,7 @@ const useStyles = makeStyles({
         left: '0',
         color: 'black',
         backgroundColor: '#C4C4C4',
-        opacity: 0.3,
+        opacity: 0.5,
     },
     reposition: {
         width: '100%',
