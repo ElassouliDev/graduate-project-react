@@ -13,22 +13,28 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 export default function BlogPost() {
-    let { slug } = useParams();
-    const [data, setData] = useState({ post: {} });
+    const [data, setData] = useState({});
     const classes = useStyles();
 
     useEffect(
         () => {
             async function fetchData() {
-                // You can await here
-                console.log(getConfig().apiUrl, 'sdsdsdsd')
-                const result = await axios(
-                    `${getConfig().apiUrl}/post/${slug}`
-                );
-                setData(result.data);
+                try {
+                    // You can await here
+                    console.log(getConfig().apiUrlLocal, 'sdsdsdsd')
+                    const result = await axios.get(
+                        `${getConfig().apiUrlLocal}`
+                    );
+                    console.log(result, "ssdsdsdsdsd")
+                    setData(result.data);
+                } catch (e) {
+                    console.log(e, 'erroro')
+                }
+
             }
-            fetchData();
+            // fetchData();
         });
+    console.log(data)
     return (
         <div>
             <Container style={{ paddingTop: '7.5rem'}}>
