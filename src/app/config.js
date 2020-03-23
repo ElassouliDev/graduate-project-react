@@ -1,7 +1,7 @@
 const dev = {
     // apiUrl: 'http://localhost:8000',
-    apiUrl: 'https://aug-classroom.herokuapp.com/api/',
-    apiUrlLocal: 'http://localhost:8000/api/',
+    apiUrl: 'https://aug-classroom.herokuapp.com/api',
+    apiUrlLocal: 'http://localhost:8000/api',
     apiAuthUrl: 'https://aug-classroom.herokuapp.com/api-auth/login',
     webUrl: 'http://localhost:3000',
     logoutRedirectPage: '/login',

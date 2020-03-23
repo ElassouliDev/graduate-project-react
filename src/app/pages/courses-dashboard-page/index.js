@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import getConfig from "../../config";
 import axios from "axios";
@@ -13,28 +13,26 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 export default function BlogPost() {
-    const [data, setData] = useState({});
+    const [data, setData] = useState([]);
     const classes = useStyles();
 
-    useEffect(
-        () => {
+    useEffect(() => {
             async function fetchData() {
                 try {
                     // You can await here
                     console.log(getConfig().apiUrlLocal, 'sdsdsdsd')
                     const result = await axios.get(
-                        `${getConfig().apiUrlLocal}`
+                        `${getConfig().apiUrl}/classroom`
                     );
                     console.log(result, "ssdsdsdsdsd")
                     setData(result.data);
                 } catch (e) {
-                    console.log(e, 'erroro')
+                    console.log(e.message, 'erroro')
                 }
-
             }
-            // fetchData();
-        });
-    console.log(data)
+            fetchData();
+        }, []);
+
     return (
         <div>
             <Container style={{ paddingTop: '7.5rem'}}>
