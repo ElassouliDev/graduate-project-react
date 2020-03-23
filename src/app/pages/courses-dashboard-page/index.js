@@ -32,7 +32,7 @@ export default function BlogPost() {
             }
             fetchData();
         }, []);
-
+    console.log(data)
     return (
         <div>
             <Container style={{ paddingTop: '7.5rem'}}>
