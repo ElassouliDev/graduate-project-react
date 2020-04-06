@@ -8,8 +8,8 @@ import {
 import './App.css';
 import CustomPageLayout from "../shared/components/custom-page-layout";
 import CoursesDashboardPage from "../app/pages/courses-dashboard-page";
-import ParticipationClassroomPage from "../app/pages/courses-dashboard-page/participation/participation";
-import Test from "../app/pages/courses-dashboard-page/participation/test";
+import ParticipationClassroomPage from "./pages/participation-page/participation";
+import Test from "./pages/participation-page/test";
 
 
 function App() {
