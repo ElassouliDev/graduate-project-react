@@ -47,6 +47,7 @@ export default function BlogPost() {
                     </Grid>
                 </Grid>
             </Container>
+
         </div>
     );
 }
