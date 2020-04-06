@@ -5,7 +5,9 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import FolderOpenIcon from '@material-ui/icons/FolderOpen';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import Typography from '@material-ui/core/Typography';
 import classnames from 'classnames';
 import ThreeDotsMenu from '../three-dots-menu';
@@ -68,12 +70,12 @@ export default function MediaCard() {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button size="small" color="primary">
-                    Share
-                </Button>
-                <Button size="small" color="primary">
-                    Learn More
-                </Button>
+                <IconButton size="medium" color="primary" aria-label="folder picture" component="span">
+                    <FolderOpenIcon />
+                </IconButton>
+                <IconButton size="medium" color="primary">
+                    <PersonOutlineIcon />
+                </IconButton>
             </CardActions>
         </Card>
     );
