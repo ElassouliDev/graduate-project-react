@@ -1,8 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { useParams } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import Formsy from 'formsy-react';
-
+import React, { useEffect } from "react";
 import { Paper } from '@material-ui/core';
 import { Tab } from '@material-ui/core';
 import { Tabs } from '@material-ui/core';
@@ -17,7 +15,7 @@ import { IconButton } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import { CardActions } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
-import { Typography, MuiThemeProvider } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { Card } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -95,73 +93,72 @@ export default function Login() {
   </Tabs>
 </Paper>
         <Card className={classes.root}>
-          <Formsy>
-            <CardContent>
-              <Typography variant="h2" component="h2" className={'text-center mt-30 mb-12 ' + classes.auth_title}>
-              Sign in to your account
-              </Typography>
-              <div className="mb-10">
-                <FormControl
-                  fullWidth
-                  className={classes.margin+' ' +classes.textFiel}
-                  variant="outlined"
-                >
-                  <InputLabel
-                    className={classes.form_label}
-                    htmlFor="outlined-adornment-username"
-                  >
-                    Username or email
-                  </InputLabel>
-                  <OutlinedInput
-                    id="outlined-adornment-username"
-                    type="text"
-                    value={values.email}
-                    onChange={handleChange("username")}
-                    labelWidth={125}
-                  />
-                </FormControl>
-              </div>
+          <CardContent>
+          <Typography variant="h2" component="h2" className={'text-center mt-30 mb-12 ' + classes.auth_title}>
+          Sign in to your account
+          </Typography>
+            <div className="mb-10">
               <FormControl
                 fullWidth
-                className={classes.margin+' ' + classes.textField}
+                className={classes.margin+' ' +classes.textFiel}
                 variant="outlined"
               >
                 <InputLabel
                   className={classes.form_label}
-                  htmlFor="outlined-adornment-password"
+                  htmlFor="outlined-adornment-username"
                 >
-                  Password
+                  Username or email
                 </InputLabel>
                 <OutlinedInput
-                  id="outlined-adornment-password"
-                  type={showPassword ? "text" : "password"}
-                  value={values.password}
-                  onChange={handleChange("password")}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  labelWidth={70}
+                  id="outlined-adornment-username"
+                  type="text"
+                  value={values.email}
+                  onChange={handleChange("username")}
+                  labelWidth={125}
                 />
               </FormControl>
-            </CardContent>
-            <CardActions>
-              <Button size="small" color="primary">
-                Share
-              </Button>
-              <Button size="small" color="primary">
-                Learn More
-              </Button>
-            </CardActions>
-          </Formsy>
+            </div>
+            <Typography ></Typography>
+            <FormControl
+              fullWidth
+              className={classes.margin+' ' +classes.textFiel}
+              variant="outlined"
+            >
+              <InputLabel
+                className={classes.form_label}
+                htmlFor="outlined-adornment-password"
+              >
+                Password
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-password"
+                type={showPassword ? "text" : "password"}
+                value={values.password}
+                onChange={handleChange("password")}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                labelWidth={70}
+              />
+            </FormControl>
+          </CardContent>
+          <CardActions>
+            <Button size="small" color="primary">
+              Share
+            </Button>
+            <Button size="small" color="primary">
+              Learn More
+            </Button>
+          </CardActions>
         </Card>
     </div>
   );
