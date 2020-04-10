@@ -8,8 +8,8 @@ import {
 import './App.css';
 import CustomPageLayout from "../shared/components/custom-page-layout";
 import CoursesDashboardPage from "../app/pages/courses-dashboard-page";
-import ParticipationClassroomPage from "./pages/participation-page/participation";
-import Test from "./pages/participation-page/test";
+import ParticipationClassroomPage from "../app/pages/participation/participation";
+import Login from './pages/login';
 
 
 function App() {
@@ -28,9 +28,10 @@ function App() {
                         <ParticipationClassroomPage />
                     </CustomPageLayout>
                 </Route>
-                <Route  path="/test">
+
+                <Route  path="/login">
                     <CustomPageLayout>
-                        <Test />
+                        <Login />
                     </CustomPageLayout>
                 </Route>
                 {/*<Route path="/post/:slug">*/}
