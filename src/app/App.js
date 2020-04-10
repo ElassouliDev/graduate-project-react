@@ -7,14 +7,12 @@ import {
 
 import './App.css';
 import CustomPageLayout from "../shared/components/custom-page-layout";
-import CoursesDashboardPage from "../app/pages/courses-dashboard-page";
-import ParticipationClassroomPage from "../app/pages/participation/participation";
+import CoursesDashboardPage from "./pages/courses-dashboard-page";
+import ParticipationClassroomPage from "./pages/participation/participation";
 import Login from './pages/login';
 
 
 function App() {
-
-
     return (
         <Router>
             <Switch>
@@ -28,7 +26,6 @@ function App() {
                         <ParticipationClassroomPage />
                     </CustomPageLayout>
                 </Route>
-
                 <Route  path="/login">
                     <CustomPageLayout>
                         <Login />

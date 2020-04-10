@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import getConfig from "../../config";
 import axios from "axios";
 import Grid from "@material-ui/core/Grid";
 import CardTask from "../../../shared/components/task-card";
@@ -18,15 +19,15 @@ export default function BlogPost() {
   const [data, setData] = useState({ post: {} });
   const classes = useStyles();
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     // You can await here
-  //     console.log(getConfig().apiUrl, "sdsdsdsd");
-  //     const result = await axios(`${getConfig().apiUrl}/post/${slug}`);
-  //     setData(result.data);
-  //   }
-  //   fetchData();
-  // });
+  useEffect(() => {
+    async function fetchData() {
+      // You can await here
+      console.log(getConfig().apiUrl, "sdsdsdsd");
+      const result = await axios(`${getConfig().apiUrl}/post/${slug}`);
+      setData(result.data);
+    }
+    fetchData();
+  });
 
   return (
     <div>
