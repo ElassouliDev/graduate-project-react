@@ -9,7 +9,6 @@ import './App.css';
 import CustomPageLayout from "../shared/components/custom-page-layout";
 import CoursesDashboardPage from "./pages/courses-dashboard-page";
 import ParticipationClassroomPage from "./pages/participation/participation";
-
 import Login from './pages/login';
 
 
