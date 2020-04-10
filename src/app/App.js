@@ -9,7 +9,6 @@ import './App.css';
 import CustomPageLayout from "../shared/components/custom-page-layout";
 import CoursesDashboardPage from "../app/pages/courses-dashboard-page";
 import ParticipationClassroomPage from "../app/pages/participation/participation";
-import Test from "../app/pages/participation/test";
 import Login from './pages/login';
 
 
@@ -30,11 +29,6 @@ function App() {
                     </CustomPageLayout>
                 </Route>
 
-                <Route  path="/test">
-                    <CustomPageLayout>
-                        <Test />
-                    </CustomPageLayout>
-                </Route>
                 <Route  path="/login">
                     <CustomPageLayout>
                         <Login />

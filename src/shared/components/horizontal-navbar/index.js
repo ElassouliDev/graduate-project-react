@@ -12,6 +12,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import classNames from 'classnames';
+import Tabs from './components/Tabs';
 
 const useStyles = makeStyles(theme => ({
     grow: {
@@ -41,13 +43,17 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar({ toggleDrawer, anchor}) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+// ============
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+// =============
+
+
 
     const handleProfileMenuOpen = event => {
         setAnchorEl(event.currentTarget);
@@ -125,20 +131,23 @@ export default function PrimarySearchAppBar() {
 
     return (
         <div className={classes.grow}>
-            <AppBar position="static" color="transparent">
-                <Toolbar>
+            <AppBar position="static" color="transparent" style={{ minHeight: '5.5rem'}}>
+                <Toolbar style={{ minHeight: '5.5rem'}}>
                     <IconButton
                         edge="start"
                         className={classes.menuButton}
                         color="inherit"
                         aria-label="open drawer"
+                        onClick={toggleDrawer(anchor, true)}
                     >
                         <MenuIcon />
                     </IconButton>
                     <Typography className={classes.title} variant="h6" noWrap>
                       CLASSROOM <span style={{ color: "#2FEFE4" }}> AUG </span>
                     </Typography>
-                    <div className={classes.grow} />
+                    <div className={classNames(classes.grow, 'h-full')} >
+                        <Tabs />
+                    </div>
                     <div className={classes.sectionDesktop}>
                         <IconButton aria-label="show 4 new mails" color="inherit">
                             <Badge badgeContent={4} color="secondary">

@@ -6,13 +6,11 @@ const CustomClassroomLayout = (props) => {
   return (
     <Container style={{ paddingTop: "1.5rem" }}>
       <ClassRoomHeader
-        Title="information Scurity"
+        Title="information Security"
         code="123456"
         image="./assets/images/backgrounds/header_classroom_default.png"
       />
-
       {props.children}
-
     </Container>
   );
 };
