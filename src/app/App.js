@@ -7,15 +7,12 @@ import {
 
 import './App.css';
 import CustomPageLayout from "../shared/components/custom-page-layout";
-import CoursesDashboardPage from "../app/pages/courses-dashboard-page";
-import ParticipationClassroomPage from "../app/pages/participation/participation";
-import Test from "../app/pages/participation/test";
-import Login from './pages/login';
+import CoursesDashboardPage from "./pages/courses-dashboard-page";
+import ParticipationClassroomPage from "./pages/participation/participation";
+import Auth from './pages/auth';
 
 
 function App() {
-
-
     return (
         <Router>
             <Switch>
@@ -29,15 +26,9 @@ function App() {
                         <ParticipationClassroomPage />
                     </CustomPageLayout>
                 </Route>
-
-                <Route  path="/test">
-                    <CustomPageLayout>
-                        <Test />
-                    </CustomPageLayout>
-                </Route>
                 <Route  path="/login">
                     <CustomPageLayout>
-                        <Login />
+                        <Auth tabValue={0} />
                     </CustomPageLayout>
                 </Route>
                 {/*<Route path="/post/:slug">*/}
