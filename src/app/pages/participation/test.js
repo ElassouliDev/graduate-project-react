@@ -1,47 +1,72 @@
-import { makeStyles } from "@material-ui/core/styles";
-import { useParams } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import Grid from "@material-ui/core/Grid";
-import CardTask from "../../../shared/components/task-card";
-import CreateParticipationCard from "../../../shared/components/Participation/CreateParticipationCard";
-import CustomClassroomLayout from "../../../shared/components/custom-classroom-layout";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1
-  }
-}));
-export default function BlogPost() {
-  let { slug } = useParams();
-  const [data, setData] = useState({ post: {} });
-  const classes = useStyles();
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     // You can await here
-  //     console.log(getConfig().apiUrl, "sdsdsdsd");
-  //     const result = await axios(`${getConfig().apiUrl}/post/${slug}`);
-  //     setData(result.data);
-  //   }
-  //   fetchData();
-  // });
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
 
   return (
-    <div>
-      <CustomClassroomLayout>
-        <Grid container className={[classes.root, "pt-12"]} spacing={2}>
-          <Grid item xs={12} sm={8} md={9}>
-            <CreateParticipationCard />
+    <Typography
+      component="div"
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box p={3}>{children}</Box>}
+    </Typography>
+  );
+}
 
-          </Grid>
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
 
-          <Grid item xs={12} sm={4} md={3}>
-            <CardTask link={"#data"} />
-          </Grid>
-        </Grid>
-      </CustomClassroomLayout>
+function a11yProps(index) {
+  return {
+    // id: `simple-tab-${index}`,
+    // 'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
+  },
+}));
+
+export default function SimpleTabs() {
+  const classes = useStyles();
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  return (
+    <div className={classes.root}>
+      <Paper>
+        <Tabs    variant="fullWidth" value={value} onChange={handleChange} aria-label="simple tabs example">
+          <Tab label="Item One" {...a11yProps(0)} />
+          <Tab label="Item Two" {...a11yProps(1)} />
+        </Tabs>
+      </Paper>
+       <TabPanel value={value} index={0}>
+        Item One
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        Item Two
+      </TabPanel>
     </div>
   );
 }

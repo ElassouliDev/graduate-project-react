@@ -5,10 +5,11 @@ import axios from "axios";
 import Grid from "@material-ui/core/Grid";
 import CustomPageLayout from "../../../shared/components/custom-page-layout";
 import ThreeDotsMenu from "../../../shared/components/three-dots-menu";
-import { AppBar } from '@material-ui/core';
-import { Paper } from '@material-ui/core';
-import { Tab } from '@material-ui/core';
-import { Tabs } from '@material-ui/core';
+import classnames from "classnames";
+import { AppBar } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
+import { Tab } from "@material-ui/core";
+import { Tabs } from "@material-ui/core";
 import { InputAdornment } from "@material-ui/core";
 import { OutlinedInput } from "@material-ui/core";
 import { InputLabel } from "@material-ui/core";
@@ -39,11 +40,20 @@ const useStyles = makeStyles((theme) => ({
   form_label: {
     fontSize: "14px",
     fontWeight: 600,
-  }, auth_title: {
-    padding:' 21px 0px'
+  },
+  auth_title: {
+    padding: " 21px 0px",
   },
   MuiOutlinedInputInput: {
     fontSize: "14px",
+  },
+  muiTabRoot: {
+    fontSize: "1.875rem",
+    fontWeight: "600",
+    backgroundColor: "#f1f1f1",
+  },
+  containedSizeLarge: {
+    fontSize: '1.9375rem'
   },
 }));
 
@@ -79,94 +89,161 @@ export default function Login() {
     event.preventDefault();
   };
 
+
+
   return (
     <div
       container
-      className={"pt-12 m-auto w-1/2 " + classes.auth_dev}
+      className={classnames(
+        "pt-12 m-auto  md:w-1/2 sm:w-full lg:w-1/2 xl:w-1/2 ",
+        classes.auth_dev
+      )}
       spacing={2}
     >
-      <Paper >
-  <Tabs
-   // value={value}
-    indicatorColor="primary"
-    textColor="primary"
-   // onChange={handleChange}
-   variant="fullWidth"
+      <Paper>
+        <Tabs
+          value={0}
+          indicatorColor="primary"
+          textColor="primary"
+          // onChange={handleChange}
+          variant="fullWidth"
+          aria-label=" tabs example"
+        >
+          <Tab
+            label="SIGN IN"
+            className={classnames(classes.muiTabRoot, "!py-5")}
+          />
+          <Tab
+            label="SIGN UP"
+            className={classnames(classes.muiTabRoot, "!py-5")}
+          />
+        </Tabs>
+      </Paper>
 
-    aria-label=" tabs example"
-  >
-    <Tab label="SIGN IN"  />
-    <Tab label="SIGN UP" />
-  </Tabs>
-</Paper>
-        <Card className={classes.root}>
-          <CardContent>
-          <Typography variant="h2" component="h2" className={'text-center mt-30 mb-12 ' + classes.auth_title}>
-          Sign in to your account
+
+      <Formsy>
+      <CardContent>
+        <div className="mb-10">
+          <FormControl
+            fullWidth
+            className={classes.margin + " " + classes.textField}
+            variant="outlined"
+          >
+            <FormasyInput
+              label="Username or email"
+              placeholder="Username or email"
+              name="username"
+              id="standard"
+              onChange={handleChange}
+              value={values.username}
+              validations="isEmail"
+              validationError="This is not a valid email"
+              required
+            />
+          </FormControl>
+        </div>
+        <div className="mb-10">
+          <FormControl
+            fullWidth
+            className={classes.margin + " " + classes.textFiel}
+            variant="outlined"
+          >
+            <FormasyInput
+              label="Password"
+              placeholder="Enter your password"
+              name="password"
+              id="password"
+              onChange={handleChange}
+              type="password"
+              value={values.password}
+              validations="isEmail"
+              validationError="This is not a valid password"
+              required
+            />
+          </FormControl>
+        </div>
+      </CardContent>
+      <CardActions>
+        <Button size="small" color="primary">
+          Login
+        </Button>
+      </CardActions>
+      </Formsy>
+      <Card className={classes.root}>
+        <CardContent>
+          <Typography
+            variant="h3"
+            component="h3"
+            className="text-center !mt-5 !mb-12"
+          >
+            Sign in to your account
           </Typography>
-            <div className="mb-10">
-              <FormControl
-                fullWidth
-                className={classes.margin+' ' +classes.textFiel}
-                variant="outlined"
-              >
-                <InputLabel
-                  className={classes.form_label}
-                  htmlFor="outlined-adornment-username"
-                >
-                  Username or email
-                </InputLabel>
-                <OutlinedInput
-                  id="outlined-adornment-username"
-                  type="text"
-                  value={values.email}
-                  onChange={handleChange("username")}
-                  labelWidth={125}
-                />
-              </FormControl>
-            </div>
-            <Typography ></Typography>
+          <div className="mb-10">
             <FormControl
               fullWidth
-              className={classes.margin+' ' +classes.textFiel}
+              className={classes.margin + " " + classes.textFiel}
               variant="outlined"
             >
               <InputLabel
                 className={classes.form_label}
-                htmlFor="outlined-adornment-password"
+                htmlFor="outlined-adornment-username"
               >
-                Password
+                Username or email
               </InputLabel>
               <OutlinedInput
-                id="outlined-adornment-password"
-                type={showPassword ? "text" : "password"}
-                value={values.password}
-                onChange={handleChange("password")}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                labelWidth={70}
+                id="outlined-adornment-username"
+                type="text"
+                value={values.email}
+                onChange={handleChange("username")}
+                labelWidth={125}
               />
             </FormControl>
-          </CardContent>
-          <CardActions>
-            <Button size="small" color="primary">
-              Share
-            </Button>
-            <Button size="small" color="primary">
-              Learn More
+          </div>
+          <Typography></Typography>
+          <FormControl
+            fullWidth
+            className={classes.margin + " " + classes.textFiel}
+            variant="outlined"
+          >
+            <InputLabel
+              className={classes.form_label}
+              htmlFor="outlined-adornment-password"
+            >
+              Password
+            </InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              type={showPassword ? "text" : "password"}
+              value={values.password}
+              onChange={handleChange("password")}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              labelWidth={70}
+            />
+          </FormControl>
+          <CardActions className="!px-0 !mt-10">
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              size="large"
+              className={classes.containedSizeLarge}
+            >
+              LOG IN
             </Button>
           </CardActions>
-        </Card>
+        </CardContent>
+      </Card>
     </div>
   );
 }
