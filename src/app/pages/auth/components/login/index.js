@@ -6,7 +6,6 @@ import Formsy from "formsy-react";
 import { Button } from "@material-ui/core";
 import { CardActions } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
-import { useParams } from "react-router";
 import { Checkbox } from "@material-ui/core";
 import { FormControlLabel } from "@material-ui/core";
 
@@ -17,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
   inputRoot: {
     fontSize: "1.75rem",
   },
+  containedSizeLarge: {
+    fontSize: "1.75rem",
+  },
 }));
 
 const LoginForm = () => {
@@ -25,12 +27,7 @@ const LoginForm = () => {
     password: "",
     rememberMe: false,
   });
-  const [state, setState] = React.useState({
-    checkedA: true,
-    checkedB: true,
-    checkedF: true,
-    checkedG: true,
-  });
+  const classes = useStyles();
 
   const handelSubmitLoginForm = () => {
     console.log("submit form", values);
@@ -44,7 +41,6 @@ const LoginForm = () => {
     setValues({ ...values, [event.target.name]: event.target.checked });
   };
 
-  const classes = useStyles();
   return (
     <CardContent>
       <Typography

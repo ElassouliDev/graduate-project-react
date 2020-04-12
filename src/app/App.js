@@ -26,9 +26,14 @@ function App() {
                         <ParticipationClassroomPage />
                     </CustomPageLayout>
                 </Route>
-                <Route  path="/login">
+                <Route  path="/sign in">
                     <CustomPageLayout>
                         <Auth tabValue={0} />
+                    </CustomPageLayout>
+                </Route>
+                 <Route  path="/sign up">
+                    <CustomPageLayout>
+                        <Auth tabValue={1} />
                     </CustomPageLayout>
                 </Route>
                 {/*<Route path="/post/:slug">*/}
