@@ -78,6 +78,8 @@ export default function Auth(props) {
   });
 
   useEffect(() => {
+//   props.router.push('/foo')
+    console.log('router ',props);
     if (props.tabValue) {
       setTabValue(props.tabValue);
     }
