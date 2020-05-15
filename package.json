@@ -26,12 +26,12 @@
     "react-scripts": "3.4.0"
   },
   "scripts": {
-    "start": "yarn run tailwind && react-scripts start",
-    "build": "yarn run tailwind && cross-env NODE_ENV=production NODE_PATH=src && react-scripts build",
+    "start": "npm run tailwind && react-scripts start",
+    "build": "npm run tailwind && cross-env NODE_ENV=production NODE_PATH=src && react-scripts build",
     "tailwind": "./node_modules/.bin/tailwind build ./src/styles/tailwind.base.css -c ./tailwind.js -o ./src/styles/tailwind.css",
     "build-docs": "babel-node src/app/main/components/material-ui/build.js",
-    "build-stats": "yarn run build --stats",
-    "bundle-report": "yarn run build-stats && webpack-bundle-analyzer build/bundle-stats.json -m static -r build/bundle-stats.html -O",
+    "build-stats": "npm run build --stats",
+    "bundle-report": "npm run build-stats && webpack-bundle-analyzer build/bundle-stats.json -m static -r build/bundle-stats.html -O",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
