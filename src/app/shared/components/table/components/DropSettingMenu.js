@@ -48,6 +48,7 @@ const StyledMenu = withStyles({
     {...props}
   />
 ));
+
 const StyledMenuItem = withStyles((theme) => ({
   root: {
     '&:focus': {

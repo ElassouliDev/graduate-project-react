@@ -1,7 +1,7 @@
 import { getEnv, types } from 'mobx-state-tree';
-import  getConfig from '../../app/config';
-import LocalStorage from '../../app/services/LocalStorage';
-import getApiRequests from '../../app/services/apiRequestes';
+import  getConfig from '../../../app/config';
+import LocalStorage from '../../../app/services/LocalStorage';
+import getApiRequests from '../../../app/services/apiRequestes';
 
 // Root store for all stores and models
 

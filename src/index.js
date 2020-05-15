@@ -8,7 +8,7 @@ import remotedev from 'remotedev';
 import './styles/index.css';
 import App from './app/App';
 import * as serviceWorker from './serviceWorker';
-import store from './shared/store';
+import store from './app/shared/store';
 import  getConfig from './app/config';
 
 if (getConfig().isLocalEnv) {

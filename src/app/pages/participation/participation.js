@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 import getConfig from "../../config";
 import axios from "axios";
 import Grid from "@material-ui/core/Grid";
-import CardTask from "../../../shared/components/task-card";
-import CreateParticipationCard from "../../../shared/components/Participation/CreateParticipationCard";
-import CustomClassroomLayout from "../../../shared/components/custom-classroom-layout";
+import CardTask from "../../shared/components/task-card";
+import CreateParticipationCard from "../../shared/components/Participation/CreateParticipationCard";
+import CustomClassroomLayout from "../../shared/components/custom-classroom-layout";
 
 
 const useStyles = makeStyles(theme => ({
@@ -15,19 +15,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 export default function BlogPost() {
-  let { slug } = useParams();
-  const [data, setData] = useState({ post: {} });
+  // let { slug } = useParams();
+  // const [data, setData] = useState({ post: {} });
   const classes = useStyles();
-
-  useEffect(() => {
-    async function fetchData() {
-      // You can await here
-      console.log(getConfig().apiUrl, "sdsdsdsd");
-      const result = await axios(`${getConfig().apiUrl}/post/${slug}`);
-      setData(result.data);
-    }
-    fetchData();
-  });
+  //
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     // You can await here
+  //     console.log(getConfig().apiUrl, "sdsdsdsd");
+  //     const result = await axios(`${getConfig().apiUrl}/post/${slug}`);
+  //     setData(result.data);
+  //   }
+  //   fetchData();
+  // });
 
   return (
     <div>

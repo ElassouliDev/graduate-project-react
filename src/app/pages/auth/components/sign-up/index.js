@@ -1,7 +1,7 @@
 import { Typography, makeStyles, Grid } from "@material-ui/core";
 import classnames from "classnames";
 import React, { useEffect, useState } from "react";
-import MyInput from "../../../../../shared/components/formasy-input";
+import MyInput from "../../../../shared/components/formasy-input";
 import Formsy from "formsy-react";
 import { Radio } from "@material-ui/core";
 import { RadioGroup } from "@material-ui/core";
