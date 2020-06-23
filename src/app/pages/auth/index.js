@@ -1,5 +1,4 @@
-import { makeStyles } from "@material-ui/core/styles";
-import { useParams } from "react-router-dom";
+
 import React, { useEffect } from "react";
 import classnames from "classnames";
 import { Paper } from "@material-ui/core";
@@ -9,43 +8,10 @@ import { Card } from "@material-ui/core";
 import LoginForm from "./components/login";
 import SignUpForm from "./components/sign-up";
 import { Box } from "@material-ui/core";
+import useStyles from './styles';
+import getConfig from "../../config";
+import { apiRequests } from "../../services/apiRequestes";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  MuiInputLabelOutlined: {
-    fontSize: "15px",
-    fontWeight: 700,
-  },
-  auth_dev: {
-    marginTop: "4rem",
-  },
-  form_label: {
-    fontSize: "14px",
-    fontWeight: 600,
-  },
-  auth_title: {
-    padding: " 21px 0px",
-  },
-  MuiOutlinedInputInput: {
-    fontSize: "14px",
-  },
-  muiTabRoot: {
-    fontSize: "1.875rem",
-    fontWeight: "600",
-    backgroundColor: "#f1f1f1",
-  },
-  containedSizeLarge: {
-    fontSize: "1.9375rem",
-  },
-  labelRoot: {
-    fontSize: "1.75rem",
-  },
-  inputRoot: {
-    fontSize: "1.75rem",
-  },
-}));
 
 function TabPanel(props) {
   console.log("tab panel ", props);
@@ -66,16 +32,6 @@ export default function Auth(props) {
   const [tabValue, setTabValue] = React.useState(0);
 
   const classes = useStyles();
-
-  useEffect(() => {
-    async function fetchData() {
-      // You can await here
-      //  console.log(getConfig().apiUrl, "sdsdsdsd");
-      //   const result = await axios(`${getConfig().apiUrl}/post/${slug}`);
-      //   setData(result.data);
-    }
-    fetchData();
-  });
 
   useEffect(() => {
 //   props.router.push('/foo')

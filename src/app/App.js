@@ -30,15 +30,17 @@ function App() {
             <Videos />
           </CustomPageLayout>
         </Route>
-        <Route path="/sign in">
-          <CustomPageLayout>
-            <Auth tabValue={0} />
-          </CustomPageLayout>
-        </Route>
-        <Route path="/sign up">
-          <CustomPageLayout>
-            <Auth tabValue={1} />
-          </CustomPageLayout>
+        <Route path="/auth">
+          <Route path="/auth/login">
+            <CustomPageLayout>
+              <Auth tabValue={0} />
+            </CustomPageLayout>
+          </Route>
+          <Route path="/auth/register">
+            <CustomPageLayout>
+              <Auth tabValue={1} />
+            </CustomPageLayout>
+          </Route>
         </Route>
         <Route path="/material">
           <CustomPageLayout>
