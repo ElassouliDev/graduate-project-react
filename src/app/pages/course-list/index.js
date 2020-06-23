@@ -28,21 +28,18 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
-import { Button } from "@material-ui/core";
 
-function createData(id,name, date) {
-  return {id ,  name, date};
+function createData(id,url,name, date) {
+  return {id ,name,url, date};
 }
 
-// function createData(name, calories, fat, carbs, protein) {
-//   return { name, calories, fat, carbs, protein };
-// }
+
 
 const rows = [
-  createData("1","Donut",'15/2/2020'),
-  createData("1","Donut",'15/2/2020'),
-  createData("1","Donut",'15/2/2020'),
-  createData("1","Donut",'15/2/2020'),
+  createData("1","https://www.youtube.com/watch?v=eXqU-HWAMsc","Donut",'15/2/2020'),
+  createData("1","https://www.youtube.com/watch?v=eXqU-HWAMsc","Donut",'15/2/2020'),
+  createData("1","https://www.youtube.com/watch?v=eXqU-HWAMsc","Donut",'15/2/2020'),
+  createData("1","https://www.youtube.com/watch?v=eXqU-HWAMsc","Donut",'15/2/2020')
 
 
 ];
@@ -74,10 +71,11 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: "material", numeric: false, disablePadding: false, label: "Material" },
+  { id: "Lesson Title", numeric: false, disablePadding: false, label: "Lesson Title" },
+  { id: "Lesson Url", numeric: false, disablePadding: false, label: "Lesson Url" },
   {
     id: "date",
-    numeric: true,
+    numeric: false,
     disablePadding: true,
     label: "Date",
   },{
@@ -108,14 +106,7 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        {/* <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ "aria-label": "select all desserts" }}
-          />
-        </TableCell> */}
+
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -185,16 +176,18 @@ const EnhancedTableToolbar = (props) => {
         [classes.highlight]: numSelected > 0,
       })}
     >
-      {numSelected > 0 ? (
-        <Typography
-          className={classes.title}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      ) : (
+      {
+      // numSelected > 0 ? (
+      //   <Typography
+      //     className={classes.title}
+      //     color="inherit"
+      //     variant="subtitle1"
+      //     component="div"
+      //   >
+      //     {numSelected} selected
+      //   </Typography>
+      // ) :
+      (
         <>
           <Typography
             className={classes.title}
@@ -202,7 +195,7 @@ const EnhancedTableToolbar = (props) => {
             id="tableTitle"
             component="div"
           >
-            Material
+            Course List
 
              <Tooltip title="Add" aria-label="add">
             <Fab color="primary" className={classes.fab}>
@@ -212,20 +205,20 @@ const EnhancedTableToolbar = (props) => {
           </Typography>
 
 
-          {/* <Button>
-            <AddCircle color="secondary" / >
-          </Button> */}
+
         </>
       )}
 
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton aria-label="delete">
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
+      {
+    //   numSelected > 0 ? (
+    //     <Tooltip title="Delete">
+    //       <IconButton aria-label="delete">
+    //         <DeleteIcon />
+    //       </IconButton>
+    //     </Tooltip>
 
-     ) : (
+    //  ) :
+      (
         <>
         <Tooltip title="Filter list">
           <IconButton aria-label="filter list">
@@ -281,11 +274,11 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function EnhancedTable() {
+export default function CourseList() {
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
-  const [selected, setSelected] = React.useState([]);
+  // const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -295,34 +288,34 @@ export default function EnhancedTable() {
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
+  // const handleSelectAllClick = (event) => {
+  //   if (event.target.checked) {
+  //     const newSelecteds = rows.map((n) => n.name);
+  //     setSelected(newSelecteds);
+  //     return;
+  //   }
+  //   setSelected([]);
+  // };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
+  // const handleClick = (event, name) => {
+  //   const selectedIndex = selected.indexOf(name);
+  //   let newSelected = [];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
+  //   if (selectedIndex === -1) {
+  //     newSelected = newSelected.concat(selected, name);
+  //   } else if (selectedIndex === 0) {
+  //     newSelected = newSelected.concat(selected.slice(1));
+  //   } else if (selectedIndex === selected.length - 1) {
+  //     newSelected = newSelected.concat(selected.slice(0, -1));
+  //   } else if (selectedIndex > 0) {
+  //     newSelected = newSelected.concat(
+  //       selected.slice(0, selectedIndex),
+  //       selected.slice(selectedIndex + 1)
+  //     );
+  //   }
 
-    setSelected(newSelected);
-  };
+  //   setSelected(newSelected);
+  // };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -333,7 +326,7 @@ export default function EnhancedTable() {
     setPage(0);
   };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  // const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -341,7 +334,9 @@ export default function EnhancedTable() {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar
+        // numSelected={selected.length}
+         />
         <TableContainer>
           <Table
             className={classes.table}
@@ -351,10 +346,10 @@ export default function EnhancedTable() {
           >
             <EnhancedTableHead
               classes={classes}
-              numSelected={selected.length}
+              // numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
+              // onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
             />
@@ -362,18 +357,18 @@ export default function EnhancedTable() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  // const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${row.id}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
+                      // onClick={(event) => handleClick(event, row.name)}
                       role="checkbox"
-                      aria-checked={isItemSelected}
+                      // aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row.id}
-                      selected={isItemSelected}
+                      // selected={isItemSelected}
                     >
 
                       <TableCell
@@ -384,14 +379,14 @@ export default function EnhancedTable() {
                       >
                         {row.name}
                       </TableCell>
-                      <TableCell align="right">{row.date}</TableCell>
+                      <TableCell align="">{row.url}</TableCell>
+                      <TableCell align="">{row.date}</TableCell>
                       <TableCell align="right">
 
 
                         <DropSettingMenu id={row.id} />
                       </TableCell>
-                      {/* <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell> */}
+
                     </TableRow>
                   );
                 })}

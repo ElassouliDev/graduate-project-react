@@ -8,7 +8,8 @@ import ParticipationClassroomPage from "./pages/participation/participation";
 import Auth from "./pages/auth";
 import Material from "./pages/material";
 import CustomClassroomLayout from "../shared/components/custom-classroom-layout";
-import Videos from './pages/videos';
+import Videos from "./pages/videos";
+import CourseList from "./pages/course-list";
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
             <ParticipationClassroomPage />
           </CustomPageLayout>
         </Route>
-         <Route path="/videos">
+        <Route path="/videos">
           <CustomPageLayout>
             <Videos />
           </CustomPageLayout>
@@ -48,6 +49,14 @@ function App() {
             </CustomClassroomLayout>
           </CustomPageLayout>
         </Route>
+        <Route path="/course/list">
+          <CustomPageLayout>
+            <CustomClassroomLayout>
+              <CourseList />
+            </CustomClassroomLayout>
+          </CustomPageLayout>
+        </Route>
+
         {/*<Route path="/post/:slug">*/}
         {/*    <BlogPost />*/}
         {/*</Route>*/}
