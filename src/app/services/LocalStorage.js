@@ -21,6 +21,7 @@ class LocalStorage {
 
     set(key, value) {
      // set in localStorage
+        this.localStorage.setItem(key, value);
     }
 
     clear() {

@@ -2,11 +2,12 @@ import { getEnv, types } from 'mobx-state-tree';
 import  getConfig from '../../app/config';
 import LocalStorage from '../../app/services/LocalStorage';
 import getApiRequests from '../../app/services/apiRequestes';
-
+import UserStore from "../../app/pages/auth/stores/UserStore";
 // Root store for all stores and models
 
 const RootStore = types
     .model('RootStore', {
+        userStore: types.optional(UserStore, {}),
         // e.g :  userStore: types.optional(UserStore, {}),
         title: ""
     }).views(self => ({

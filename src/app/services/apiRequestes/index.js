@@ -50,10 +50,9 @@ class Request {
     async send(method, url, data = {}) {
         let jwtToken = window.localStorage.getItem('jwtToken');
 
-        const authCredentials = this.localStorage.get('authCredentials');
 
         // Add auth headers and x-ray tracking if logged in, and using our API.
-        if (jwtToken && !_.isEmpty(authCredentials) && url.indexOf(this.baseUrl) !== -1) {
+        if (jwtToken && url.indexOf(this.baseUrl) !== -1) {
         }
         if (jwtToken && jwtToken !== 'null') {
             return axios({
@@ -61,12 +60,13 @@ class Request {
                 method,
                 data,
                 headers: {
-                    Authorization: `Bearer ${jwtToken}`,
+                    Authorization: `Token ${jwtToken}`,
                 },
             })
                 .then(response => response)
                 .catch(error => handleError(error));
         }
+        console.log(url, "dfdfdfdfdfdfdfdfdf")
         return axios({
             url,
             method,
@@ -81,6 +81,7 @@ class Request {
     }
 
     get(url) {
+        console.log(url, 'get(url)')
         return this.send('get', url);
     }
 
@@ -99,8 +100,11 @@ class Request {
 
 const requests = (localStorage, config) => {
     const baseUrl = config.apiUrl;
+    console.log(baseUrl, 'baseUrl')
     const requestInstance = new Request(localStorage, baseUrl);
     return {
+        getClassRooms: () => requestInstance.get(`${baseUrl}/classroom`),
+        registerUser: (payload) => requestInstance.post(`${config.webUrl}/users/users/`, payload),
         requestInstance
     }
 };

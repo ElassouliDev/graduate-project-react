@@ -22,7 +22,6 @@ export default function BlogPost() {
   useEffect(() => {
     async function fetchData() {
       // You can await here
-      console.log(getConfig().apiUrl, "sdsdsdsd");
       const result = await axios(`${getConfig().apiUrl}/post/${slug}`);
       setData(result.data);
     }

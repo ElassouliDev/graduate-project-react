@@ -6,6 +6,7 @@ import axios from "axios";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import ClassCard from "../../../shared/components/class-card";
+import { apiRequests } from "../../services/apiRequestes";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -20,12 +21,7 @@ export default function BlogPost() {
     useEffect(
         () => {
             async function fetchData() {
-                // You can await here
-                console.log(getConfig().apiUrl, 'sdsdsdsd')
-                const result = await axios(
-                    `${getConfig().apiUrl}/post/${slug}`
-                );
-                setData(result.data);
+               await apiRequests.getClassRooms()
             }
             fetchData();
         });

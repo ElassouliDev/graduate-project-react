@@ -8,6 +8,7 @@ import { CardActions } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
 import { Checkbox } from "@material-ui/core";
 import { FormControlLabel } from "@material-ui/core";
+import { apiRequests } from "../../../../services/apiRequestes";
 
 const useStyles = makeStyles((theme) => ({
   labelRoot: {
@@ -51,7 +52,7 @@ const LoginForm = () => {
         Sign in to your account
       </Typography>
 
-      <Formsy className="mb-10" onSubmit={handelSubmitLoginForm()}>
+      <Formsy className="mb-10" onSubmit={handelSubmitLoginForm}>
         <MyInput
           value={values.email}
           name="email"
