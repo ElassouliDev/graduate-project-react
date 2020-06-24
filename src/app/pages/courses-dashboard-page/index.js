@@ -21,13 +21,13 @@ export default function BlogPost() {
     useEffect(
         () => {
             async function fetchData() {
-               await apiRequests.getClassRooms()
+                await apiRequests.getClassRooms()
             }
             fetchData();
-        });
+        }, []);
     return (
         <div>
-            <Container style={{ paddingTop: '7.5rem'}}>
+            <Container style={{ paddingTop: '7.5rem' }}>
                 <Grid container className={classes.root} spacing={2}>
                     <Grid item xs={6} sm={3}>
                         <ClassCard />

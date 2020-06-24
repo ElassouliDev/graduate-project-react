@@ -56,6 +56,12 @@ function App() {
             </CustomClassroomLayout>
           </CustomPageLayout>
         </Route>
+        <Route path='*' exact={true} component={
+          () => <h2>
+            Page Not Found 404
+            </h2>}>
+
+        </Route>
 
         {/*<Route path="/post/:slug">*/}
         {/*    <BlogPost />*/}

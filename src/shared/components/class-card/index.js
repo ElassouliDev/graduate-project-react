@@ -47,7 +47,7 @@ export default function MediaCard() {
                     image="./assets/images/backgrounds/engineering-bg.jpg"
                     title="Contemplative Reptile"
                 >
-                    <div className={classes.overlay}> </div>
+                    {/* <div className={classes.overlay}> </div> */}
                     <CardContent className={classNames(classes.reposition, 'flex justify-between items-center')}>
                         <ThreeDotsMenu />
                         <Typography
@@ -63,7 +63,7 @@ export default function MediaCard() {
 
                 </CardMedia>
                 <CardContent>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    <Typography variant="h6" color="textSecondary" component="p">
                         Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
                         across all continents except Antarctica
                     </Typography>
