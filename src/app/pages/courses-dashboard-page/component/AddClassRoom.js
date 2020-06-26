@@ -28,10 +28,8 @@ const AddClassRoom = (props) => {
    const handelSubmitAddClassRoom = async () => {
       try {
          setLoading(true)
-         let payload = getSnapshot(props.store.ClassRoomStore).newClassRoom;
-         console.log(payload);
-
-         props.store.ClassRoomStore.addNewClassRoom(payload);
+         props.store.ClassRoomStore.addNewClass();
+         props.store.ClassRoomStore.clearClass();
 
       } catch (err) {
 
@@ -45,7 +43,7 @@ const AddClassRoom = (props) => {
 
    const handleChange = (key) => (event) => {
       const value = event.target.value;
-      props.store.ClassRoomStore.newClassRoom.setClassRoomData({ key, value })
+      props.store.ClassRoomStore.handleClassChange({key, value})
    };
    const classes = useStyles();
 
@@ -66,7 +64,7 @@ const AddClassRoom = (props) => {
 
          <Formsy className="mb-10" onSubmit={handelSubmitAddClassRoom}>
             <MyInput
-               value={getSnapshot(props.store.ClassRoomStore.newClassRoom).title}
+               value={props.store.ClassRoomStore.newClass.title}
                name="title"
                type="text"
                fullWidth
@@ -92,7 +90,7 @@ const AddClassRoom = (props) => {
                required
             />
             <MyInput
-               value={getSnapshot(props.store.ClassRoomStore.newClassRoom).descrption}
+               value={props.store.ClassRoomStore.newClass.descrption}
                name="descrption"
                type="text"
                fullWidth
@@ -118,7 +116,7 @@ const AddClassRoom = (props) => {
                required
             />
             <MyInput
-               value={getSnapshot(props.store.ClassRoomStore.newClassRoom).thumbnail}
+               value={props.store.ClassRoomStore.newClass.thumbnail}
                name="thumbnail"
                type="file"
                fullWidth
@@ -143,7 +141,7 @@ const AddClassRoom = (props) => {
                }}
             />
             <MyInput
-               value={getSnapshot(props.store.ClassRoomStore.newClassRoom).coverImage}
+               value={props.store.ClassRoomStore.newClass.coverImage}
                name="coverImage"
                type="file"
                fullWidth

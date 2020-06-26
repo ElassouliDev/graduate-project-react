@@ -55,10 +55,7 @@ const RootStore = types
     .model('RootStore', {
         UserStore: types.optional(UserStore, {}),
         LoginStore: types.optional(LoginStore, {}),
-        ClassRoomStore: types.optional(ClassRoomStore, {
-            classRooms: courseArray,
-
-        }),
+        ClassRoomStore: types.optional(ClassRoomStore, {}),
     }).views(self => ({
         // views for root store
         get apiRequests() {

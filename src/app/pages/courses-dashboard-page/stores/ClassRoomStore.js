@@ -1,8 +1,6 @@
 
 import { types, getSnapshot, getParent } from 'mobx-state-tree';
 export const classRoom = types.model({
-
-   id: types.identifierNumber,
    title: types.optional(types.string, ''),
    description: types.optional(types.string, ''),
    coverImage: types.optional(types.string, ''),
@@ -15,17 +13,24 @@ export const classRoom = types.model({
 }));
 export default types.model('ClassRoomStore', {
    classRooms: types.array(classRoom),
-   newClassRoom: types.map(classRoom)
+   newClass: types.optional(classRoom, {}),
 }).views((self) => ({
 
 })).actions((self) => ({
-   addNewClassRoom: (payload) => {
-      self.classRooms.push(
-         classRoom.create({
-            id: self.classRooms.length + 1, ...self.newClassRoom
-         })
-      )
+   handleClassChange: (payload) => {
+      self.newClass.setClassRoomData(payload)
    },
-
+   addNewClass: () => {
+      self.classRooms.push(self.newClass)
+   },
+   clearClass: () => {
+   const data = {
+      title:'',
+      description: '',
+      coverImage: '',
+      thumbnail: ''
+   };
+      self.newClass = data;
+   }
 
 }))
