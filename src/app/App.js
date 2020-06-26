@@ -9,60 +9,66 @@ import Auth from "./pages/auth";
 import Material from "./pages/material";
 import CustomClassroomLayout from "../shared/components/custom-classroom-layout";
 import Videos from "./pages/videos";
+import Protected from "../shared/components/Protected/Protected"
+import IsLoggedIn from "../shared/components/Protected/IsLoggedIn"
 import CourseList from "./pages/course-list";
 
 function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/">
-          <CustomPageLayout>
-            <CoursesDashboardPage />
-          </CustomPageLayout>
-        </Route>
-        <Route path="/participation">
-          <CustomPageLayout>
-            <ParticipationClassroomPage />
-          </CustomPageLayout>
-        </Route>
-        <Route path="/videos">
-          <CustomPageLayout>
-            <Videos />
-          </CustomPageLayout>
-        </Route>
         <Route path="/auth">
-          <Route path="/auth/login">
+          <IsLoggedIn>
+            <Route path="/auth/login">
+              <CustomPageLayout>
+                <Auth tabValue={0} />
+              </CustomPageLayout>
+            </Route>
+            <Route path="/auth/register">
+              <CustomPageLayout>
+                <Auth tabValue={1} />
+              </CustomPageLayout>
+            </Route>
+          </IsLoggedIn>
+        </Route>
+        <Protected>
+          <Route exact path="/">
             <CustomPageLayout>
-              <Auth tabValue={0} />
+              <CoursesDashboardPage />
             </CustomPageLayout>
           </Route>
-          <Route path="/auth/register">
+          <Route path="/participation">
             <CustomPageLayout>
-              <Auth tabValue={1} />
+              <ParticipationClassroomPage />
             </CustomPageLayout>
           </Route>
-        </Route>
-        <Route path="/material">
-          <CustomPageLayout>
-            <CustomClassroomLayout>
-              <Material />
-            </CustomClassroomLayout>
-          </CustomPageLayout>
-        </Route>
-        <Route path="/course/list">
-          <CustomPageLayout>
-            <CustomClassroomLayout>
-              <CourseList />
-            </CustomClassroomLayout>
-          </CustomPageLayout>
-        </Route>
+          <Route path="/videos">
+            <CustomPageLayout>
+              <Videos />
+            </CustomPageLayout>
+          </Route>
+          <Route path="/material">
+            <CustomPageLayout>
+              <CustomClassroomLayout>
+                <Material />
+              </CustomClassroomLayout>
+            </CustomPageLayout>
+          </Route>
+          <Route path="/course/list">
+            <CustomPageLayout>
+              <CustomClassroomLayout>
+                <CourseList />
+              </CustomClassroomLayout>
+            </CustomPageLayout>
+          </Route>
+        </Protected>
+
         <Route path='*' exact={true} component={
           () => <h2>
             Page Not Found 404
-            </h2>}>
-
+            </h2>}
+        >
         </Route>
-
         {/*<Route path="/post/:slug">*/}
         {/*    <BlogPost />*/}
         {/*</Route>*/}

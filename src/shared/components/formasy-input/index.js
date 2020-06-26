@@ -13,7 +13,7 @@ const MyInput = ({ value, isValid, name, errorMessage, onChange, ...res }) => {
         <div>
             <TextField
                 error={error}
-                onChange={onChange(name)}
+                onChange={onChange}
                 defaultValue={value}
                 helperText={error ? errorMessage : " "}
                 {...res}

@@ -6926,6 +6926,11 @@ mkdirp@0.5.1, mkdirp@^0.5.1, mkdirp@~0.5.1:
   dependencies:
     minimist "0.0.8"
 
+mobx-devtools-mst@^0.9.22:
+  version "0.9.22"
+  resolved "https://registry.yarnpkg.com/mobx-devtools-mst/-/mobx-devtools-mst-0.9.22.tgz#51c7695064d78d31a9c416e7bc58c90a185575cc"
+  integrity sha512-Yi0zoZjy/HcpIYQSttJfzjP8sWvSDxwtemGB99wSvKCSITvWk0CRCeT149Ynhud6sJ9XUgZMdsSAd/kIuZ8vOQ==
+
 mobx-react-devtools@^6.1.1:
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/mobx-react-devtools/-/mobx-react-devtools-6.1.1.tgz#a462b944085cf11ff96fc937d12bf31dab4c8984"

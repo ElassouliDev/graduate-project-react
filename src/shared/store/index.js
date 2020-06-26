@@ -1,14 +1,65 @@
 import { getEnv, types } from 'mobx-state-tree';
-import  getConfig from '../../app/config';
+import getConfig from '../../app/config';
 import LocalStorage from '../../app/services/LocalStorage';
 import getApiRequests from '../../app/services/apiRequestes';
 import UserStore from "../../app/pages/auth/stores/UserStore";
+import LoginStore from "../../app/pages/auth/stores/LoginStore";
+import CourseStore from "../../app/pages/course-list/stores/ClassRoomStore";
+import { classRoom } from "../../app/pages/course-list/stores/ClassRoomStore";
 // Root store for all stores and models
-
+const courseArray = [
+    classRoom.create({
+        id: 1,
+        title: "course 1",
+        description: "course description 1",
+        coverImage: "./assets/images/backgrounds/header_classroom_default.png",
+        thumbnail: "./assets/images/backgrounds/informationSec.jpg"
+    }),
+    classRoom.create({
+        id: 2,
+        title: "course 2",
+        description: "course description 1",
+        coverImage: "./assets/images/backgrounds/header_classroom_default.png",
+        thumbnail: "./assets/images/backgrounds/informationSec.jpg"
+    }),
+    classRoom.create({
+        id: 3,
+        title: "course 3",
+        description: "course description 1",
+        coverImage: "./assets/images/backgrounds/header_classroom_default.png",
+        thumbnail: "./assets/images/backgrounds/informationSec.jpg"
+    }),
+    classRoom.create({
+        id: 4,
+        title: "course 4",
+        description: "course description 1",
+        coverImage: "./assets/images/backgrounds/header_classroom_default.png",
+        thumbnail: "./assets/images/backgrounds/informationSec.jpg"
+    }),
+    classRoom.create({
+        id: 5,
+        title: "course 5",
+        description: "course description 1",
+        coverImage: "./assets/images/backgrounds/header_classroom_default.png",
+        thumbnail: "./assets/images/backgrounds/informationSec.jpg"
+    }),
+    classRoom.create({
+        id: 6,
+        title: "course 6",
+        description: "course description 1",
+        coverImage: "./assets/images/backgrounds/header_classroom_default.png",
+        thumbnail: "./assets/images/backgrounds/informationSec.jpg"
+    }),
+]
 const RootStore = types
     .model('RootStore', {
-        userStore: types.optional(UserStore, {}),
-        // e.g :  userStore: types.optional(UserStore, {}),
+        UserStore: types.optional(UserStore, {}),
+        LoginStore: types.optional(LoginStore, {}),
+        ClassRoomStore: types.optional(CourseStore, {
+            classRooms: courseArray
+        }),
+
+        // e.g :  UserStore: types.optional(UserStore, {}),
         title: ""
     }).views(self => ({
         // views for root store

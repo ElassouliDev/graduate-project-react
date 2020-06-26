@@ -1,12 +1,12 @@
 import { flow, getParent, types } from 'mobx-state-tree';
 
 export default types.model('UserStore', {
-    username: types.optional(types.string, ''),
-    firstName: types.optional(types.string, ''),
-    lastName: types.optional(types.string, ''),
-    password: types.optional(types.string, ''),
-    confirmPassword: types.optional(types.string, ''),
-    email: types.optional(types.string, ''),
+    username: types.optional(types.string, 'username'),
+    first_name: types.optional(types.string, 'first name'),
+    last_name: types.optional(types.string, 'last name'),
+    password: types.optional(types.string, 'password'),
+    confirmPassword: types.optional(types.string, 'password'),
+    email: types.optional(types.string, 'a@a.com'),
     groups: types.optional(types.integer, 1),
 }).views((self) => ({
     get isMatchingPassword() {
@@ -18,9 +18,9 @@ export default types.model('UserStore', {
         self.username = payload.username;
         self.password = payload.password;
         self.confirmPassword = payload.confirmPassword;
-        self.email = payload.email;
-        self.email = payload.email;
-        self.email = payload.email;
+        self.first_name = payload.first_name;
+        self.last_name = payload.last_name;
+        self.groubs = payload.groubs;
     },
     setNewUserData: (payload) => {
         self[payload.key] = payload.value;
@@ -32,9 +32,9 @@ export default types.model('UserStore', {
         // user.append('confirm_password', self.confirmPassword)
         user.append('email', self.email)
         user.append('groups', self.groups)
-        user.append('firstName', self.firstName)
-        user.append('lastName', self.lastName)
-       const res = yield getParent(self).apiRequests.registerUser(user)
+        user.append('first_name', self.first_name)
+        user.append('last_name', self.last_name)
+        const res = yield getParent(self).apiRequests.registerUser(user)
         console.log(res)
     })
 }))

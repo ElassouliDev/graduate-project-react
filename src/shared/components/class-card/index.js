@@ -14,10 +14,10 @@ import ThreeDotsMenu from '../three-dots-menu';
 
 const useStyles = makeStyles({
     root: {
-        maxWidth: 345,
+        width: 320,
     },
     media: {
-        height: 140,
+        height: 200,
         position: 'relative',
     },
     overlay: {
@@ -36,7 +36,7 @@ const useStyles = makeStyles({
     },
 });
 
-export default function MediaCard() {
+export default function MediaCard(props) {
     const classes = useStyles();
 
     return (
@@ -44,7 +44,7 @@ export default function MediaCard() {
             <CardActionArea>
                 <CardMedia
                     className={classes.media}
-                    image="./assets/images/backgrounds/engineering-bg.jpg"
+                    image={props.thumbnail}
                     title="Contemplative Reptile"
                 >
                     {/* <div className={classes.overlay}> </div> */}
@@ -57,15 +57,14 @@ export default function MediaCard() {
                             align="right"
                             className="!font-medium w-3/5 !text-4xl text-white"
                         >
-                            Information Security
+                            {props.title}
                         </Typography>
                     </CardContent>
 
                 </CardMedia>
                 <CardContent>
                     <Typography variant="h6" color="textSecondary" component="p">
-                        Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                        across all continents except Antarctica
+                        {props.description}
                     </Typography>
                 </CardContent>
             </CardActionArea>

@@ -9,6 +9,9 @@ makeCancelable(axios, { debug: true });
 const handleError = error => {
     let errorToThrow = null;
     if (error.response) {
+        if (['400', '401', 400, 401].includes(error.response.status)) {
+            window.history.pushState({}, '', "/auth/login")
+        }
         // TODO: check error status (error.response.status)
         if (error.response.status && error.response.data) {
             if (error.response.data.message === 'The incoming token has expired') {
@@ -96,6 +99,7 @@ class Request {
     post(url, data) {
         return this.send('post', url, data);
     }
+
 }
 
 const requests = (localStorage, config) => {
@@ -104,7 +108,9 @@ const requests = (localStorage, config) => {
     const requestInstance = new Request(localStorage, baseUrl);
     return {
         getClassRooms: () => requestInstance.get(`${baseUrl}/classroom`),
-        registerUser: (payload) => requestInstance.post(`${config.webUrl}/users/users/`, payload),
+        registerUser: (payload) => requestInstance.post(`${config.webUrl}/api/users/`, payload),
+        loginUser: (payload) => requestInstance.post(`${config.webUrl}/api/login/`, payload),
+
         requestInstance
     }
 };
