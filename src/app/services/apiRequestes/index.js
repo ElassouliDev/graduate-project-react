@@ -105,6 +105,7 @@ const requests = (localStorage, config) => {
     return {
         getClassRooms: () => requestInstance.get(`${baseUrl}/classroom`),
         registerUser: (payload) => requestInstance.post(`${config.webUrl}/users/users/`, payload),
+        createNewClassroom: (payload) => requestInstance.post(`${config.webUrl}/classroom/create/`, payload),
         requestInstance
     }
 };

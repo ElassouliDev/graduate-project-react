@@ -10,15 +10,15 @@ import Material from "./pages/material";
 import CustomClassroomLayout from "../shared/components/custom-classroom-layout";
 import Videos from "./pages/videos";
 import CourseList from "./pages/course-list";
+import TaskInfo from './pages/task_info';
 
 function App() {
   return (
     <Router>
+
       <Switch>
         <Route exact path="/">
-          <CustomPageLayout>
             <CoursesDashboardPage />
-          </CustomPageLayout>
         </Route>
         <Route path="/participation">
           <CustomPageLayout>
@@ -56,17 +56,24 @@ function App() {
             </CustomClassroomLayout>
           </CustomPageLayout>
         </Route>
-        <Route path='*' exact={true} component={
-          () => <h2>
-            Page Not Found 404
-            </h2>}>
-
+        <Route path="/task/1">
+          <CustomPageLayout>
+            <CustomClassroomLayout>
+              <TaskInfo />
+            </CustomClassroomLayout>
+          </CustomPageLayout>
         </Route>
+        <Route
+          path="*"
+          exact={true}
+          component={() => <h2>Page Not Found 404</h2>}
+        ></Route>
 
         {/*<Route path="/post/:slug">*/}
         {/*    <BlogPost />*/}
         {/*</Route>*/}
       </Switch>
+
     </Router>
   );
 }

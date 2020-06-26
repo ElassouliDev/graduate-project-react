@@ -35,12 +35,12 @@ export default function BlogPost() {
                     <Grid item xs={6} sm={3}>
                         <ClassCard />
                     </Grid>
-                    <Grid item xs={6} sm={3}>
+                    {/* <Grid item xs={6} sm={3}>
                         <ClassCard />
                     </Grid>
                     <Grid item xs={6} sm={3}>
                         <ClassCard />
-                    </Grid>
+                    </Grid> */}
                 </Grid>
             </Container>
 
