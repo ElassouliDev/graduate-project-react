@@ -1,16 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { useParams } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import getConfig from "../../config";
-import axios from "axios";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
+import React, { useEffect } from "react";
 import ClassCard from "../../../shared/components/class-card";
-import { apiRequests } from "../../services/apiRequestes";
 import { getSnapshot } from "mobx-state-tree";
 import { withStyles } from "@material-ui/core";
 import { inject, observer } from 'mobx-react';
 import Box from '@material-ui/core/Box';
+import AddClassRoom from "./component/AddClassRoom";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -43,6 +38,7 @@ function BlogPost(props) {
                         </Box>
                     })
                 }
+                <AddClassRoom></AddClassRoom>
             </Box>
 
         </div>

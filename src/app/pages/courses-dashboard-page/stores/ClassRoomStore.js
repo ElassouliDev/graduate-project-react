@@ -1,5 +1,5 @@
 
-import { types } from 'mobx-state-tree';
+import { types, getSnapshot, getParent } from 'mobx-state-tree';
 export const classRoom = types.model({
 
    id: types.identifierNumber,
@@ -9,7 +9,9 @@ export const classRoom = types.model({
    thumbnail: types.optional(types.string, '')
 
 }).actions((self) => ({
-
+   setClassRoomData: (payload) => {
+      self[payload.key] = payload.value;
+   }
 }));
 export default types.model('ClassRoomStore', {
    classRooms: types.array(classRoom),
@@ -18,9 +20,12 @@ export default types.model('ClassRoomStore', {
 
 })).actions((self) => ({
    addNewClassRoom: (payload) => {
-      self.classRooms.push(self.newClassRoom);
+      self.classRooms.push(
+         classRoom.create({
+            id: self.classRooms.length + 1, ...self.newClassRoom
+         })
+      )
    },
-   setClassRoomData: (payload) => {
-      self.newClassRoom[payload.key] = payload.value;
-   }
+
+
 }))

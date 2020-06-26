@@ -4,8 +4,8 @@ import LocalStorage from '../../app/services/LocalStorage';
 import getApiRequests from '../../app/services/apiRequestes';
 import UserStore from "../../app/pages/auth/stores/UserStore";
 import LoginStore from "../../app/pages/auth/stores/LoginStore";
-import CourseStore from "../../app/pages/course-list/stores/ClassRoomStore";
-import { classRoom } from "../../app/pages/course-list/stores/ClassRoomStore";
+import ClassRoomStore from "../../app/pages/courses-dashboard-page/stores/ClassRoomStore";
+import { classRoom } from "../../app/pages/courses-dashboard-page/stores/ClassRoomStore";
 // Root store for all stores and models
 const courseArray = [
     classRoom.create({
@@ -55,12 +55,10 @@ const RootStore = types
     .model('RootStore', {
         UserStore: types.optional(UserStore, {}),
         LoginStore: types.optional(LoginStore, {}),
-        ClassRoomStore: types.optional(CourseStore, {
-            classRooms: courseArray
-        }),
+        ClassRoomStore: types.optional(ClassRoomStore, {
+            classRooms: courseArray,
 
-        // e.g :  UserStore: types.optional(UserStore, {}),
-        title: ""
+        }),
     }).views(self => ({
         // views for root store
         get apiRequests() {
