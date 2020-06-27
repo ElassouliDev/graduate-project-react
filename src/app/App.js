@@ -12,6 +12,7 @@ import Videos from "./pages/videos";
 import CourseList from "./pages/course-list";
 import TaskInfo from './pages/task_info';
 import TaskList from './pages/task_list';
+import TaskStudentsList from './pages/task_students_list';
 
 function App() {
   return (
@@ -62,18 +63,27 @@ function App() {
               <TaskList />
           </CustomPageLayout>
         </Route>
-        <Route path="/task/1">
+
+        <Route path="/task/:id">
           <CustomPageLayout>
             <CustomClassroomLayout>
               <TaskInfo />
             </CustomClassroomLayout>
           </CustomPageLayout>
         </Route>
+
+        <Route path="/classroon/:classroom_id/task/:task_id/student">
+          <CustomPageLayout>
+              <TaskStudentsList />
+          </CustomPageLayout>
+        </Route>
+
         <Route
           path="*"
           exact={true}
           component={() => <h2>Page Not Found 404</h2>}
-        ></Route>
+        >
+        </Route>
 
         {/*<Route path="/post/:slug">*/}
         {/*    <BlogPost />*/}

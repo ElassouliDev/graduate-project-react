@@ -30,9 +30,10 @@ export default function TaskListItem(props) {
         subheader={props.taskData.created_at}
 
         action={ <Chip
+            className="mt-5"
           size="larg"
           color={props.taskData.is_closed?"secondary":"primary"}
-          label={ <Typography variant="h6" className="!mb-2">
+          label={ <Typography  variant="h6" >
           {props.taskData.is_closed?"closed":"open"}
         </Typography>}
         />}
