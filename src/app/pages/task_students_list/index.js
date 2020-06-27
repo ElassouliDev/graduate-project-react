@@ -108,7 +108,7 @@ export default class TaskStudentsList extends Component {
                 <>
                   List of student that submited the solution
                   <Chip
-                    color="primary"
+                    // color="primary"
                     className="mx-5 !px-5 !text-lg"
                     size="medium"
                     label={
@@ -122,7 +122,7 @@ export default class TaskStudentsList extends Component {
                 <>
                   List of student that not submited the solution
                   <Chip
-                    color="secondary"
+                    // color="secondary"
                     className="mx-5 !px-5 !text-lg"
                     size="medium"
                     label={
