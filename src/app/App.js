@@ -11,6 +11,7 @@ import CustomClassroomLayout from "../shared/components/custom-classroom-layout"
 import Videos from "./pages/videos";
 import CourseList from "./pages/course-list";
 import TaskInfo from './pages/task_info';
+import TaskList from './pages/task_list';
 
 function App() {
   return (
@@ -54,6 +55,11 @@ function App() {
             <CustomClassroomLayout>
               <CourseList />
             </CustomClassroomLayout>
+          </CustomPageLayout>
+        </Route>
+        <Route path="/task/list">
+          <CustomPageLayout>
+              <TaskList />
           </CustomPageLayout>
         </Route>
         <Route path="/task/1">
