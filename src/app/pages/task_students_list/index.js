@@ -4,6 +4,7 @@ import React, { useEffect, useState, Component } from "react";
 
 import UserItem from "./component/UserItem";
 import classNames from "classnames";
+import { Chip } from "@material-ui/core";
 import { Select } from "@material-ui/core";
 import { InputLabel } from "@material-ui/core";
 import { FormControl } from "@material-ui/core";
@@ -65,18 +66,16 @@ export default class TaskStudentsList extends Component {
           created_at: "September 14, 2016",
         },
       ],
-       students_list_not_answoer: [
+      students_list_not_answoer: [
         {
           name: "Yehia Elas",
           image:
             "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
-
         },
         {
           name: "Yehia Elas",
           image:
             "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
-
         },
         {
           name: "Yehia Elas2",
@@ -89,9 +88,9 @@ export default class TaskStudentsList extends Component {
             "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
         },
       ],
+      total_student: 200,
     };
     this.handleChange = this.handleChange.bind(this);
-
   }
   handleChange(event) {
     console.log(event.target.value);
@@ -104,13 +103,36 @@ export default class TaskStudentsList extends Component {
       <div className="container m-auto my-20  ">
         <Grid container>
           <Grid item xs={8}>
-            {" "}
             <Typography variant="h2" className="!mb-5">
-              {
-                          this.state.student_type == "Students answered"?
-"List of student that submited the solution"
- : "List of student that not submited the solution"
-}
+              {this.state.student_type == "Students answered" ? (
+                <>
+                  List of student that submited the solution
+                  <Chip
+                    color="primary"
+                    className="mx-5 !px-5 !text-lg"
+                    size="medium"
+                    label={
+                      this.state.students_list_answoer.length +
+                      " / " +
+                      this.state.total_student
+                    }
+                  />
+                </>
+              ) : (
+                <>
+                  List of student that not submited the solution
+                  <Chip
+                    color="secondary"
+                    className="mx-5 !px-5 !text-lg"
+                    size="medium"
+                    label={
+                      this.state.students_list_not_answoer.length +
+                      " / " +
+                      this.state.total_student
+                    }
+                  />
+                </>
+              )}
             </Typography>
           </Grid>
           <Grid item xs={4}>
@@ -120,10 +142,6 @@ export default class TaskStudentsList extends Component {
                 native
                 value={this.state.student_type}
                 onChange={this.handleChange}
-                // inputProps={{
-                //   name: "S",
-                //   id: "age-native-simple",
-                // }}
               >
                 <option value="Students answered">Students answered</option>
                 <option value="Students not answered">
@@ -136,21 +154,13 @@ export default class TaskStudentsList extends Component {
 
         <Divider />
         <div className="my-10">
-          {
-          this.state.student_type == "Students answered"?(
-
-          this.state.students_list_answoer.map((student,index) => (
-            <UserItem student={student}  key={index}/>
-
-          ))):
-          (
-
-            this.state.students_list_not_answoer.map((student,index) => (
-              <UserItem student={student}  key={index} />
-
-            )))
-
-        }
+          {this.state.student_type == "Students answered"
+            ? this.state.students_list_answoer.map((student, index) => (
+                <UserItem student={student} key={index} />
+              ))
+            : this.state.students_list_not_answoer.map((student, index) => (
+                <UserItem student={student} key={index} />
+              ))}
         </div>
       </div>
     );
