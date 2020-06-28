@@ -12,10 +12,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 const options = [
   'None',
-  'Atria',
-  'Callisto',
-  'Dione',
-  'Ganymede',
+  'delete',
   // 'Hangouts Call',
   // 'Luna',
   // 'Oberon',
@@ -95,12 +92,12 @@ export default function DropSettingMenu() {
         }}
       >
         {options.map((option) => (
-            <StyledMenuItem>
-              <ListItemIcon style = {{     minWidth:'22px' }}>
-                <SendIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText primary="Sent mail" />
-            </StyledMenuItem>
+          <StyledMenuItem>
+            <ListItemIcon style={{ minWidth: '22px' }}>
+              <SendIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Sent mail" />
+          </StyledMenuItem>
 
         ))}
       </Menu>

@@ -6,13 +6,12 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const options = [
     'None',
-    'Atria',
-    'Callisto',
+    'delete ',
 ];
 
 const ITEM_HEIGHT = 48;
 
-export default function ThreeDotsMenu() {
+export default function ThreeDotsMenu(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
@@ -20,8 +19,12 @@ export default function ThreeDotsMenu() {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleClose = () => {
+    const handleClose = (option) => () => {
         setAnchorEl(null);
+        if (props.actions[option])
+            props.actions[option]();
+        else
+            console.log("no action spcefied");
     };
 
     return (
@@ -44,7 +47,7 @@ export default function ThreeDotsMenu() {
                 PaperProps={{
                     style: {
                         maxHeight: ITEM_HEIGHT * 4.5,
-                        width: 200,
+                        width: 150,
                     },
                 }}
                 anchorOrigin={{
@@ -57,7 +60,7 @@ export default function ThreeDotsMenu() {
                 }}
             >
                 {options.map(option => (
-                    <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
+                    <MenuItem key={option} selected={option === "xadasdkl"} onClick={handleClose(option)}>
                         {option}
                     </MenuItem>
                 ))}

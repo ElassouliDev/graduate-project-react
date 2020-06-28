@@ -12,10 +12,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 const options = [
   'None',
-  'Atria',
-  'Callisto',
-  'Dione',
-  'Ganymede',
+  'delete',
   // 'Hangouts Call',
   // 'Luna',
   // 'Oberon',

@@ -7,7 +7,6 @@ import { CardActions } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
 import { FormControlLabel } from "@material-ui/core";
 import { useHistory } from "react-router-dom"
-import { getSnapshot } from "mobx-state-tree"
 import { inject, observer } from 'mobx-react';
 
 const useStyles = makeStyles((theme) => ({
@@ -28,7 +27,7 @@ const AddClassRoom = (props) => {
    const handelSubmitAddClassRoom = async () => {
       try {
          setLoading(true)
-         let payload = getSnapshot(props.store.ClassRoomStore).newClassRoom;
+         let payload = props.store.ClassRoomStore.newClassRoom;
          console.log(payload);
 
          props.store.ClassRoomStore.addNewClassRoom(payload);
@@ -45,15 +44,10 @@ const AddClassRoom = (props) => {
 
    const handleChange = (key) => (event) => {
       const value = event.target.value;
-      props.store.ClassRoomStore.newClassRoom.setClassRoomData({ key, value })
+      props.store.ClassRoomStore.setClassRoomData({ key, value })
    };
    const classes = useStyles();
 
-   // id: types.identifierNumber,
-   // title: types.optional(types.string, ''),
-   // description: types.optional(types.string, ''),
-   // coverImage: types.optional(types.string, ''),
-   // thumbnail: types.optional(types.string, '')
    return (
       <CardContent>
          <Typography
@@ -66,14 +60,14 @@ const AddClassRoom = (props) => {
 
          <Formsy className="mb-10" onSubmit={handelSubmitAddClassRoom}>
             <MyInput
-               value={getSnapshot(props.store.ClassRoomStore.newClassRoom).title}
+               value={props.store.ClassRoomStore.newClassRoom.title}
                name="title"
                type="text"
                fullWidth
                placeholder="Enter Title"
                label="Title"
                id="title"
-               validations="isEmptyString"
+               validations="isSpecialWords"
                validationError="This is not a valid title"
                onChange={handleChange("title")}
                InputProps={{ classes: { root: classes.inputRoot } }}
@@ -92,16 +86,16 @@ const AddClassRoom = (props) => {
                required
             />
             <MyInput
-               value={getSnapshot(props.store.ClassRoomStore.newClassRoom).descrption}
-               name="descrption"
+               value={props.store.ClassRoomStore.newClassRoom.description}
+               name="description"
                type="text"
                fullWidth
-               placeholder="Enter your descrption"
+               placeholder="Enter your description"
                label="Descrption"
-               id="descrption"
-               validations="isEmptyString"
-               validationError="This is not a valid descrption"
-               onChange={handleChange("descrption")}
+               id="description"
+               validations="isSpecialWords"
+               validationError="This is not a valid description"
+               onChange={handleChange("description")}
                InputProps={{ classes: { root: classes.inputRoot } }}
                InputLabelProps={{
                   classes: {
@@ -118,14 +112,13 @@ const AddClassRoom = (props) => {
                required
             />
             <MyInput
-               value={getSnapshot(props.store.ClassRoomStore.newClassRoom).thumbnail}
+               value={props.store.ClassRoomStore.newClassRoom.thumbnail}
                name="thumbnail"
                type="file"
                fullWidth
                placeholder="Enter your thumbnail"
                label="Thumbnail"
                id="thumbnail"
-               validations="isEmptyString"
                validationError="This is not a valid thumbnail"
                onChange={handleChange("thumbnail")}
                InputProps={{ classes: { root: classes.inputRoot } }}
@@ -143,14 +136,13 @@ const AddClassRoom = (props) => {
                }}
             />
             <MyInput
-               value={getSnapshot(props.store.ClassRoomStore.newClassRoom).coverImage}
+               value={props.store.ClassRoomStore.newClassRoom.coverImage}
                name="coverImage"
                type="file"
                fullWidth
                placeholder="Enter your username"
                label="coverImage"
                id="coverImage"
-               validations="isEmptyString"
                validationError="This is not a valid coverImage"
                onChange={handleChange("coverImage")}
                InputProps={{ classes: { root: classes.inputRoot } }}
@@ -177,8 +169,7 @@ const AddClassRoom = (props) => {
                   color="primary"
                   size="large"
                   type="submit"
-                  className={classes.containedSizeLarge}
-               >
+                  className={classes.containedSizeLarge}>
                   Add Class Room {isLoading && <CircularProgress />}
                </Button>
             </CardActions>

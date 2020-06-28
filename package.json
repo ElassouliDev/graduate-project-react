@@ -11,6 +11,7 @@
     "axios": "^0.19.2",
     "axios-cancelable": "^1.0.0",
     "classnames": "^2.2.6",
+    "create-react-class": "^15.6.3",
     "formsy-react": "^2.0.2",
     "lodash": "^4.17.15",
     "material-ui-pickers": "^2.2.4",
@@ -23,8 +24,8 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-route": "^1.0.3",
-    "react-router": "^5.1.2",
-    "react-router-dom": "^5.1.2",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.0"
   },
   "scripts": {

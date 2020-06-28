@@ -37,17 +37,22 @@ function App() {
               <CoursesDashboardPage />
             </CustomPageLayout>
           </Route>
-          <Route path="/participation">
+          <Route exact path="/Room/:id">
             <CustomPageLayout>
               <ParticipationClassroomPage />
             </CustomPageLayout>
           </Route>
-          <Route path="/videos">
+          <Route exact path="/Room/:id/participation">
+            <CustomPageLayout>
+              <ParticipationClassroomPage />
+            </CustomPageLayout>
+          </Route>
+          <Route path="/Room/:id/videos">
             <CustomPageLayout>
               <Videos />
             </CustomPageLayout>
           </Route>
-          <Route path="/material">
+          <Route path="/Room/:id/material">
             <CustomPageLayout>
               <CustomClassroomLayout>
                 <Material />
@@ -73,7 +78,7 @@ function App() {
         {/*    <BlogPost />*/}
         {/*</Route>*/}
       </Switch>
-    </Router>
+    </Router >
   );
 }
 

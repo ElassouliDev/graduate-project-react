@@ -1,6 +1,8 @@
 import React from "react";
 import ClassRoomHeader from '../classroom_header';
 import { Container } from '@material-ui/core';
+import { inject, observer } from 'mobx-react';
+import { withRouter } from 'react-route';
 
 const CustomClassroomLayout = (props) => {
   return (
@@ -8,11 +10,13 @@ const CustomClassroomLayout = (props) => {
       <ClassRoomHeader
         Title="information Security"
         code="123456"
-        image="./assets/images/backgrounds/header_classroom_default.png"
+        image={props.store.ClassRoomStore.classRooms.find((classR) => {
+          return classR.id === props.match.params.id;
+        })?.coverImage}
       />
       {props.children}
     </Container>
   );
 };
 
-export default CustomClassroomLayout;
+export default inject('store')(observer(withRouter(CustomClassroomLayout)));

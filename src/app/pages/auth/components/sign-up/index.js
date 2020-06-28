@@ -8,7 +8,6 @@ import { Radio, RadioGroup, FormLabel, Button, CardActions, CardContent, FormCon
 // import { apiRequests } from "../../../../services/apiRequestes";
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { inject, observer } from 'mobx-react';
-import { getSnapshot } from 'mobx-state-tree';
 import { red } from "@material-ui/core/colors";
 import { Redirect } from "react-router-dom";
 
@@ -39,7 +38,7 @@ class SignUpForm extends React.Component {
   handelSubmitLoginForm = async (values) => {
     console.log("submit form", values);
     console.log(this.props.store)
-    let body = getSnapshot(this.props.store).UserStore;
+    let body = this.props.store.UserStore;
     try {
       this.setState({ isLoading: true, helperText: "" })
       const res = await this.props.store.apiRequests.registerUser({ ...body, groups: [body.groups] });
@@ -72,7 +71,7 @@ class SignUpForm extends React.Component {
   render() {
     console.log(this.props.store, "dsdfdsfdsf")
     const { classes } = this.props;
-    const { email = "", password = "", confirmPassword = "", username = "", groups = "", first_name = "", last_name = "" } = getSnapshot(this.props.store.UserStore);
+    const { email = "", password = "", confirmPassword = "", username = "", groups = "", first_name = "", last_name = "" } = (this.props.store.UserStore);
     if (this.state.isLoggedIn) {
       return <Redirect to={"/"} />
     }

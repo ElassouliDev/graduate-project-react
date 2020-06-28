@@ -7,7 +7,6 @@ import { CardActions } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
 import { FormControlLabel } from "@material-ui/core";
 import { useHistory } from "react-router-dom"
-import { getSnapshot } from "mobx-state-tree"
 import { inject, observer } from 'mobx-react';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +30,7 @@ const LoginForm = (props) => {
     try {
       setLoading(true)
       setHelperText("")
-      const payload = getSnapshot(props.store.LoginStore);
+      const payload = props.store.LoginStore;
       console.log("login", payload);
       const res = await props.store.apiRequests.loginUser({ username: payload.username, password: payload.password })
       console.log(res);
@@ -79,7 +78,7 @@ const LoginForm = (props) => {
 
       <Formsy className="mb-10" onSubmit={handelSubmitLoginForm}>
         <MyInput
-          value={getSnapshot(props.store.LoginStore).email}
+          value={props.store.LoginStore.email}
           name="text"
           type="text"
           fullWidth
@@ -106,7 +105,7 @@ const LoginForm = (props) => {
         />
 
         <MyInput
-          value={getSnapshot(props.store.LoginStore).password}
+          value={props.store.LoginStore.password}
           name="password"
           type="password"
           fullWidth

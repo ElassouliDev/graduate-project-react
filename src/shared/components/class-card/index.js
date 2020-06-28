@@ -11,6 +11,7 @@ import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import Typography from '@material-ui/core/Typography';
 import ThreeDotsMenu from '../three-dots-menu';
+import { inject, observer } from 'mobx-react';
 
 const useStyles = makeStyles({
     root: {
@@ -36,7 +37,7 @@ const useStyles = makeStyles({
     },
 });
 
-export default function MediaCard(props) {
+export default inject("store")(observer(function MediaCard(props) {
     const classes = useStyles();
 
     return (
@@ -49,7 +50,14 @@ export default function MediaCard(props) {
                 >
                     {/* <div className={classes.overlay}> </div> */}
                     <CardContent className={classNames(classes.reposition, 'flex justify-between items-center')}>
-                        <ThreeDotsMenu />
+                        <ThreeDotsMenu actions={
+                            {
+                                delete: () => {
+                                    const result = props.store.ClassRoomStore.deleteClassRoom(props.id)
+                                    console.log("delete", props.id, result)
+                                },
+                            }
+                        } />
                         <Typography
                             noWrap
                             variant="h3"
@@ -62,12 +70,12 @@ export default function MediaCard(props) {
                     </CardContent>
 
                 </CardMedia>
-                <CardContent>
-                    <Typography variant="h6" color="textSecondary" component="p">
-                        {props.description}
-                    </Typography>
-                </CardContent>
             </CardActionArea>
+            <CardContent>
+                <Typography variant="h6" color="textSecondary" component="p">
+                    {props.description}
+                </Typography>
+            </CardContent>
             <CardActions>
                 <IconButton size="medium" color="primary" aria-label="folder picture" component="span">
                     <FolderOpenIcon />
@@ -78,4 +86,4 @@ export default function MediaCard(props) {
             </CardActions>
         </Card>
     );
-}
+}));
