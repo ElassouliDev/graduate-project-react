@@ -61,9 +61,11 @@ export default function SimpleTabs() {
     return (
         <div className={classes.tabsContainer} >
             <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-                <Tab label="Item One" {...a11yProps(0)} />
-                <Tab label="Item Two" {...a11yProps(1)} />
-                <Tab label="Item Three" {...a11yProps(2)} />
+                <Tab label="Streams" {...a11yProps(0)} />
+                <Tab label="Home Work" {...a11yProps(1)} />
+                <Tab label="People" {...a11yProps(2)} />
+                <Tab label="Videos" {...a11yProps(3)} />
+                <Tab label="Material" {...a11yProps(4)} />
             </Tabs>
             {/*<TabPanel value={value} index={0}>*/}
             {/*    Item One*/}
