@@ -6,7 +6,7 @@ import UserStore from "../../app/pages/auth/stores/UserStore";
 import LoginStore from "../../app/pages/auth/stores/LoginStore";
 import ClassRoomStore from "../../app/pages/courses-dashboard-page/stores/ClassRoomStore";
 import { classRoom } from "../../app/pages/courses-dashboard-page/stores/ClassRoomStore";
-import MaterialStores, { material } from "../../app/pages/material/stores"
+import MaterialStore, { material } from "../../app/pages/material/stores"
 // Root store for all stores and models
 const courseArray = [
     classRoom.create({
@@ -15,7 +15,31 @@ const courseArray = [
         description: "course description 1",
         coverImage: "./assets/images/backgrounds/header_classroom_default.png",
         thumbnail: "./assets/images/backgrounds/informationSec.jpg",
-   Materials: types.optional(MaterialStores, {}),
+        MaterialStore: MaterialStore.create({
+            materials: [
+                material.create({
+                    id: 0,
+                    url: "https://drive.google.com/file/d/1SRt0aQBO2moUzvMKXH3K8RqYmYXdEEOu/view?fbclid=IwAR3Y8zoV0VyDYiRhNMedW9P7MpGveH7kBUS4TfKYgCzr98tkM4OJXFok9Dg",
+                    uploadedAt: new Date().toString(),
+                    title: "material title",
+                    description: "material description"
+                }),
+                material.create({
+                    id: 1,
+                    url: "https://drive.google.com/file/d/1SRt0aQBO2moUzvMKXH3K8RqYmYXdEEOu/view?fbclid=IwAR3Y8zoV0VyDYiRhNMedW9P7MpGveH7kBUS4TfKYgCzr98tkM4OJXFok9Dg",
+                    uploadedAt: new Date().toString(),
+                    title: "material title",
+                    description: "material description"
+                }),
+                material.create({
+                    id: 2,
+                    url: "https://drive.google.com/file/d/1SRt0aQBO2moUzvMKXH3K8RqYmYXdEEOu/view?fbclid=IwAR3Y8zoV0VyDYiRhNMedW9P7MpGveH7kBUS4TfKYgCzr98tkM4OJXFok9Dg",
+                    uploadedAt: new Date().toString(),
+                    title: "material title",
+                    description: "material description"
+                }),
+            ]
+        }),
 
     }),
     classRoom.create({

@@ -28,24 +28,18 @@ import Tooltip from "@material-ui/core/Tooltip";
 // import Switch from "@material-ui/core/Switch";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
+import { inject, observer } from "mobx-react";
+import { withRouter } from "react-router";
 // import { Button } from "@material-ui/core";
 
-function createData(id, name, date) {
-  return { id, name, date };
+function createData(id, title, description, url, uploadedAt) {
+  return { id, title, description, url, uploadedAt };
 }
 
 // function createData(name, calories, fat, carbs, protein) {
 //   return { name, calories, fat, carbs, protein };
 // }
 
-const rows = [
-  createData("1", "Donut", '15/2/2020'),
-  createData("1", "Donut", '15/2/2020'),
-  createData("1", "Donut", '15/2/2020'),
-  createData("1", "Donut", '15/2/2020'),
-
-
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -74,17 +68,29 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: "material", numeric: false, disablePadding: false, label: "Material" },
+  { id: "id", numeric: false, disablePadding: false, label: "Material No." },
   {
-    id: "date",
-    numeric: true,
-    disablePadding: true,
-    label: "Date",
-  }, {
-    id: "option",
-    numeric: true,
+    id: "title",
+    numeric: false,
     disablePadding: false,
-    label: "",
+    label: "Title",
+  }, {
+    id: "description",
+    numeric: false,
+    disablePadding: false,
+    label: "Description",
+  },
+  {
+    id: "url",
+    numeric: false,
+    disablePadding: false,
+    label: "File Donwload Link",
+  },
+  {
+    id: "uploadedAt",
+    numeric: false,
+    disablePadding: false,
+    label: "uploadedAt",
   },
   // { id: "fat", numeric: true, disablePadding: false, label: "Fat (g)" },
   // { id: "carbs", numeric: true, disablePadding: false, label: "Carbs (g)" },
@@ -205,7 +211,7 @@ const EnhancedTableToolbar = (props) => {
               Material
 
              <Tooltip title="Add" aria-label="add">
-                <Fab color="primary" className={classes.fab}>
+                <Fab color="primary" className={classes.fab} >
                   <Add />
                 </Fab>
               </Tooltip>
@@ -281,13 +287,16 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function EnhancedTable() {
+function EnhancedTable(props) {
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const classRoom = props.store.ClassRoomStore.getClassRoom(+props.match.params.id);
+
+  const rows = classRoom ? classRoom.MaterialStore.materials.map((m) => createData(m.id, m.title, m.description, m.url, m.uploadedAt)) : [];
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -334,9 +343,21 @@ export default function EnhancedTable() {
   };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
-
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  if (!classRoom) {
+    return (<div>
+      classRoom not found
+    </div>
+    )
+  }
+  /**
+      id: types.optional(types.identifierNumber, 0),
+     url: types.optional(types.string, ''),
+     uploadedAt: types.optional(types.string, ''),
+     title: types.optional(types.string, ''),
+     description:types.optional(types.string,'')
+   */
 
   return (
     <div className={classes.root}>
@@ -364,7 +385,6 @@ export default function EnhancedTable() {
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${row.id}`;
-
                   return (
                     <TableRow
                       hover
@@ -382,12 +402,41 @@ export default function EnhancedTable() {
                         scope="row"
                         padding="defualt"
                       >
-                        {row.name}
+                        {row.id}
                       </TableCell>
-                      <TableCell align="right">{row.date}</TableCell>
+                      <TableCell
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        padding="defualt"
+                      >
+                        {row.title}
+                      </TableCell>
+                      <TableCell
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        padding="defualt"
+                      >
+                        {row.description}
+                      </TableCell>
+                      <TableCell
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        padding="defualt"
+                      >
+                        <a href={row.url}>Download</a>
+                      </TableCell>
+                      <TableCell
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        padding="defualt"
+                      >
+                        {row.uploadedAt}
+                      </TableCell>
                       <TableCell align="right">
-
-
                         <DropSettingMenu id={row.id} />
                       </TableCell>
                       {/* <TableCell align="right">{row.carbs}</TableCell>
@@ -416,3 +465,4 @@ export default function EnhancedTable() {
     </div>
   );
 }
+export default inject('store')(observer(withRouter(EnhancedTable)))

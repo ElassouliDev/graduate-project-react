@@ -7,7 +7,7 @@ export const classRoom = types.model({
    description: types.optional(types.string, ''),
    coverImage: types.optional(types.string, ''),
    thumbnail: types.optional(types.string, ''),
-   materialStore: types.optional(MaterialStore, {}),
+   MaterialStore: types.optional(MaterialStore, {}),
 }).actions((self) => ({
    setClassData: (payload) => {
 

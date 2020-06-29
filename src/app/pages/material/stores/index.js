@@ -6,7 +6,7 @@ export const material = types.model({
    url: types.optional(types.string, ''),
    uploadedAt: types.optional(types.string, ''),
    title: types.optional(types.string, ''),
-   description:types.optional(types.string,'')
+   description: types.optional(types.string, '')
 }).actions((self) => ({
    setClassData: (payload) => {
       if (payload.key === "profileImage") {
