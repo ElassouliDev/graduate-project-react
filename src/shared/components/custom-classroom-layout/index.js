@@ -2,7 +2,6 @@ import React from "react";
 import ClassRoomHeader from '../classroom_header';
 import { Container } from '@material-ui/core';
 import { inject, observer } from 'mobx-react';
-import { withRouter } from 'react-route';
 
 const CustomClassroomLayout = (props) => {
   return (
@@ -19,4 +18,4 @@ const CustomClassroomLayout = (props) => {
   );
 };
 
-export default inject('store')(observer(withRouter(CustomClassroomLayout)));
+export default inject('store')(observer(CustomClassroomLayout));

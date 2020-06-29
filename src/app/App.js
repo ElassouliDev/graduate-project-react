@@ -12,6 +12,7 @@ import Videos from "./pages/videos";
 import Protected from "../shared/components/Protected/Protected"
 import IsLoggedIn from "../shared/components/Protected/IsLoggedIn"
 import CourseList from "./pages/course-list";
+import Settings from "./pages/courses-dashboard-page/settings"
 
 function App() {
   return (
@@ -37,14 +38,14 @@ function App() {
               <CoursesDashboardPage />
             </CustomPageLayout>
           </Route>
-          <Route exact path="/Room/:id">
+          <Route exact path="/Room/:id/participation">
             <CustomPageLayout>
               <ParticipationClassroomPage />
             </CustomPageLayout>
           </Route>
-          <Route exact path="/Room/:id/participation">
+          <Route path="/Room/:id/settings">
             <CustomPageLayout>
-              <ParticipationClassroomPage />
+              <Settings />
             </CustomPageLayout>
           </Route>
           <Route path="/Room/:id/videos">
@@ -74,12 +75,8 @@ function App() {
             </h2>}
         >
         </Route>
-        {/*<Route path="/post/:slug">*/}
-        {/*    <BlogPost />*/}
-        {/*</Route>*/}
       </Switch>
     </Router >
   );
 }
-
 export default App;

@@ -16,22 +16,23 @@ const useStyles = makeStyles(theme => ({
 }));
 export default function BlogPost(props) {
   let { slug } = useParams();
-  const [data, setData] = useState({ post: {} });
+  // const [data, setData] = useState({ post: {} });
   const classes = useStyles();
 
-  useEffect(() => {
-    async function fetchData() {
-      // You can await here
-      const result = await axios(`${getConfig().apiUrl}/post/${slug}`);
-      setData(result.data);
-    }
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     // You can await here
+  //     const result = await axios(`${getConfig().apiUrl}/post/${slug}`);
+  //     setData(result.data);
+  //   }
+  //   fetchData();
+  // }, []);
 
   return (
     <div>
       <CustomClassroomLayout
-        coverImage={props.store.ClassRoomStore.getCover(props.match.params.id)}>
+      // coverImage={props.store.ClassRoomStore.getCover(props.match.params.id)}
+      >
         <Grid container className={[classes.root, "pt-12"]} spacing={2}>
           <Grid item xs={12} sm={8} md={9}>
             <CreateParticipationCard />
