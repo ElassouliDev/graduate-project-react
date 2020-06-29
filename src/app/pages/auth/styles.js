@@ -13,7 +13,7 @@ export default makeStyles((theme) => ({
         marginTop: "4rem",
     },
     form_label: {
-        fontSize: "14px",
+        fontSize: "10px",
         fontWeight: 600,
     },
     auth_title: {

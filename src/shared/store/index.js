@@ -6,6 +6,7 @@ import UserStore from "../../app/pages/auth/stores/UserStore";
 import LoginStore from "../../app/pages/auth/stores/LoginStore";
 import ClassRoomStore from "../../app/pages/courses-dashboard-page/stores/ClassRoomStore";
 import { classRoom } from "../../app/pages/courses-dashboard-page/stores/ClassRoomStore";
+import MaterialStores, { material } from "../../app/pages/material/stores"
 // Root store for all stores and models
 const courseArray = [
     classRoom.create({
@@ -13,7 +14,9 @@ const courseArray = [
         title: "course 1",
         description: "course description 1",
         coverImage: "./assets/images/backgrounds/header_classroom_default.png",
-        thumbnail: "./assets/images/backgrounds/informationSec.jpg"
+        thumbnail: "./assets/images/backgrounds/informationSec.jpg",
+   Materials: types.optional(MaterialStores, {}),
+
     }),
     classRoom.create({
         id: 2,
@@ -57,8 +60,8 @@ const RootStore = types
         LoginStore: types.optional(LoginStore, {}),
         ClassRoomStore: types.optional(ClassRoomStore, {
             classRooms: courseArray,
-
         }),
+
     }).views(self => ({
         // views for root store
         get apiRequests() {

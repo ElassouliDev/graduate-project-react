@@ -1,11 +1,13 @@
-
+/* eslint-disable eqeqeq */
 import { types } from 'mobx-state-tree';
+import MaterialStore from "../../material/stores"
 export const classRoom = types.model({
    id: types.optional(types.identifierNumber, 0),
    title: types.optional(types.string, ''),
    description: types.optional(types.string, ''),
    coverImage: types.optional(types.string, ''),
-   thumbnail: types.optional(types.string, '')
+   thumbnail: types.optional(types.string, ''),
+   materialStore: types.optional(MaterialStore, {}),
 }).actions((self) => ({
    setClassData: (payload) => {
 
@@ -15,7 +17,7 @@ export const classRoom = types.model({
 }));
 export default types.model('ClassRoomStore', {
    classRooms: types.array(classRoom),
-   newClassRoom: types.optional(classRoom, {})
+   newClassRoom: types.optional(classRoom, {}),
 }).views((self) => ({
    getCoverImage: (id) => {
       let selectedClassRoom = self.classRooms = self.classRooms.find((cR) => {
