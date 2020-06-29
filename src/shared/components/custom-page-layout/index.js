@@ -1,8 +1,9 @@
 import React from 'react';
 import HorizontalNavigation from "../horizontal-navbar";
 import TemporaryDrawer from '../temporary-drawer'
+import { Container } from '@material-ui/core';
 
-export  default  ({ children , navConfig, containerStyle, classes }) => {
+export default ({ children, navConfig, containerStyle, classes }) => {
     const [state, setState] = React.useState({
         left: false,
     });
@@ -24,7 +25,9 @@ export  default  ({ children , navConfig, containerStyle, classes }) => {
                 toggleDrawer={toggleDrawer}
             />
             <TemporaryDrawer state={state} anchor={anchor} toggleDrawer={toggleDrawer} />
-            {children}
+            <Container>
+                {children}
+            </Container>
         </div>
     );
 }

@@ -13,7 +13,7 @@ import Protected from "../shared/components/Protected/Protected"
 import IsLoggedIn from "../shared/components/Protected/IsLoggedIn"
 import CourseList from "./pages/course-list";
 import Settings from "./pages/courses-dashboard-page/settings"
-
+import Room from "./pages/Room/index.js"
 function App() {
   return (
     <Router>
@@ -36,6 +36,11 @@ function App() {
           <Route exact path="/">
             <CustomPageLayout>
               <CoursesDashboardPage />
+            </CustomPageLayout>
+          </Route>
+          <Route exact path="/Room/:id">
+            <CustomPageLayout>
+              <Room />
             </CustomPageLayout>
           </Route>
           <Route exact path="/Room/:id/participation">

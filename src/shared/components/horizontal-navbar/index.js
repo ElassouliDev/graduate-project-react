@@ -43,15 +43,15 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function PrimarySearchAppBar({ toggleDrawer, anchor}) {
+export default function PrimarySearchAppBar({ toggleDrawer, anchor }) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-// ============
+    // ============
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-// =============
+    // =============
 
 
 
@@ -131,8 +131,8 @@ export default function PrimarySearchAppBar({ toggleDrawer, anchor}) {
 
     return (
         <div className={classes.grow}>
-            <AppBar position="static" color="transparent" style={{ minHeight: '5.5rem'}}>
-                <Toolbar style={{ minHeight: '5.5rem'}}>
+            <AppBar position="static" color="transparent" style={{ minHeight: '2.5rem' }}>
+                <Toolbar style={{ minHeight: '2.5rem' }}>
                     <IconButton
                         edge="start"
                         className={classes.menuButton}
@@ -143,7 +143,7 @@ export default function PrimarySearchAppBar({ toggleDrawer, anchor}) {
                         <MenuIcon />
                     </IconButton>
                     <Typography className={classes.title} variant="h6" noWrap>
-                      CLASSROOM <span style={{ color: "#2FEFE4" }}> AUG </span>
+                        CLASSROOM <span style={{ color: "#2FEFE4" }}> AUG </span>
                     </Typography>
                     <div className={classNames(classes.grow, 'h-full')} >
                         <Tabs />

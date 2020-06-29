@@ -35,7 +35,7 @@ export default types.model('ClassRoomStore', {
    editNewClassRoom: (payload) => {
       let edited = false;
       self.classRooms = self.classRooms.map((cR) => {
-         if (cR.id === payload.id) {
+         if (cR.id == payload.id) {
             edited = true
             return payload;
          }
@@ -43,17 +43,23 @@ export default types.model('ClassRoomStore', {
       });
       return edited
    },
+   getClassRoom: (id) => {
+      return self.classRooms.find((cR) => {
+         return cR.id == id;
+      })
+   }
+   ,
    setClassRoomData: (payload) => {
       self.newClassRoom.setClassData(payload);
    },
    deleteClassRoom: (id) => {
       let deleted = false;
       self.classRooms = self.classRooms.filter((cR) => {
-         console.log(cR.id === id, id, cR.id);
+         console.log(cR.id == id, id, cR.id);
 
-         if (cR.id === id)
+         if (cR.id == id)
             deleted = true
-         return cR.id !== id
+         return cR.id != id
       });
       return deleted
    }

@@ -12,6 +12,7 @@ import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import Typography from '@material-ui/core/Typography';
 import ThreeDotsMenu from '../three-dots-menu';
 import { inject, observer } from 'mobx-react';
+import { withRouter } from 'react-router';
 
 const useStyles = makeStyles({
     root: {
@@ -36,13 +37,15 @@ const useStyles = makeStyles({
         position: 'absolute'
     },
 });
-
-export default inject("store")(observer(function MediaCard(props) {
+function ClassCard(props) {
     const classes = useStyles();
+    function Redirect() {
+        props.history.push(`Room/${props.id}`)
+    }
 
     return (
         <Card className={classes.root}>
-            <CardActionArea>
+            <CardActionArea onClick={Redirect}>
                 <CardMedia
                     className={classes.media}
                     image={props.thumbnail}
@@ -86,4 +89,5 @@ export default inject("store")(observer(function MediaCard(props) {
             </CardActions>
         </Card>
     );
-}));
+}
+export default inject("store")(observer(withRouter(ClassCard)))
