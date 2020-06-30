@@ -66,7 +66,7 @@ export default class TaskList extends Component {
     ];
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   render() {
     return (
