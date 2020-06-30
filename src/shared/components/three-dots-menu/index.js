@@ -4,15 +4,10 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-const options = [
-    'None',
-    'Atria',
-    'Callisto',
-];
 
 const ITEM_HEIGHT = 48;
 
-export default function ThreeDotsMenu() {
+export default function ThreeDotsMenu(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
@@ -20,8 +15,9 @@ export default function ThreeDotsMenu() {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleClose = () => {
+    const handleClose = (option, onClick) => () => {
         setAnchorEl(null);
+        onClick();
     };
 
     return (
@@ -33,7 +29,7 @@ export default function ThreeDotsMenu() {
                 onClick={handleClick}
                 size='small'
             >
-                <MoreVertIcon className='text-white !text-4xl' />
+                <MoreVertIcon className='text-dark !text-4xl' />
             </IconButton>
             <Menu
                 id="long-menu"
@@ -44,7 +40,7 @@ export default function ThreeDotsMenu() {
                 PaperProps={{
                     style: {
                         maxHeight: ITEM_HEIGHT * 4.5,
-                        width: 200,
+                        width: 150,
                     },
                 }}
                 anchorOrigin={{
@@ -56,11 +52,13 @@ export default function ThreeDotsMenu() {
                     horizontal: 'left',
                 }}
             >
-                {options.map(option => (
-                    <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
-                        {option}
-                    </MenuItem>
-                ))}
+                {
+                    props.options.map(option => (
+                        <MenuItem key={option.id} selected={false} onClick={handleClose(option.id, option.onClick)}>
+                            {option.id}
+                        </MenuItem>
+                    ))
+                }
             </Menu>
         </div>
     );

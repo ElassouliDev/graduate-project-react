@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 export default function PrimarySearchAppBar({
   toggleDrawer,
   anchor,
-  aside_show =true,
+  aside_show = true,
   nav_item = false,
   add_calssroom = true,
   is_teacher = false,
@@ -176,8 +176,8 @@ export default function PrimarySearchAppBar({
               <MenuIcon />
             </IconButton>
           ) : (
-            ""
-          )}
+              ""
+            )}
 
           <Typography className={classes.title} variant="h6" noWrap>
             CLASSROOM <span style={{ color: "#2FEFE4" }}> AUG </span>
@@ -191,11 +191,11 @@ export default function PrimarySearchAppBar({
             <>
               <div className={classes.sectionDesktop}>
 
-                {add_calssroom?
-                <IconButton aria-label="show 4 new mails" color="inherit">
-                <Add size="larg" className="!text-4xl" />
-              </IconButton>
-                :""}
+                {add_calssroom ?
+                  <IconButton aria-label="show 4 new mails" color="inherit">
+                    <Add size="larg" className="!text-4xl" />
+                  </IconButton>
+                  : ""}
 
                 {/* <IconButton aria-label="show 4 new mails" color="inherit">
                   <Badge badgeContent={4} color="secondary">
@@ -220,7 +220,7 @@ export default function PrimarySearchAppBar({
                 >
                   {/* <AccountCircle /> */}
 
-                  <Avatar alt="Yehia Test"  src="https://kooledge.com/assets/default_medium_avatar-57d58da4fc778fbd688dcbc4cbc47e14ac79839a9801187e42a796cbd6569847.png"></Avatar>
+                  <Avatar alt="Yehia Test" src="https://kooledge.com/assets/default_medium_avatar-57d58da4fc778fbd688dcbc4cbc47e14ac79839a9801187e42a796cbd6569847.png"></Avatar>
                 </IconButton>
               </div>
               <div className={classes.sectionMobile}>
@@ -236,8 +236,8 @@ export default function PrimarySearchAppBar({
               </div>
             </>
           ) : (
-            ""
-          )}
+              ""
+            )}
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

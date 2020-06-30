@@ -11,13 +11,15 @@ import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import Typography from '@material-ui/core/Typography';
 import ThreeDotsMenu from '../three-dots-menu';
+import { inject, observer } from 'mobx-react';
+import { withRouter } from 'react-router';
 
 const useStyles = makeStyles({
     root: {
-        maxWidth: 345,
+        width: 320,
     },
     media: {
-        height: 140,
+        height: 200,
         position: 'relative',
     },
     overlay: {
@@ -35,21 +37,22 @@ const useStyles = makeStyles({
         position: 'absolute'
     },
 });
-
-export default function MediaCard() {
+function ClassCard(props) {
     const classes = useStyles();
+    function Redirect() {
+        props.history.push(`Room/${props.id}`)
+    }
 
     return (
         <Card className={classes.root}>
-            <CardActionArea>
+            <CardActionArea onClick={Redirect}>
                 <CardMedia
                     className={classes.media}
-                    image="./assets/images/backgrounds/engineering-bg.jpg"
+                    image={props.thumbnail}
                     title="Contemplative Reptile"
                 >
                     {/* <div className={classes.overlay}> </div> */}
                     <CardContent className={classNames(classes.reposition, 'flex justify-between items-center')}>
-                        <ThreeDotsMenu />
                         <Typography
                             noWrap
                             variant="h3"
@@ -57,18 +60,17 @@ export default function MediaCard() {
                             align="right"
                             className="!font-medium w-3/5 !text-4xl text-white"
                         >
-                            Information Security
+                            {props.title}
                         </Typography>
                     </CardContent>
 
                 </CardMedia>
-                <CardContent>
-                    <Typography variant="h6" color="textSecondary" component="p">
-                        Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                        across all continents except Antarctica
-                    </Typography>
-                </CardContent>
             </CardActionArea>
+            <CardContent>
+                <Typography variant="h6" color="textSecondary" component="p">
+                    {props.description}
+                </Typography>
+            </CardContent>
             <CardActions>
                 <IconButton size="medium" color="primary" aria-label="folder picture" component="span">
                     <FolderOpenIcon />
@@ -80,3 +82,4 @@ export default function MediaCard() {
         </Card>
     );
 }
+export default inject("store")(observer(withRouter(ClassCard)))

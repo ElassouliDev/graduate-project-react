@@ -4,18 +4,21 @@ import { Provider } from 'mobx-react';
 import { asReduxStore, connectReduxDevtools } from 'mst-middlewares';
 import DevTools from 'mobx-react-devtools';
 import remotedev from 'remotedev';
-
+import makeInspectable from 'mobx-devtools-mst';
 import './styles/index.css';
 import App from './app/App';
 import * as serviceWorker from './serviceWorker';
 import store from './shared/store';
-import  getConfig from './app/config';
+import getConfig from './app/config';
 
 if (getConfig().isLocalEnv) {
     connectReduxDevtools(remotedev, store);
 }
+
+makeInspectable(store);
+
 ReactDOM.render(
-    <Provider store={asReduxStore(store)}>
+    <Provider store={store}>
         <App />
     </Provider>
     , document.getElementById('root'));

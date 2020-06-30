@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.paper,
     },
     tabsContainer: {
-        minHeight: '5.5rem',
+        minHeight: '2.5rem',
         display: 'flex',
         alignItems: 'flex-end',
         justifyContent: 'center',

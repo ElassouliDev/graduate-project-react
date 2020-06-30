@@ -14,27 +14,28 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   }
 }));
-export default function BlogPost() {
+export default function BlogPost(props) {
   let { slug } = useParams();
-  const [data, setData] = useState({ post: {} });
+  // const [data, setData] = useState({ post: {} });
   const classes = useStyles();
 
-  useEffect(() => {
-    async function fetchData() {
-      // You can await here
-      const result = await axios(`${getConfig().apiUrl}/post/${slug}`);
-      setData(result.data);
-    }
-    fetchData();
-  });
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     // You can await here
+  //     const result = await axios(`${getConfig().apiUrl}/post/${slug}`);
+  //     setData(result.data);
+  //   }
+  //   fetchData();
+  // }, []);
 
   return (
     <div>
-      <CustomClassroomLayout>
+      <CustomClassroomLayout
+      // coverImage={props.store.ClassRoomStore.getCover(props.match.params.id)}
+      >
         <Grid container className={[classes.root, "pt-12"]} spacing={2}>
           <Grid item xs={12} sm={8} md={9}>
             <CreateParticipationCard />
-
           </Grid>
 
           <Grid item xs={12} sm={4} md={3}>

@@ -1,19 +1,9 @@
 import React from "react";
 import HorizontalNavigation from "../horizontal-navbar";
-import TemporaryDrawer from "../temporary-drawer";
-import { Modal } from '@material-ui/core';
+import TemporaryDrawer from '../temporary-drawer'
+import { Container } from '@material-ui/core';
 
-export default ({
-  children,
-  navConfig,
-  containerStyle,
-  classes,
-  aside_show,
-  nav_item = true,
-  add_calssroom = false,
-  is_teacher = false,
-  nav_action = false,
-}) => {
+export default ({ children, navConfig, containerStyle, classes }) => {
   const [state, setState] = React.useState({
     left: false,
   });
@@ -28,34 +18,19 @@ export default ({
 
     setState({ ...state, [anchor]: open });
   };
-  const anchor = "left";
+  const anchor = 'left';
   return (
-    <div
-      className={classes}
-      style={{ overflowY: "auto", height: "100%", ...containerStyle }}
-    >
+    <div className={classes} style={{ overflowY: "auto", height: "100%", ...containerStyle }}>
       <HorizontalNavigation
         navConfig={navConfig}
         classes={classes}
         anchor={anchor}
         toggleDrawer={toggleDrawer}
-        aside_show={aside_show}
-        nav_item={nav_item}
-        add_calssroom={add_calssroom}
-        nav_action={nav_action}
-        is_teacher={is_teacher}
       />
-      {aside_show == true ? (
-        <TemporaryDrawer
-          state={state}
-          anchor={anchor}
-          toggleDrawer={toggleDrawer}
-        />
-      ) : (
-        ""
-      )}
-
-      {children}
+      <TemporaryDrawer state={state} anchor={anchor} toggleDrawer={toggleDrawer} />
+      <Container>
+        {children}
+      </Container>
     </div>
   );
-};
+}

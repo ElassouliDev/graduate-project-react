@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 // import { Icon } from "@material-ui/core/icons";
-import classNames from "classnames";
+// import classNames from "classnames";
 import DropSettingMenu from './components/dropSettingMenu';
 import { Sort } from '@material-ui/icons';
 import { Add } from '@material-ui/icons';
@@ -21,25 +21,21 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
-import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 
-function createData(id,url,name, date) {
-  return {id ,name,url, date};
+function createData(id, url, name, date) {
+  return { id, name, url, date };
 }
 
 
 
 const rows = [
-  createData("1","https://www.youtube.com/watch?v=eXqU-HWAMsc","Donut",'15/2/2020'),
-  createData("1","https://www.youtube.com/watch?v=eXqU-HWAMsc","Donut",'15/2/2020'),
-  createData("1","https://www.youtube.com/watch?v=eXqU-HWAMsc","Donut",'15/2/2020'),
-  createData("1","https://www.youtube.com/watch?v=eXqU-HWAMsc","Donut",'15/2/2020')
+  createData("1", "https://www.youtube.com/watch?v=eXqU-HWAMsc", "Donut", '15/2/2020'),
+  createData("1", "https://www.youtube.com/watch?v=eXqU-HWAMsc", "Donut", '15/2/2020'),
+  createData("1", "https://www.youtube.com/watch?v=eXqU-HWAMsc", "Donut", '15/2/2020'),
+  createData("1", "https://www.youtube.com/watch?v=eXqU-HWAMsc", "Donut", '15/2/2020')
 
 
 ];
@@ -78,7 +74,7 @@ const headCells = [
     numeric: false,
     disablePadding: true,
     label: "Date",
-  },{
+  }, {
     id: "option",
     numeric: true,
     disablePadding: false,
@@ -151,13 +147,13 @@ const useToolbarStyles = makeStyles((theme) => ({
   highlight:
     theme.palette.type === "light"
       ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-        }
+        color: theme.palette.secondary.main,
+        backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+      }
       : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark,
-        },
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.secondary.dark,
+      },
   title: {
     flex: "1 1 100%",
   },
@@ -177,63 +173,63 @@ const EnhancedTableToolbar = (props) => {
       })}
     >
       {
-      // numSelected > 0 ? (
-      //   <Typography
-      //     className={classes.title}
-      //     color="inherit"
-      //     variant="subtitle1"
-      //     component="div"
-      //   >
-      //     {numSelected} selected
-      //   </Typography>
-      // ) :
-      (
-        <>
-          <Typography
-            className={classes.title}
-            variant="h6"
-            id="tableTitle"
-            component="div"
-          >
-            Course List
+        // numSelected > 0 ? (
+        //   <Typography
+        //     className={classes.title}
+        //     color="inherit"
+        //     variant="subtitle1"
+        //     component="div"
+        //   >
+        //     {numSelected} selected
+        //   </Typography>
+        // ) :
+        (
+          <>
+            <Typography
+              className={classes.title}
+              variant="h6"
+              id="tableTitle"
+              component="div"
+            >
+              Course List
 
              <Tooltip title="Add" aria-label="add">
-            <Fab color="primary" className={classes.fab}>
-              <Add />
-            </Fab>
-          </Tooltip>
-          </Typography>
+                <Fab color="primary" className={classes.fab}>
+                  <Add />
+                </Fab>
+              </Tooltip>
+            </Typography>
 
 
 
-        </>
-      )}
+          </>
+        )}
 
       {
-    //   numSelected > 0 ? (
-    //     <Tooltip title="Delete">
-    //       <IconButton aria-label="delete">
-    //         <DeleteIcon />
-    //       </IconButton>
-    //     </Tooltip>
+        //   numSelected > 0 ? (
+        //     <Tooltip title="Delete">
+        //       <IconButton aria-label="delete">
+        //         <DeleteIcon />
+        //       </IconButton>
+        //     </Tooltip>
 
-    //  ) :
-      (
-        <>
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
+        //  ) :
+        (
+          <>
+            <Tooltip title="Filter list">
+              <IconButton aria-label="filter list">
+                <FilterListIcon />
+              </IconButton>
 
-        </Tooltip>
-        <Tooltip title="Sort ">
-          <IconButton aria-label="Sort">
-            <Sort />
-          </IconButton>
+            </Tooltip>
+            <Tooltip title="Sort ">
+              <IconButton aria-label="Sort">
+                <Sort />
+              </IconButton>
 
-        </Tooltip>
-      </>
-      )}
+            </Tooltip>
+          </>
+        )}
     </Toolbar>
   );
 };
@@ -336,7 +332,7 @@ export default function CourseList() {
       <Paper className={classes.paper}>
         <EnhancedTableToolbar
         // numSelected={selected.length}
-         />
+        />
         <TableContainer>
           <Table
             className={classes.table}
@@ -368,7 +364,7 @@ export default function CourseList() {
                       // aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row.id}
-                      // selected={isItemSelected}
+                    // selected={isItemSelected}
                     >
 
                       <TableCell
