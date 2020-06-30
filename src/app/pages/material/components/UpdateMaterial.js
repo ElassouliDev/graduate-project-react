@@ -29,6 +29,11 @@ const UpdateMaterial = (props) => {
    const handelSubmit = async () => {
       try {
          setLoading(true)
+         let formData = new FormData();
+         Object.keys(material).forEach(key => {
+            formData.append(key, material.key)
+         });
+         formData.append("url", file)
          classRoom.MaterialStore.editMaterial((material.id, material));
 
       } catch (err) {
@@ -53,7 +58,9 @@ const UpdateMaterial = (props) => {
    }, [])
    const handleChange = (key) => (event) => {
       if (event.type === "file") {
-         setFile(event.target.files[0])
+         if (event.target.files.length > 0) {
+            setFile(event.target.files[0])
+         }
       }
       setMaterial({ ...material, [key]: event.target.value })
    };
@@ -84,14 +91,7 @@ const UpdateMaterial = (props) => {
          validations: "isExisty",
          validationError: "This is not a valid",
          required: true
-      },
-      {
-         name: "uploadedAt",
-         type: "date",
-         validations: "isExisty",
-         validationError: "This is not a valid",
-         required: true
-      },
+      }
 
    ]
    function capitalizeFLetter(input) {
