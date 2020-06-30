@@ -8,9 +8,7 @@ export const material = types.model({
    title: types.optional(types.string, ''),
    description: types.optional(types.string, '')
 }).actions((self) => ({
-   setClassData: (payload) => {
-      if (payload.key === "profileImage") {
-      }
+   setNewData: (payload) => {
       self[payload.key] = payload.value;
    }
 }));
@@ -43,8 +41,8 @@ const MaterialStore = types.model({
       })
    }
    ,
-   setClassRoomData: (payload) => {
-      self.newMaterial.setClassData(payload);
+   setNewData: (payload) => {
+      self.newMaterial.setNewData(payload);
    },
    deleteClassRoom: (id) => {
       let deleted = false;

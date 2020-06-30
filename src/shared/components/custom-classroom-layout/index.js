@@ -5,17 +5,16 @@ import { inject, observer } from 'mobx-react';
 import { withRouter } from "react-router";
 
 const CustomClassroomLayout = (props) => {
+  const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
   return (
-    <Container style={{ paddingTop: "1.5rem" }}>
+    <div style={{ paddingTop: "1.5rem" }}>
       <ClassRoomHeader
-        Title="information Security"
-        code="123456"
-        image={props.store.ClassRoomStore.classRooms.find((classR) => {
-          return classR.id === props.match.params.id;
-        })?.coverImage}
+        Title={classRoom.title}
+        code={"123456"}
+        image={classRoom.coverImage}
       />
       {props.children}
-    </Container>
+    </div>
   );
 };
 

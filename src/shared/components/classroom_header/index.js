@@ -10,9 +10,9 @@ export default function ClassRoomHeader(props) {
     }
   };
 
-  let image_path = "./assets/images/backgrounds/header_classroom_default.png";
-  if (props.image) {
-    image_path = props.image;
+  let image_path = "/assets/images/backgrounds/header_classroom_default.png";
+  if (props.coverImage) {
+    image_path = props.coverImage;
   }
   let classroom_code_header_field = null;
   if (props.code) {

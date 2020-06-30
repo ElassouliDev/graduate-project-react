@@ -30,9 +30,10 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
+import AddMaterial from "./components/AddMaterial"
 // import { Button } from "@material-ui/core";
 
-function createData(id, title, description, url, uploadedAt) {
+function createData({ id, title, description, url, uploadedAt }) {
   return { id, title, description, url, uploadedAt };
 }
 
@@ -294,10 +295,7 @@ function EnhancedTable(props) {
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const classRoom = props.store.ClassRoomStore.getClassRoom(+props.match.params.id);
-
-  const rows = classRoom ? classRoom.MaterialStore.materials.map((m) => createData(m.id, m.title, m.description, m.url, m.uploadedAt)) : [];
-
+  const [rows, setRows] = React.useState([]);
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -341,24 +339,111 @@ function EnhancedTable(props) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  const TableRows = ({ Materials }) => {
+    let Rows = Materials.map((m) => createData(m))
+    console.log("Rows", Rows);
 
+    return (<TableBody>
+      {stableSort(Rows, getComparator(order, orderBy))
+        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+        .map((row, index) => {
+          const isItemSelected = isSelected(row.name);
+          const labelId = `enhanced-table-checkbox-${row.id}`;
+          return (
+            <TableRow
+              hover
+              onClick={(event) => handleClick(event, row.name)}
+              role="checkbox"
+              aria-checked={isItemSelected}
+              tabIndex={-1}
+              key={row.id}
+              selected={isItemSelected}
+            >
+
+              <TableCell
+                component="th"
+                id={labelId}
+                scope="row"
+                padding="defualt"
+              >
+                {row.id}
+              </TableCell>
+              <TableCell
+                component="th"
+                id={labelId}
+                scope="row"
+                padding="defualt"
+              >
+                {row.title}
+              </TableCell>
+              <TableCell
+                component="th"
+                id={labelId}
+                scope="row"
+                padding="defualt"
+              >
+                {row.description}
+              </TableCell>
+              <TableCell
+                component="th"
+                id={labelId}
+                scope="row"
+                padding="defualt"
+              >
+                <a href={row.url}>Download</a>
+              </TableCell>
+              <TableCell
+                component="th"
+                id={labelId}
+                scope="row"
+                padding="defualt"
+              >
+                {row.uploadedAt}
+              </TableCell>
+              <TableCell align="right">
+                <DropSettingMenu id={row.id} />
+              </TableCell>
+              {/* <TableCell align="right">{row.carbs}</TableCell>
+            <TableCell align="right">{row.protein}</TableCell> */}
+            </TableRow>
+          );
+        })}
+      {emptyRows > 0 && (
+        <TableRow style={{ height: 53 * emptyRows }}>
+          <TableCell colSpan={6} />
+        </TableRow>
+      )}
+    </TableBody>);
+  }
   const isSelected = (name) => selected.indexOf(name) !== -1;
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
   if (!classRoom) {
     return (<div>
       classRoom not found
     </div>
     )
   }
-  /**
-      id: types.optional(types.identifierNumber, 0),
+  /**x
+   *       id: types.optional(types.identifierNumber, 0),
      url: types.optional(types.string, ''),
      uploadedAt: types.optional(types.string, ''),
      title: types.optional(types.string, ''),
      description:types.optional(types.string,'')
    */
+  const getRows = function () {
+    const id = +props.match.params.id;
+    if (id === undefined) {
+      return []
+    }
+    let classRoom = props.store.ClassRoomStore.getClassRoom(id);
+    if (!classRoom)
+      return [];
 
+    const Rows = classRoom.MaterialStore.materials.map((m) => createData(m));
+    return Rows
+  }
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -379,77 +464,7 @@ function EnhancedTable(props) {
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
             />
-            <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
-                  const labelId = `enhanced-table-checkbox-${row.id}`;
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.name)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.id}
-                      selected={isItemSelected}
-                    >
-
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="defualt"
-                      >
-                        {row.id}
-                      </TableCell>
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="defualt"
-                      >
-                        {row.title}
-                      </TableCell>
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="defualt"
-                      >
-                        {row.description}
-                      </TableCell>
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="defualt"
-                      >
-                        <a href={row.url}>Download</a>
-                      </TableCell>
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="defualt"
-                      >
-                        {row.uploadedAt}
-                      </TableCell>
-                      <TableCell align="right">
-                        <DropSettingMenu id={row.id} />
-                      </TableCell>
-                      {/* <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell> */}
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 53 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
+            <TableRows Materials={getRows()}></TableRows>
           </Table>
         </TableContainer>
         <TablePagination
@@ -462,7 +477,10 @@ function EnhancedTable(props) {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-    </div>
+      <Paper>
+        <AddMaterial />
+      </Paper>
+    </div >
   );
 }
 export default inject('store')(observer(withRouter(EnhancedTable)))
