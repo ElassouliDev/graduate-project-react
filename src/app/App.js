@@ -14,6 +14,7 @@ import IsLoggedIn from "../shared/components/Protected/IsLoggedIn"
 import CourseList from "./pages/course-list";
 import Settings from "./pages/courses-dashboard-page/settings"
 import Room from "./pages/Room/index.js"
+import UpdateMaterial from "./pages/material/components/UpdateMaterial";
 function App() {
   return (
     <Router>
@@ -58,10 +59,17 @@ function App() {
               <Videos />
             </CustomPageLayout>
           </Route>
-          <Route path="/Room/:id/material">
+          <Route exact path="/Room/:id/material">
             <CustomPageLayout>
               <CustomClassroomLayout>
                 <Material />
+              </CustomClassroomLayout>
+            </CustomPageLayout>
+          </Route>
+          <Route exact path="/Room/:id/material/:mId">
+            <CustomPageLayout>
+              <CustomClassroomLayout>
+                <UpdateMaterial />
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>

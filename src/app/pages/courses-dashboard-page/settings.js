@@ -23,7 +23,12 @@ const Settings = (props) => {
             // process success
             setDeleted(true)
             setStatus(1)
-            setMessage("Class Room Deleted")
+            setMessage("Class Room Deleted, you will be redirected in 5sec...")
+
+            setTimeout(() => {
+               console.log("props.history.push('/')");
+               props.history.push('/')
+            }, 6000);
          } else {
             setStatus(2)
             setDeleted(false)
@@ -40,12 +45,6 @@ const Settings = (props) => {
          setTimeout(() => {
             setStatus(0)
          }, 5000);
-         setTimeout(() => {
-            console.log(deleted, "props.history.push('/')");
-
-            if (deleted)
-               props.history.push('/')
-         }, 200);
       }
    }
    if (!classRoom) {

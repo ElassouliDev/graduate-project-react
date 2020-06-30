@@ -9,6 +9,18 @@ import _ from "lodash";
 const MyInput = ({ value, isValid, name, errorMessage, onChange, ...res }) => {
     // An error message is passed only if the component is invalid
     const error = _.isEmpty(value) ? false : !isValid;
+    if(res.type === "file"){
+        return (
+            <div>
+                <TextField
+                    error={error}
+                    onChange={onChange}
+                    helperText={error ? errorMessage : " "}
+                    {...res}
+                />
+            </div>
+        );
+    }
     return (
         <div>
             <TextField

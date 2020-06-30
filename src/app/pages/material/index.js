@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 // import { Icon } from "@material-ui/core/icons";
 // import classNames from "classnames";
-import DropSettingMenu from './components/dropSettingMenu';
+import DropSettingMenu from '../../../shared/components/three-dots-menu';
 import { Sort } from '@material-ui/icons';
 import { Add } from '@material-ui/icons';
 import { Fab } from '@material-ui/core';
@@ -93,6 +93,8 @@ const headCells = [
     disablePadding: false,
     label: "uploadedAt",
   },
+
+
   // { id: "fat", numeric: true, disablePadding: false, label: "Fat (g)" },
   // { id: "carbs", numeric: true, disablePadding: false, label: "Carbs (g)" },
   // { id: "protein", numeric: true, disablePadding: false, label: "Protein (g)" },
@@ -144,6 +146,19 @@ function EnhancedTableHead(props) {
             </TableSortLabel>
           </TableCell>
         ))}
+        <TableCell
+          key={"Actions"}
+          align={"left"}
+          padding={"none"}
+          sortDirection={false}
+        >
+          <TableSortLabel
+            active={false}
+            direction={"asc"}
+          >
+            "Actions"
+            </TableSortLabel>
+        </TableCell>
       </TableRow>
     </TableHead>
   );
@@ -209,13 +224,7 @@ const EnhancedTableToolbar = (props) => {
               id="tableTitle"
               component="div"
             >
-              Material
-
-             <Tooltip title="Add" aria-label="add">
-                <Fab color="primary" className={classes.fab} >
-                  <Add />
-                </Fab>
-              </Tooltip>
+              Materials
             </Typography>
 
 
@@ -311,25 +320,25 @@ function EnhancedTable(props) {
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
+  // const handleClick = (event, name) => {
+  //   const selectedIndex = selected.indexOf(name);
+  //   let newSelected = [];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
+  //   if (selectedIndex === -1) {
+  //     newSelected = newSelected.concat(selected, name);
+  //   } else if (selectedIndex === 0) {
+  //     newSelected = newSelected.concat(selected.slice(1));
+  //   } else if (selectedIndex === selected.length - 1) {
+  //     newSelected = newSelected.concat(selected.slice(0, -1));
+  //   } else if (selectedIndex > 0) {
+  //     newSelected = newSelected.concat(
+  //       selected.slice(0, selectedIndex),
+  //       selected.slice(selectedIndex + 1)
+  //     );
+  //   }
 
-    setSelected(newSelected);
-  };
+  //   setSelected(newSelected);
+  // };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -339,6 +348,21 @@ function EnhancedTable(props) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  const handleDelete = (id) => (event) => {
+    classRoom.MaterialStore.delete(id)
+
+  }
+  const handleUpdate = (id) => (event) => {
+    const pathname = props.history.location.pathname;
+    if (pathname.length > 0) {
+      if (pathname[pathname.length - 1] === "/") {
+        props.history.push("./" + id);
+      } else {
+        props.history.push(pathname + "/" + id);
+
+      }
+    }
+  }
   const TableRows = ({ Materials }) => {
     let Rows = Materials.map((m) => createData(m))
     console.log("Rows", Rows);
@@ -352,7 +376,6 @@ function EnhancedTable(props) {
           return (
             <TableRow
               hover
-              onClick={(event) => handleClick(event, row.name)}
               role="checkbox"
               aria-checked={isItemSelected}
               tabIndex={-1}
@@ -400,8 +423,12 @@ function EnhancedTable(props) {
               >
                 {row.uploadedAt}
               </TableCell>
-              <TableCell align="right">
-                <DropSettingMenu id={row.id} />
+              <TableCell align="left">
+                <DropSettingMenu id={row.id} options={
+                  [
+                    { id: "delete", onClick: handleDelete(row.id) }
+                    , { id: "update", onClick: handleUpdate(row.id) }
+                  ]} />
               </TableCell>
               {/* <TableCell align="right">{row.carbs}</TableCell>
             <TableCell align="right">{row.protein}</TableCell> */}

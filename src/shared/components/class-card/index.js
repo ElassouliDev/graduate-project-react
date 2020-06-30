@@ -53,14 +53,6 @@ function ClassCard(props) {
                 >
                     {/* <div className={classes.overlay}> </div> */}
                     <CardContent className={classNames(classes.reposition, 'flex justify-between items-center')}>
-                        <ThreeDotsMenu actions={
-                            {
-                                delete: () => {
-                                    const result = props.store.ClassRoomStore.deleteClassRoom(props.id)
-                                    console.log("delete", props.id, result)
-                                },
-                            }
-                        } />
                         <Typography
                             noWrap
                             variant="h3"

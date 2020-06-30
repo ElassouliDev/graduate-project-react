@@ -4,10 +4,6 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-const options = [
-    'None',
-    'delete ',
-];
 
 const ITEM_HEIGHT = 48;
 
@@ -19,12 +15,9 @@ export default function ThreeDotsMenu(props) {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleClose = (option) => () => {
+    const handleClose = (option, onClick) => () => {
         setAnchorEl(null);
-        if (props.actions[option])
-            props.actions[option]();
-        else
-            console.log("no action spcefied");
+        onClick();
     };
 
     return (
@@ -36,7 +29,7 @@ export default function ThreeDotsMenu(props) {
                 onClick={handleClick}
                 size='small'
             >
-                <MoreVertIcon className='text-white !text-4xl' />
+                <MoreVertIcon className='text-dark !text-4xl' />
             </IconButton>
             <Menu
                 id="long-menu"
@@ -59,11 +52,13 @@ export default function ThreeDotsMenu(props) {
                     horizontal: 'left',
                 }}
             >
-                {options.map(option => (
-                    <MenuItem key={option} selected={option === "xadasdkl"} onClick={handleClose(option)}>
-                        {option}
-                    </MenuItem>
-                ))}
+                {
+                    props.options.map(option => (
+                        <MenuItem key={option.id} selected={false} onClick={handleClose(option.id, option.onClick)}>
+                            {option.id}
+                        </MenuItem>
+                    ))
+                }
             </Menu>
         </div>
     );

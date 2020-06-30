@@ -1,6 +1,6 @@
 /* eslint-disable eqeqeq */
 
-import { types } from 'mobx-state-tree';
+import { types, getParent } from 'mobx-state-tree';
 export const material = types.model({
    id: types.optional(types.identifierNumber, 0),
    url: types.optional(types.string, ''),
@@ -26,7 +26,7 @@ const MaterialStore = types.model({
    },
    editMaterial: (payload) => {
       let edited = false;
-      self.classRooms = self.classRooms.map((cR) => {
+      self.materials = self.materials.map((cR) => {
          if (cR.id == payload.id) {
             edited = true
             return payload;
@@ -35,8 +35,8 @@ const MaterialStore = types.model({
       });
       return edited
    },
-   getMaterial: (id) => {
-      return self.classRooms.find((cR) => {
+   get: (id) => {
+      return self.materials.find((cR) => {
          return cR.id == id;
       })
    }
@@ -44,7 +44,7 @@ const MaterialStore = types.model({
    setNewData: (payload) => {
       self.newMaterial.setNewData(payload);
    },
-   deleteClassRoom: (id) => {
+   delete: (id) => {
       let deleted = false;
       self.materials = self.materials.filter((cR) => {
          console.log(cR.id == id, id, cR.id);
