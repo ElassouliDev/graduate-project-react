@@ -1,35 +1,68 @@
-import { flow, getParent, types } from 'mobx-state-tree';
+/* eslint-disable eqeqeq */
+import { types } from 'mobx-state-tree';
+import MaterialStore from "../../material/stores"
+export const classRoom = types.model({
+   id: types.optional(types.identifierNumber, 0),
+   title: types.optional(types.string, ''),
+   description: types.optional(types.string, ''),
+   coverImage: types.optional(types.string, ''),
+   thumbnail: types.optional(types.string, ''),
+   MaterialStore: types.optional(MaterialStore, {}),
+}).actions((self) => ({
+   setClassData: (payload) => {
 
-export default types.model('ClassroomStore', {
-    id: types.optional(types.integer, 0),
-    title: types.optional(types.string, ''),
-    background_img: types.optional(types.string, ''),
-    logo_img: types.optional(types.string, ''),
-    description: types.optional(types.string, ''),
-    promo_code: types.optional(types.string, ''),
-    allow_student_participation: types.optional(types.boolean, true),
-    auto_accept_students: types.optional(types.boolean, true),
-    archived: types.optional(types.boolean, true),
-    attachments: types.optional(types.array, []),
-    student_requests: types.optional(types.array, []),
-    students: types.optional(types.array, []),
+      if (payload.key === "coverImage" || payload.key === "coverImage") {
+      }
+   }
+}));
+export default types.model('ClassRoomStore', {
+   classRooms: types.array(classRoom),
+   newClassRoom: types.optional(classRoom, {}),
 }).views((self) => ({
-
-
+   getCoverImage: (id) => {
+      let selectedClassRoom = self.classRooms = self.classRooms.find((cR) => {
+         return cR.id !== id
+      });
+      return selectedClassRoom.classCover ? selectedClassRoom.classCover : ""
+   }
 })).actions((self) => ({
-    setNewClassroom: (payload) => {
-        self.title = payload.title;
-        self.description = payload.description;
-    },
-    setNewClassroomData: (payload) => {
-        self[payload.key] = payload.value;
-    },
-    createNewClassroom: flow(function* createNewClassroom() {
-        const formdata = new FormData();
-        formdata.append('title', self.title)
-        formdata.append('description', self.description)
+   addNewClassRoom: (payload) => {
+      self.classRooms.push(
+         classRoom.create({
+            id: self.classRooms.length + 1,
+            ...self.newClassRoom
+         })
+      )
+   },
+   editNewClassRoom: (payload) => {
+      let edited = false;
+      self.classRooms = self.classRooms.map((cR) => {
+         if (cR.id == payload.id) {
+            edited = true
+            return payload;
+         }
+         return cR
+      });
+      return edited
+   },
+   getClassRoom: (id) => {
+      return self.classRooms.find((cR) => {
+         return cR.id == id;
+      })
+   }
+   ,
+   setClassRoomData: (payload) => {
+      self.newClassRoom.setClassData(payload);
+   },
+   deleteClassRoom: (id) => {
+      let deleted = false;
+      self.classRooms = self.classRooms.filter((cR) => {
+         console.log(cR.id == id, id, cR.id);
 
-       const res = yield getParent(self).apiRequests.createNewClassroom(formdata)
-        console.log(res)
-    })
+         if (cR.id == id)
+            deleted = true
+         return cR.id != id
+      });
+      return deleted
+   }
 }))
