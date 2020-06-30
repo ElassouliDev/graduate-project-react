@@ -79,13 +79,6 @@ function App() {
             </CustomPageLayout>
           </Route>
           <Route path="/course/list">
-            <CustomPageLayout>
-              <CustomClassroomLayout>
-                <CourseList />
-              </CustomClassroomLayout>
-            </CustomPageLayout>
-          </Route>
-          <Route path="/course/list">
             <CustomPageLayout
 
               aside_show={false}

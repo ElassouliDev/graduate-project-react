@@ -9,9 +9,9 @@ const CustomClassroomLayout = (props) => {
   return (
     <div style={{ paddingTop: "1.5rem" }}>
       <ClassRoomHeader
-        Title={classRoom.title}
+        Title={classRoom ? classRoom.title : ""}
         code={"123456"}
-        image={classRoom.coverImage}
+        image={classRoom ? classRoom.coverImage : ""}
       />
       {props.children}
     </div>
