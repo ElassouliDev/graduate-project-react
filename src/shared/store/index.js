@@ -7,6 +7,8 @@ import LoginStore from "../../app/pages/auth/stores/LoginStore";
 import ClassRoomStore from "../../app/pages/courses-dashboard-page/stores/ClassRoomStore";
 import { classRoom } from "../../app/pages/courses-dashboard-page/stores/ClassRoomStore";
 import MaterialStore, { material } from "../../app/pages/material/stores"
+import TaskStore, { task } from "../../app/pages/task_list/stores"
+import File from "../../shared/store/File"
 // Root store for all stores and models
 const courseArray = [
     classRoom.create({
@@ -40,6 +42,60 @@ const courseArray = [
                 }),
             ]
         }),
+        TaskStore: TaskStore.create({
+            tasks: [
+                task.create({
+                    id: 1,
+                    taskFile: File.create({
+                        id: 1,
+                        file_name: "file task",
+                        file_path: "https://i.ytimg.com/vi/0KEv38tAWm4/maxresdefault.jpg",
+                        uploadedBy: LoginStore.create({
+                            id: 1,
+                            username: "yahia qumboz",
+                            image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
+                        })
+                    }),
+                    SubmittedSolutions: [File.create({
+                        id: 2,
+                        file_name: "file task",
+                        file_path: "https://i.ytimg.com/vi/0KEv38tAWm4/maxresdefault.jpg",
+                        uploadedBy: LoginStore.create({
+                            id: 2,
+                            username: "mohammed qumboz",
+                            image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
+                        })
+                    })],
+                    created_at: "12-12-2020",
+                    title: "Task Test 1",
+                    description: "Lizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except AntarcticaLizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except AntarcticaLizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except AntarcticaLizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except Antarctica",
+                    status: "notSended",
+                    is_closed: false,
+                    teacher: LoginStore.create({
+                        id: 1,
+                        username: "yahia qumboz",
+                        image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
+                    }),
+                    students: [
+                        LoginStore.create({
+                            id: 2,
+                            username: "mohammed qumboz",
+                            image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
+                        }),
+                        LoginStore.create({
+                            id: 3,
+                            username: "alaa qumboz",
+                            image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
+                        }),
+                        LoginStore.create({
+                            id: 4,
+                            username: "ezat qumboz",
+                            image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
+                        })
+                    ]
+                })
+            ]
+        })
 
     }),
     classRoom.create({

@@ -1,6 +1,7 @@
 /* eslint-disable eqeqeq */
 import { types } from 'mobx-state-tree';
 import MaterialStore from "../../material/stores"
+import TaskStore from "../../task_list/stores"
 export const classRoom = types.model({
    id: types.optional(types.identifierNumber, 0),
    title: types.optional(types.string, ''),
@@ -8,6 +9,7 @@ export const classRoom = types.model({
    coverImage: types.optional(types.string, ''),
    thumbnail: types.optional(types.string, ''),
    MaterialStore: types.optional(MaterialStore, {}),
+   TaskStore: types.optional(TaskStore, {}),
 }).actions((self) => ({
    setClassData: (payload) => {
 

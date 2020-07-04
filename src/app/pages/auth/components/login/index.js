@@ -6,8 +6,10 @@ import { Button, CircularProgress } from "@material-ui/core";
 import { CardActions } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
 import { FormControlLabel } from "@material-ui/core";
-import { useHistory } from "react-router-dom"
+import { useHistory, withRouter } from "react-router-dom"
 import { inject, observer } from 'mobx-react';
+import DescriptionAlerts from "../../../../../shared/components/alert"
+// import {withRouter} from "react-route"
 
 const useStyles = makeStyles((theme) => ({
   labelRoot: {
@@ -23,7 +25,9 @@ const useStyles = makeStyles((theme) => ({
 const LoginForm = (props) => {
   const [isLoading, setLoading] = useState(false);
   const [helperText, setHelperText] = useState("");
-  let history = useHistory();
+  let [status, setStatus] = useState(0);
+  let [message, setMessage] = useState("");
+
 
 
   const handelSubmitLoginForm = async () => {
@@ -36,23 +40,31 @@ const LoginForm = (props) => {
       console.log(res);
 
       if (res.data.auth_token) {
+        setStatus(1)
+        setMessage("You are logged in, you will be redirected in 5 secounds")
+
         window.localStorage.setItem('jwtToken', res.data.auth_token)
-        history.push("/")
+        setTimeout(() => {
+          console.log("props.history.push('/')");
+          props.history.push("/")
+        }, 6000);
       }
     } catch (err) {
       window.localStorage.clear()
       if (err.non_field_errors) {
         if (err.non_field_errors.length > 0) {
-          setHelperText(err.non_field_errors[0])
+          setStatus(2)
+          setMessage(err.non_field_errors[0])
           return;
         } else {
-          setHelperText("The provided password and email is not correct")
+          setStatus(2)
+          setMessage("The provided password and email is not correct")
           return;
         }
       } else {
         if (err.message) {
-          setHelperText(err.message)
-
+          setStatus(2)
+          setMessage(err.message)
         }
       }
     } finally {
@@ -130,7 +142,7 @@ const LoginForm = (props) => {
           }}
           required
         />
-        {helperText}
+        <DescriptionAlerts status={status} message={message} />
         <CardActions className="!px-0 !mt-10">
           <Button
             fullWidth
@@ -148,4 +160,4 @@ const LoginForm = (props) => {
   );
 }
 
-export default withStyles(useStyles)(inject('store')(observer(LoginForm)));
+export default withStyles(useStyles)(inject('store')(observer(withRouter(LoginForm))));

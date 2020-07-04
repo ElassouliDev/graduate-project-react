@@ -12,9 +12,9 @@ import Videos from "./pages/videos";
 import Protected from "../shared/components/Protected/Protected"
 import IsLoggedIn from "../shared/components/Protected/IsLoggedIn"
 import CourseList from "./pages/course-list";
-import TaskInfo from "./pages/task_info";
+import TaskInfo from "./pages/task_list/component/task_info";
 import TaskList from "./pages/task_list";
-import TaskStudentsList from "./pages/task_students_list";
+import TaskStudentsList from "./pages/task_list/component/task_students_list";
 import Settings from "./pages/courses-dashboard-page/settings"
 import Room from "./pages/Room/index.js"
 import UpdateMaterial from "./pages/material/components/UpdateMaterial";
@@ -92,12 +92,20 @@ function App() {
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
-          <Route path="/task/list">
-            <CustomPageLayout>
-              <TaskList />
+          <Route exact path="/Room/:id/tasks">
+            <CustomPageLayout
+              aside_show={false}
+              nav_item={true}
+              add_calssroom={false}
+              is_teacher={"teacher" == "teacher"} // check if user is tracher
+              nav_action={true}
+            >
+              <CustomClassroomLayout>
+                <TaskList />
+              </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
-          <Route path="/task/:id">
+          <Route exact path="/Room/:id/tasks/:tId">
             <CustomPageLayout
               aside_show={false}
               nav_item={true}
@@ -110,7 +118,7 @@ function App() {
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
-          <Route path="/classroon/:classroom_id/task/:task_id/student">
+          <Route exact path="/classroon/:classroom_id/task/:task_id/student">
             <CustomPageLayout
 
               aside_show={false}
