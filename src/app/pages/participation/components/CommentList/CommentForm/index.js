@@ -1,15 +1,14 @@
-import { Typography, withStyles, Grid } from "@material-ui/core";
+import { Typography, withStyles, Grid, Divider } from "@material-ui/core";
 import CircularProgress from '@material-ui/core/CircularProgress';
 // import classnames from "classnames";
 import React from "react";
 import MyInput from "../../../../../../shared/components/formasy-input";
 import Formsy from "formsy-react";
+import classNames from 'classnames';
+import { Avatar } from '@material-ui/core';
 import { Radio, RadioGroup, FormLabel, Button, CardActions, CardContent, FormControlLabel } from "@material-ui/core";
-// import { apiRequests } from "../../../../services/apiRequestes";
-import FormHelperText from '@material-ui/core/FormHelperText';
-import { inject, observer } from 'mobx-react';
-import { red } from "@material-ui/core/colors";
-import { Redirect } from "react-router-dom";
+import TextField from '@material-ui/core/TextField';
+
 
 const styles = (theme) => ({
   labelRoot: {
@@ -34,10 +33,22 @@ class CommentForm extends React.Component {
     }
   }
 
-
+   styles = {
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    textField: {
+        width: 300,
+        margin: 100,
+    },
+    //style for font size
+    resize:{
+      fontSize:50
+    },
+    }
 constructor(props){
   super(props);
-  alert(1)
   console.log('post_id',555);
 
 }
@@ -73,6 +84,12 @@ constructor(props){
   handleChange = (prop) => (event) => {
     console.log("handel change", event);
     let value = event.target.value;
+    let oldComment = this.state.newComment;
+    const newComment = {...oldComment,content: value};
+    console.log('tag', newComment)
+    this.setState({newComment:newComment});
+    console.log("handel change", value);
+
 
   };
 
@@ -87,60 +104,43 @@ constructor(props){
     //   return <Redirect to={"/auth/login"} />
     // }
     return (
-      <CardContent>
 
+<>
+        <Formsy className={'!mb-10'} onSubmit={this.handelSubmitCommentForm}>
+          <Grid className={'!mt-10 !mb-2'} container spacing={1}>
+            <Grid item xs={2} sm={2} md={1}>
+            <Avatar
+            alt={this.props.user.name}
+            src={this.props.user.image}
+          ></Avatar>
+              </Grid>
+            <Grid item xs={10} sm={10} md={11}>
+            <TextField
+          label=""
+          placeholder="Enter your comment here"
+          fullWidth
+          id="content"
+          required
+          className={'!text-5xl'}
+          validationError="comment is required"
+          value={this.state.newComment.content}
+          name="content"
+          onChange ={this.handleChange("content")}
+          inputProps={{
+            style: {fontSize: 19}
+          }}
+          multiline
+        />
 
-        <Formsy className="mb-10" onSubmit={this.handelSubmitCommentForm}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} md={6}>
-              <MyInput
-                value={this.state.newComment.content}
-                name="content"
-                type="text"
-                fullWidth
-                placeholder="Enter your comment here"
-                label="Enter your comment"
-                id="content"
-                validations="isSpecialWords"
-                validationError="comment is required"
-                onChange={this.handleChange("contents")}
-                InputProps={{ classes: { root: classes.inputRoot } }}
-                InputLabelProps={{
-                  classes: {
-                    root: classes.labelRoot,
-                    // focused: classes.labelFocused
-                  },
-                }}
-                FormHelperTextProps={{
-                  classes: {
-                    root: classes.labelRoot,
-                    // focused: classes.labelFocused
-                  },
-                }}
-                required
-              />
             </Grid>
            </Grid>
 
 
-          {/* <FormHelperText color={red[200]}>{this.state.helperText}</FormHelperText> */}
-          <CardActions className="!px-0 !mt-10">
-            <Button
-              fullWidth
-              variant="contained"
-              type="submit"
-              color="primary"
-              size="large"
-              disabled={this.state.isLoading}
-              className={classes.containedSizeLarge}
-            >
-              Send
-              {this.state.isLoading && <CircularProgress />}
-            </Button>
-          </CardActions>
+           <Divider/>
+
 
         </Formsy>
-      </CardContent>
+  </>
     );
   }
 

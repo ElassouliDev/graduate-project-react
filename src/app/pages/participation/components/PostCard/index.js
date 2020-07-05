@@ -38,7 +38,7 @@ export default function PostCard(props) {
       </CardContent>
 
       <Divider />
-        <CommentList comments={props.post.comments}/>
+        <CommentList comments={props.post.comments} user={props.user}/>
 
       {/* <div className={"px-10 py-10   "}>
         <Grid row container className=" mb-10 ">

@@ -15,6 +15,11 @@ export default class  PostListCard extends Component {
 
     constructor(props){
         super(props);
+        this.auth_user ={
+          name: "Yehia Elas",
+          image:
+            "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
+        };
         this.posts =
         [
          {
@@ -96,7 +101,7 @@ export default class  PostListCard extends Component {
             <>
             {
                 this.posts.map((post) => (
-                <PostCard post={post} />
+                <PostCard post={post}  user={this.auth_user}/>
               ))
               }
               </>

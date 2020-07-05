@@ -10,10 +10,12 @@ import { CardContent } from "@material-ui/core";
 import { CardActionArea } from "@material-ui/core";
 import { Avatar } from "@material-ui/core";
 import CommentCard from './CommentCard';
+import CommentForm from './CommentForm';
 
 export default function CommentList(props) {
   return (
       <div className={"px-10 py-10   "}>
+        <CommentForm  user={props.user}/>
              {props.comments?
 
                         props.comments.map((comment)=>
