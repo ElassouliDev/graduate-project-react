@@ -7,6 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import CardTask from "../../../shared/components/task-card";
 import CreateParticipationCard from "../../../shared/components/Participation/CreateParticipationCard";
 import CustomClassroomLayout from "../../../shared/components/custom-classroom-layout";
+import PostListCard from "./components/PostListCard";
 
 
 const useStyles = makeStyles(theme => ({
@@ -36,6 +37,8 @@ export default function BlogPost(props) {
         <Grid container className={[classes.root, "pt-12"]} spacing={2}>
           <Grid item xs={12} sm={8} md={9}>
             <CreateParticipationCard />
+            <PostListCard />
+
           </Grid>
 
           <Grid item xs={12} sm={4} md={3}>
