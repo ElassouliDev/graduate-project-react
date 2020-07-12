@@ -1,13 +1,13 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { useParams } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import getConfig from "../../config";
-import axios from "axios";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
 import CardTask from "../../../shared/components/task-card";
-import CreateParticipationCard from "../../../shared/components/Participation/CreateParticipationCard";
+import CreateParticipationCard from "./CreateParticipationCard";
 import CustomClassroomLayout from "../../../shared/components/custom-classroom-layout";
-import PostListCard from "./components/PostListCard";
+import PostCard from './components/PostCard';
+import { inject, observer } from "mobx-react";
+import { withRouter } from "react-router";
 
 
 const useStyles = makeStyles(theme => ({
@@ -15,19 +15,10 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   }
 }));
-export default function BlogPost(props) {
+function BlogPost(props) {
   let { slug } = useParams();
   // const [data, setData] = useState({ post: {} });
   const classes = useStyles();
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     // You can await here
-  //     const result = await axios(`${getConfig().apiUrl}/post/${slug}`);
-  //     setData(result.data);
-  //   }
-  //   fetchData();
-  // }, []);
 
   return (
     <div>
@@ -37,8 +28,11 @@ export default function BlogPost(props) {
         <Grid container className={[classes.root, "pt-12"]} spacing={2}>
           <Grid item xs={12} sm={8} md={9}>
             <CreateParticipationCard />
-            <PostListCard />
-
+            {
+              props.store.ClassRoomStore.getClassRoom(props.match.params.id).PostStore.Posts.map((post) => {
+                return <PostCard post={post} />
+              })
+            }
           </Grid>
 
           <Grid item xs={12} sm={4} md={3}>
@@ -49,3 +43,4 @@ export default function BlogPost(props) {
     </div>
   );
 }
+export default inject('store')(observer(withRouter(BlogPost)));

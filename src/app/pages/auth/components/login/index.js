@@ -97,7 +97,7 @@ const LoginForm = (props) => {
           placeholder="Enter your username"
           label="Email"
           id="username"
-          validations="isSpecialWords"
+          validations="isExisty"
           validationError="This is not a valid username"
           onChange={handleChange("username")}
           InputProps={{ classes: { root: classes.inputRoot } }}

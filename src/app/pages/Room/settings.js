@@ -3,8 +3,9 @@ import { Button, Typography } from '@material-ui/core';
 import { inject, observer } from 'mobx-react';
 import { useParams, withRouter } from 'react-router';
 import DescriptionAlerts from "../../../shared/components/alert"
-import EditClassRoom from './component/EditClassRoom';
+import EditClassRoom from '../courses-dashboard-page/component/EditClassRoom';
 import { getSnapshot } from 'mobx-state-tree';
+import { red } from "@material-ui/core/colors";
 const Settings = (props) => {
    let { id } = useParams();
    let [classRoom, setClassRoom] = useState();
@@ -59,7 +60,7 @@ const Settings = (props) => {
          <hr></hr>
          <h2>Critical Options</h2>
          <DescriptionAlerts status={status} message={message} />
-         <Button disabled={deleted} onClick={HandleDeleteClass}>Delete Class Room</Button>
+         <Button size="large" color="secondary" variant="contained" disabled={deleted} onClick={HandleDeleteClass}>Delete Class Room</Button>
 
       </div>
    );

@@ -9,6 +9,7 @@ import { classRoom } from "../../app/pages/courses-dashboard-page/stores/Classro
 import MaterialStore, { material } from "../../app/pages/material/stores"
 import TaskStore, { task } from "../../app/pages/task_list/stores"
 import File from "../../shared/store/File"
+import PostStore from '../../app/pages/participation/stores';
 // Root store for all stores and models
 const courseArray = [
     classRoom.create({
@@ -50,7 +51,7 @@ const courseArray = [
                         id: 1,
                         file_name: "file task",
                         file_path: "https://i.ytimg.com/vi/0KEv38tAWm4/maxresdefault.jpg",
-                        uploadedBy: LoginStore.create({
+                        createdAt: LoginStore.create({
                             id: 1,
                             username: "yahia qumboz",
                             image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
@@ -60,7 +61,7 @@ const courseArray = [
                         id: 2,
                         file_name: "file task",
                         file_path: "https://i.ytimg.com/vi/0KEv38tAWm4/maxresdefault.jpg",
-                        uploadedBy: LoginStore.create({
+                        createdAt: LoginStore.create({
                             id: 2,
                             username: "mohammed qumboz",
                             image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
@@ -95,43 +96,32 @@ const courseArray = [
                     ]
                 })
             ]
+        }),
+        PostStore: PostStore.create({
+            Posts: [
+                {
+                    id: 1,
+                    createdBy: LoginStore.create({
+                        id: 1,
+                        username: "yahia qumboz",
+                        image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
+                    }),
+                    content: "React is a great tech devloped by Facebook",
+                    createdAt: "2020-04-18",
+                    comments: [{
+                        id: 1,
+                        createdAt: "2020-04-18 20:20",
+                        createdBy: LoginStore.create({
+                            id: 2,
+                            username: "mohammed qumboz",
+                            image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
+                        }),
+                        content: "Indeed 😁"
+                    }]
+                },
+            ]
         })
 
-    }),
-    classRoom.create({
-        id: 2,
-        title: "course 2",
-        description: "course description 1",
-        coverImage: "./assets/images/backgrounds/header_classroom_default.png",
-        thumbnail: "./assets/images/backgrounds/informationSec.jpg"
-    }),
-    classRoom.create({
-        id: 3,
-        title: "course 3",
-        description: "course description 1",
-        coverImage: "./assets/images/backgrounds/header_classroom_default.png",
-        thumbnail: "./assets/images/backgrounds/informationSec.jpg"
-    }),
-    classRoom.create({
-        id: 4,
-        title: "course 4",
-        description: "course description 1",
-        coverImage: "./assets/images/backgrounds/header_classroom_default.png",
-        thumbnail: "./assets/images/backgrounds/informationSec.jpg"
-    }),
-    classRoom.create({
-        id: 5,
-        title: "course 5",
-        description: "course description 1",
-        coverImage: "./assets/images/backgrounds/header_classroom_default.png",
-        thumbnail: "./assets/images/backgrounds/informationSec.jpg"
-    }),
-    classRoom.create({
-        id: 6,
-        title: "course 6",
-        description: "course description 1",
-        coverImage: "./assets/images/backgrounds/header_classroom_default.png",
-        thumbnail: "./assets/images/backgrounds/informationSec.jpg"
     }),
 ]
 const RootStore = types

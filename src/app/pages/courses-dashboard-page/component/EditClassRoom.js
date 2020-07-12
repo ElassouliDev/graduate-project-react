@@ -50,14 +50,8 @@ const EditClassRoom = (props) => {
       </Typography>
    }
    return (
-      <CardContent>
-         <Typography
-            variant="h4"
-            component="h4"
-            className="text-center !mt-5 !mb-12"
-         >
-            Edit Class Room
-        </Typography>
+      < >
+         <h2> Edit Class Room </h2>
 
          <Formsy className="mb-10" onSubmit={handelSubmit}>
             <MyInput
@@ -68,7 +62,7 @@ const EditClassRoom = (props) => {
                placeholder="Enter Title"
                label="Title"
                id="title"
-               validations="isSpecialWords"
+               validations="isExisty"
                validationError="This is not a valid title"
                onChange={handleChange("title")}
                InputProps={{ classes: { root: classes.inputRoot } }}
@@ -94,7 +88,7 @@ const EditClassRoom = (props) => {
                placeholder="Enter your description"
                label="Descrption"
                id="description"
-               validations="isSpecialWords"
+               validations="isExisty"
                validationError="This is not a valid description"
                onChange={handleChange("description")}
                InputProps={{ classes: { root: classes.inputRoot } }}
@@ -166,17 +160,16 @@ const EditClassRoom = (props) => {
             </Typography>
             <CardActions className="!px-0 !mt-10">
                <Button
-                  fullWidth
                   variant="contained"
                   color="primary"
-                  size="large"
+                  size="small"
                   type="submit"
                   className={classes.containedSizeLarge}>
                   Edit Class Room {isLoading && <CircularProgress />}
                </Button>
             </CardActions>
          </Formsy>
-      </CardContent>
+      </>
    );
 }
 export default inject('store')(observer(EditClassRoom));

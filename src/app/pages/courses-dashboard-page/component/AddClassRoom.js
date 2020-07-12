@@ -67,7 +67,7 @@ const AddClassRoom = (props) => {
                placeholder="Enter Title"
                label="Title"
                id="title"
-               validations="isSpecialWords"
+               validations="isExisty"
                validationError="This is not a valid title"
                onChange={handleChange("title")}
                InputProps={{ classes: { root: classes.inputRoot } }}
@@ -93,7 +93,7 @@ const AddClassRoom = (props) => {
                placeholder="Enter your description"
                label="Descrption"
                id="description"
-               validations="isSpecialWords"
+               validations="isExisty"
                validationError="This is not a valid description"
                onChange={handleChange("description")}
                InputProps={{ classes: { root: classes.inputRoot } }}

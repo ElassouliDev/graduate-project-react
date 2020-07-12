@@ -102,7 +102,7 @@ class SignUpForm extends React.Component {
                 placeholder="Enter your first name"
                 label="First Name"
                 id="first_name"
-                validations="isSpecialWords"
+                validations="isExisty"
                 validationError="first name not a valid"
                 onChange={this.handleChange("first_name")}
                 InputProps={{ classes: { root: classes.inputRoot } }}
@@ -130,7 +130,7 @@ class SignUpForm extends React.Component {
                 placeholder="Enter your last name"
                 label="First Name"
                 id="first_name"
-                validations="isSpecialWords"
+                validations="isExisty"
                 onChange={this.handleChange("last_name")}
                 validationError="first name not a valid"
                 InputProps={{ classes: { root: classes.inputRoot } }}
@@ -158,7 +158,7 @@ class SignUpForm extends React.Component {
                 placeholder="Enter your last name"
                 label="User Name"
                 id="user_name"
-                validations="isSpecialWords"
+                validations="isExisty"
                 onChange={this.handleChange("username")}
                 validationError="user name is not a valid"
                 InputProps={{ classes: { root: classes.inputRoot } }}

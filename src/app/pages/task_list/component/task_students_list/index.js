@@ -59,10 +59,10 @@ const TaskStudentsList = (props) => {
 
         {
           Task.getStudentsWhoAnswered.map(
-            (uploadedBy) => {
+            (createdAt) => {
               return <UserItem
-                student={uploadedBy}
-                key={uploadedBy.id + uploadedBy.username}
+                student={createdAt}
+                key={createdAt.id + createdAt.username}
               />
             }
           )
@@ -84,10 +84,10 @@ const TaskStudentsList = (props) => {
         </Typography>
         {
           Task.getStudentsWhoDidntAnswered.map(
-            (uploadedBy) => {
+            (createdAt) => {
               return <UserItem
-                student={uploadedBy}
-                key={uploadedBy.id + uploadedBy.username}
+                student={createdAt}
+                key={createdAt.id + createdAt.username}
               />
             }
           )

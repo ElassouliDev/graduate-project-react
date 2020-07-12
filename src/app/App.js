@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import CustomPageLayout from "../shared/components/custom-page-layout";
 import CoursesDashboardPage from "./pages/courses-dashboard-page";
-import ParticipationClassroomPage from "./pages/participation/participation";
+import ParticipationClassroomPage from "./pages/participation";
 import Auth from "./pages/auth";
 import Material from "./pages/material";
 import CustomClassroomLayout from "../shared/components/custom-classroom-layout";
@@ -15,7 +15,7 @@ import CourseList from "./pages/course-list";
 import TaskInfo from "./pages/task_list/component/task_info";
 import TaskList from "./pages/task_list";
 import TaskStudentsList from "./pages/task_list/component/task_students_list";
-import Settings from "./pages/courses-dashboard-page/settings"
+import Settings from "./pages/Room/settings"
 import Room from "./pages/Room/index.js"
 import UpdateMaterial from "./pages/material/components/UpdateMaterial";
 function App() {

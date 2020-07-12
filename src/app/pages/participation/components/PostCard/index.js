@@ -1,61 +1,54 @@
-import { Card, Divider, Button, CardHeader, Paper } from "@material-ui/core";
 import React from "react";
-import classNames from "classnames";
-import { Grid } from "@material-ui/core";
-import { Chip } from "@material-ui/core";
-
-import { Typography } from "@material-ui/core";
-import { CardContent } from "@material-ui/core";
-
-import { CardActionArea } from "@material-ui/core";
-import { Avatar } from "@material-ui/core";
-import CommentForm from "../CommentList/CommentForm";
+import { Card, Divider, CardHeader } from "@material-ui/core";
+import { CardContent, Typography, Avatar } from "@material-ui/core";
 import CommentList from '../CommentList';
+import { inject, observer } from "mobx-react";
 
-export default function PostCard(props) {
+function PostCard(props) {
+  const { post } = props
   return (
     <Card className="my-20">
       <CardHeader
         avatar={
           <Avatar
-            alt={props.post.user.name}
-            src={props.post.user.image}
+            alt={post.createdBy.username}
+            src={post.createdBy.image}
           ></Avatar>
         }
         title={
           <Typography variant="h6" className="!mb-2">
-            {props.post.user.name}
+            {post.createdBy.username}
           </Typography>
         }
-        subheader={props.post.created_at}
+        subheader={post.createdAt}
       />
       <Divider />
 
       <CardContent className="!mb-2 p-5">
         <Typography variant="h6" className="!my-2">
-          {props.post.content}
+          {post.content}
         </Typography>
       </CardContent>
 
       <Divider />
-        <CommentList comments={props.post.comments} user={props.user}/>
+      {/* <CommentList comments={post.comments} user={store.LoginStore} /> */}
 
       {/* <div className={"px-10 py-10   "}>
         <Grid row container className=" mb-10 ">
           <Grid item md={1}>
             <Avatar
-              alt={props.post.user.name}
-              src={props.post.user.image}
+              alt={post.user.name}
+              src={post.user.image}
             ></Avatar>
           </Grid>
           <Grid item md={11}>
             <Paper elevation={3} className="p-10">
               <Typography variant="h6" className="!my-2">
-                {props.post.content}
+                {post.content}
               </Typography>
 
               {/* <CommentForm post_id={1} /> */}
-           {/*} </Paper>
+      {/*} </Paper>
           </Grid>
         </Grid>
 
@@ -63,14 +56,14 @@ export default function PostCard(props) {
         <Grid row container className=" mb-10 ">
           <Grid item md={1}>
             <Avatar
-              alt={props.post.user.name}
-              src={props.post.user.image}
+              alt={post.user.name}
+              src={post.user.image}
             ></Avatar>
           </Grid>
           <Grid item md={11}>
             <Paper elevation={3} className="p-10">
               <Typography variant="h6" className="!my-2">
-                {props.post.content}
+                {post.content}
               </Typography>
             </Paper>
           </Grid>
@@ -80,3 +73,4 @@ export default function PostCard(props) {
     </Card>
   );
 }
+export default inject('store')(observer(PostCard))

@@ -58,7 +58,7 @@ const Room = (props) => {
          <Typography variant="button">
             <Link to={`./${classRoom.id}/tasks`}>
                <strong>
-                  Room materials <Settings />
+                  Room Tasks <Settings />
                </strong>
             </Link>
          </Typography>
