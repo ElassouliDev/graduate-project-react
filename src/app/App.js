@@ -18,6 +18,7 @@ import TaskStudentsList from "./pages/task_students_list";
 import Settings from "./pages/courses-dashboard-page/settings"
 import Room from "./pages/Room/index.js"
 import UpdateMaterial from "./pages/material/components/UpdateMaterial";
+import Chat from './pages/chat';
 function App() {
   return (
     <Router>
@@ -84,6 +85,12 @@ function App() {
                 <CourseList />
               </CustomClassroomLayout>
             </CustomPageLayout>
+          </Route>
+
+          <Route path="/chat">
+              <CustomPageLayout>
+                <Chat />
+              </CustomPageLayout>
           </Route>
           <Route path="/course/list">
             <CustomPageLayout
