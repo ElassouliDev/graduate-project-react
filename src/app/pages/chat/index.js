@@ -39,7 +39,7 @@ export default function Chat(props) {
       image:
         "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
     },{
-      chat_id: 1,
+      chat_id: 4,
       name: "Yehia Elas",
       image:
         "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
@@ -59,7 +59,7 @@ export default function Chat(props) {
 
   const [chatMessages,setChatMessages] = useState(
     {
-      chat_id: 1,
+      chat_id: 4,
       messages : [
         {
           id:1,
@@ -160,7 +160,7 @@ console.log(data)
 
       <Grid container className={[classes.root, "pt-2"]} spacing={2}>
         <Grid item xs={4} sm={4} md={3} lg={2}>
-          <ListUserChat listUser={listUser}/>
+          <ListUserChat listUser={listUser} chat_id={chatMessages.chat_id}/>
             </Grid>
 
         <Grid item xs={8} sm={8} md={9}>

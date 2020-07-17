@@ -22,6 +22,13 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "1rem",
     padding: "1rem 2rem",
   },
+  avatar:{
+    marginLeft: "-6px !important",
+    marginRight: "5px !important"
+  },
+  rtl:{
+      direction:"rtl"
+  }
 }));
 export default function ChatMessages(props) {
   const classes = useStyles();
@@ -31,9 +38,10 @@ export default function ChatMessages(props) {
     <Card className={classes.root}>
       <Card className={classes.messagesRoot}>
           {props.chat.messages.map(chat_message =>
-            <div className={"mb-1 clearfix"}>
+            <div className={classNames("mb-1 clearfix",auth_user_id == chat_message.user.id? classes.rtl:"")}>
           <Chip
-            // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
+
+             avatar={<Avatar alt="Natacha" src={chat_message.user.image} className={auth_user_id == chat_message.user.id? classes.avatar:""} />}
             label={chat_message.messages}
             className={auth_user_id == chat_message.user.id? "float-right ":""}
             color={auth_user_id == chat_message.user.id? "primary":"secondry"}

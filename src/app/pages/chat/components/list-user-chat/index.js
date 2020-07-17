@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import classNames from "classnames";
+import classNames from 'classnames';
 import { Chip } from "@material-ui/core";
 import { Avatar } from "@material-ui/core";
 import { CardHeader } from "@material-ui/core";
@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     height: 500,
     overflow: "scroll",
   },
+  active_chat: {
+    background: "#ccc",
+  },
 }));
 export default function ListUserChat(props) {
   const classes = useStyles();
@@ -22,7 +25,7 @@ export default function ListUserChat(props) {
   return (
     <Card className={classes.root} >
       {props.listUser.map((user) => (
-        <CardActionArea className="my-2 !p-2 ">
+        <CardActionArea className={classNames('my-2 !p-2',user.chat_id == props.chat_id?classes.active_chat:"")}>
           <Grid spacing={2} className="pb-2 border-b">
             <CardHeader
               avatar={<Avatar alt={user.name} src={user.image}></Avatar>}
