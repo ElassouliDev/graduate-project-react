@@ -36,8 +36,6 @@ function App() {
             </Route>
           </IsLoggedIn>
         </Route>
-
-
         <Protected>
           <Route exact path="/">
             <CustomPageLayout>
@@ -78,7 +76,7 @@ function App() {
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
-          <Route path="/course/list">
+          <Route path=" ">
             <CustomPageLayout
 
               aside_show={false}

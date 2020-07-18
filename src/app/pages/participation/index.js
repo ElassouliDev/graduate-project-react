@@ -43,4 +43,4 @@ function BlogPost(props) {
     </div>
   );
 }
-export default inject('store')(observer(withRouter(BlogPost)));
+export default inject('store')(withRouter(observer(BlogPost)));

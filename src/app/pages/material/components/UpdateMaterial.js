@@ -169,4 +169,4 @@ const UpdateMaterial = (props) => {
       </CardContent>
    );
 }
-export default inject('store')(observer(withRouter(UpdateMaterial)));
+export default inject('store')(withRouter(observer(UpdateMaterial)));

@@ -76,4 +76,4 @@ const TaskInfo = (props) => {
     </div>
   );
 }
-export default inject('store')(observer(withRouter(TaskInfo)));
+export default inject('store')(withRouter(observer(TaskInfo)));

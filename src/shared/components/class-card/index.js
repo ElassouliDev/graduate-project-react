@@ -10,7 +10,6 @@ import IconButton from '@material-ui/core/IconButton';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import Typography from '@material-ui/core/Typography';
-import ThreeDotsMenu from '../three-dots-menu';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
 
@@ -82,4 +81,4 @@ function ClassCard(props) {
         </Card>
     );
 }
-export default inject("store")(observer(withRouter(ClassCard)))
+export default inject("store")(withRouter(observer(ClassCard)))

@@ -15,7 +15,9 @@ export const classRoom = types.model({
 }).actions((self) => ({
    setClassData: (payload) => {
       if (payload.key === "coverImage" || payload.key === "coverImage") {
+
       }
+      self[payload.key] = payload.value;
    }
 }));
 export default types.model('ClassRoomStore', {
@@ -29,11 +31,11 @@ export default types.model('ClassRoomStore', {
       return selectedClassRoom.classCover ? selectedClassRoom.classCover : ""
    }
 })).actions((self) => ({
-   addNewClassRoom: (payload) => {
+   addNewClassRoom: () => {
       self.classRooms.push(
          classRoom.create({
-            id: self.classRooms.length + 1,
-            ...self.newClassRoom
+            ...self.newClassRoom.toJSON(),
+            id: self.classRooms.length + 1
          })
       )
    },

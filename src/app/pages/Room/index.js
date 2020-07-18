@@ -65,4 +65,4 @@ const Room = (props) => {
       </div>
    )
 }
-export default inject('store')(observer(withRouter(Room)))
+export default inject('store')(withRouter(observer(Room)))

@@ -12,7 +12,7 @@ const modal = {
    description: types.optional(types.string, ''),
    User: types.optional(User, {}),
    status: types.optional(types.string, ''),
-   is_closed: types.optional(types.boolean, false),
+   validUntill: types.optional(types.boolean, false),
    SubmittedSolutions: types.array(File),
    students: types.array(User)
 };

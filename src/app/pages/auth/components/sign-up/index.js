@@ -311,4 +311,4 @@ class SignUpForm extends React.Component {
 
 };
 
-export default withStyles(styles)(inject('store')(observer(withRouter(SignUpForm))));
+export default withStyles(styles)(inject('store')(withRouter(observer(SignUpForm))));

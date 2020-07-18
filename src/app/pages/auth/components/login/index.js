@@ -1,15 +1,13 @@
 import { Typography, makeStyles, withStyles } from "@material-ui/core";
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import MyInput from "../../../../../shared/components/formasy-input";
 import Formsy from "formsy-react";
 import { Button, CircularProgress } from "@material-ui/core";
 import { CardActions } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
-import { FormControlLabel } from "@material-ui/core";
-import { useHistory, withRouter } from "react-router-dom"
+import { withRouter } from "react-router-dom"
 import { inject, observer } from 'mobx-react';
 import DescriptionAlerts from "../../../../../shared/components/alert"
-// import {withRouter} from "react-route"
 
 const useStyles = makeStyles((theme) => ({
   labelRoot: {
@@ -24,16 +22,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 const LoginForm = (props) => {
   const [isLoading, setLoading] = useState(false);
-  const [helperText, setHelperText] = useState("");
   let [status, setStatus] = useState(0);
   let [message, setMessage] = useState("");
-
-
 
   const handelSubmitLoginForm = async () => {
     try {
       setLoading(true)
-      setHelperText("")
+      setMessage("")
       const payload = props.store.LoginStore;
       console.log("login", payload);
       const res = await props.store.apiRequests.loginUser({ username: payload.username, password: payload.password })
@@ -95,7 +90,7 @@ const LoginForm = (props) => {
           type="text"
           fullWidth
           placeholder="Enter your username"
-          label="Email"
+          label="Username"
           id="username"
           validations="isExisty"
           validationError="This is not a valid username"
@@ -160,4 +155,4 @@ const LoginForm = (props) => {
   );
 }
 
-export default withStyles(useStyles)(inject('store')(observer(withRouter(LoginForm))));
+export default withStyles(useStyles)(inject('store')(withRouter(observer(LoginForm))));

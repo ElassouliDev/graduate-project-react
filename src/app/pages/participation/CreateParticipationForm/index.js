@@ -1,10 +1,12 @@
 import { Card } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import React from "react";
-import { TextField } from "@material-ui/core";
+// import { TextField } from "@material-ui/core";
+import MyInput from "../../../../shared/components/formasy-input";
 import { Button, CardContent, CardActions, CardActionArea } from "@material-ui/core";
 import { inject, observer } from "mobx-react"
 import { withRouter } from "react-router";
+import Formsy from "formsy-react";
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
@@ -17,58 +19,67 @@ const CreateParticipationForm = (props) => {
   if (!classRoom) {
     return <div>
       class room not found
-  </div>
+    </div>
   }
-
   if (!classRoom.PostStore) {
     return <div>
       faild to load post addition form
   </div>
   }
-  const handleClick = (event) => {
-    const newPostContent = classRoom.PostStore.newPost;
-    props.store.ClassRoomStore.getClassRoom(props.match.params.id).PostStore.addPost(newPostContent)
+  const handleSubmit = (event) => {
+    classRoom.PostStore.addPost()
   }
   const handleChange = (key) => (event) => {
-    props.store.ClassRoomStore.getClassRoom(props.match.params.id).PostStore.setData({ key, value: event.target.value })
+    classRoom.PostStore.setData({ key, value: event.target.value })
   };
   return (
     <>
       <Card className={classes.root} className='my-10'>
-        <CardContent className='mr-5'>
-          <TextField
-            id="filled-full-width"
-            label="Post Content"
-            style={{ margin: 8 }}
-            placeholder="Post Content"
-            helperText=""
-            name="content"
-            fullWidth
-            margin="normal"
-            InputLabelProps={{
-              shrink: true
-            }}
-            variant="filled"
-            multiline
-            rows="7"
-            value={props.store.ClassRoomStore.getClassRoom(props.match.params.id).PostStore.content}
-            onChange={handleChange("content")}
-            autoFocus
-          />
-        </CardContent>
-        <CardActionArea>
+        <Formsy onSubmit={handleSubmit}>
+          <CardContent className='mr-5'>
+            <MyInput
+              value={classRoom.PostStore.newPost.content}
+              name="text"
+              type="text"
+              fullWidth
+              placeholder="Post Content"
+              label="Post Content"
+              id="content"
+              validations="isExisty"
+              validationError="This is not a valid content"
+              onChange={handleChange("content")}
+              InputProps={{ classes: { root: classes.inputRoot } }}
+              InputLabelProps={{
+                classes: {
+                  root: classes.labelRoot,
+                },
+              }}
+              FormHelperTextProps={{
+                classes: {
+                  root: classes.labelRoot,
+                },
+              }}
+              style={{ margin: 8 }}
+              required
+              variant="filled"
+              multiline
+            />
+          </CardContent>
+          <CardActionArea>
 
-        </CardActionArea>
-        <CardActions className="m-5 mt-0 float-right">
-          <Button
-            size="large"
-            variant="contained"
-            color="primary"
-            onClick={handleClick}
-          >
-            Post
+          </CardActionArea>
+          <CardActions className="m-5 mt-0 float-right">
+            <Button
+              size="large"
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              Post
             </Button>
-        </CardActions>
+          </CardActions>
+
+        </Formsy>
       </Card>
 
     </>
@@ -77,4 +88,4 @@ const CreateParticipationForm = (props) => {
 
 }
 
-export default inject('store')(observer(withRouter(CreateParticipationForm)));
+export default inject('store')(withRouter(observer(CreateParticipationForm)));

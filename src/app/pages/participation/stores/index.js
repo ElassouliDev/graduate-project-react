@@ -1,4 +1,4 @@
-import { types, getSnapshot } from 'mobx-state-tree';
+import { types } from 'mobx-state-tree';
 import User from '../../auth/stores/LoginStore';
 const Comment = types.model('Comment', {
    id: types.optional(types.identifierNumber, 0),

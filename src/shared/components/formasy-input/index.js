@@ -2,7 +2,6 @@
 import { withFormsy } from "formsy-react";
 import React from "react";
 import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
 import _ from "lodash";
 // https://github.com/formsy/formsy-react/blob/master/API.md
 // https://material-ui.com/api/text-field/

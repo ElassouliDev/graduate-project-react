@@ -25,4 +25,4 @@ const PostListCard = (props) => {
   );
 }
 
-export default inject('store')(observer(withRouter(PostListCard)));
+export default inject('store')(withRouter(observer(PostListCard)));

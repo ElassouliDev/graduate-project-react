@@ -66,4 +66,4 @@ const Settings = (props) => {
    );
 }
 
-export default inject('store')(observer(withRouter(Settings)));
+export default inject('store')(withRouter(observer(Settings)));

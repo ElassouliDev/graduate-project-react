@@ -70,7 +70,7 @@ const courseArray = [
                     created_at: "12-12-2020",
                     title: "Task Test 1",
                     description: "Lizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except AntarcticaLizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except AntarcticaLizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except AntarcticaLizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except Antarctica",
-                    status: "notSended",
+                    vaildUntill: "12-01-2020",
                     is_closed: false,
                     teacher: LoginStore.create({
                         id: 1,
@@ -127,7 +127,10 @@ const courseArray = [
 const RootStore = types
     .model('RootStore', {
         UserStore: types.optional(UserStore, {}),
-        LoginStore: types.optional(LoginStore, {}),
+        LoginStore: types.optional(LoginStore, {
+            jwtToken: "asdklaskdals",
+            username: "yahia",
+        }),
         ClassRoomStore: types.optional(ClassRoomStore, {
             classRooms: courseArray,
         }),

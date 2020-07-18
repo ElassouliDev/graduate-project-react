@@ -96,4 +96,4 @@ const TaskStudentsList = (props) => {
     </Fragment>
   );
 }
-export default inject('store')(observer(withRouter(TaskStudentsList)));
+export default inject('store')(withRouter(observer(TaskStudentsList)));

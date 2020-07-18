@@ -1,13 +1,12 @@
-import { Typography, makeStyles, withStyles } from "@material-ui/core";
-import React, { Component, useState } from "react";
+import { Typography, makeStyles } from "@material-ui/core";
+import React, { useState } from "react";
 import MyInput from "../../../../shared/components/formasy-input";
 import Formsy from "formsy-react";
 import { Button, CircularProgress } from "@material-ui/core";
 import { CardActions } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
-import { FormControlLabel } from "@material-ui/core";
-import { useHistory } from "react-router-dom"
 import { inject, observer } from 'mobx-react';
+
 
 const useStyles = makeStyles((theme) => ({
    labelRoot: {
@@ -27,10 +26,8 @@ const AddClassRoom = (props) => {
    const handelSubmitAddClassRoom = async () => {
       try {
          setLoading(true)
-         let payload = props.store.ClassRoomStore.newClassRoom;
-         console.log(payload);
 
-         props.store.ClassRoomStore.addNewClassRoom(payload);
+         props.store.ClassRoomStore.addNewClassRoom();
 
       } catch (err) {
 
