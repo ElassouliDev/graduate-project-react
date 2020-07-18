@@ -57,7 +57,10 @@ function App() {
           </Route>
           <Route path="/Room/:id/settings">
             <CustomPageLayout>
+            <CustomClassroomLayout>
+
               <Settings />
+          </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
           <Route path="/Room/:id/videos">

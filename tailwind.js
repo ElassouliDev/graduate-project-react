@@ -601,9 +601,9 @@ module.exports = {
   },
   variants: {
     accessibility: ['responsive', 'focus'],
-    alignContent: ['responsive'],
-    alignItems: ['responsive'],
-    alignSelf: ['responsive'],
+    alignContent: ['responsive','important'],
+    alignItems: ['responsive','important'],
+    alignSelf: ['responsive','important'],
     appearance: ['responsive'],
     backgroundAttachment: ['responsive'],
     backgroundColor: ['responsive', 'hover', 'focus'],
