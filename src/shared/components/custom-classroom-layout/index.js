@@ -10,7 +10,7 @@ const CustomClassroomLayout = (props) => {
       <ClassRoomHeader
         Title={classRoom ? classRoom.title : ""}
         code={"123456"}
-        image={classRoom ? classRoom.coverImage : ""}
+        image={classRoom ? classRoom.background_img : ""}
       />
       {props.children}
     </div>

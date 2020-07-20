@@ -2,7 +2,7 @@
 
 import { types } from 'mobx-state-tree';
 import { values } from "mobx";
-import User from '../../auth/stores/LoginStore';
+import User from '../../auth/stores/User';
 import File from "../../../../shared/store/File"
 const modal = {
    id: types.optional(types.identifierNumber, 0),

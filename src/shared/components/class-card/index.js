@@ -47,7 +47,7 @@ function ClassCard(props) {
             <CardActionArea onClick={Redirect}>
                 <CardMedia
                     className={classes.media}
-                    image={props.thumbnail}
+                    image={props.background_img}
                     title="Contemplative Reptile"
                 >
                     {/* <div className={classes.overlay}> </div> */}

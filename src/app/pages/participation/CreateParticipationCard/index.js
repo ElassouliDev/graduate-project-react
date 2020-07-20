@@ -22,7 +22,7 @@ const CreateParticipationCard = (props) => {
       <Card className={[classes.root, "px-10 p-5"]}>
         <Grid container className={[classes.root]} spacing={2}>
           <Grid item md={1}>
-            <Avatar src={props.store.LoginStore.image} />
+            <Avatar src={props.store.User.image} />
           </Grid>
 
           <Grid item md={10}>

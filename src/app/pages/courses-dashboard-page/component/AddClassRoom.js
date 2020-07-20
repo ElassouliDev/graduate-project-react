@@ -109,15 +109,15 @@ const AddClassRoom = (props) => {
                required
             />
             <MyInput
-               value={props.store.ClassRoomStore.newClassRoom.thumbnail}
-               name="thumbnail"
+               value={props.store.ClassRoomStore.newClassRoom.logo_img}
+               name="logo_img"
                type="file"
                fullWidth
-               placeholder="Enter your thumbnail"
-               label="Thumbnail"
-               id="thumbnail"
-               validationError="This is not a valid thumbnail"
-               onChange={handleChange("thumbnail")}
+               placeholder="Enter your logo_img"
+               label="logo_img"
+               id="logo_img"
+               validationError="This is not a valid logo_img"
+               onChange={handleChange("logo_img")}
                InputProps={{ classes: { root: classes.inputRoot } }}
                InputLabelProps={{
                   classes: {
@@ -133,15 +133,15 @@ const AddClassRoom = (props) => {
                }}
             />
             <MyInput
-               value={props.store.ClassRoomStore.newClassRoom.coverImage}
-               name="coverImage"
+               value={props.store.ClassRoomStore.newClassRoom.background_img}
+               name="background_img"
                type="file"
                fullWidth
                placeholder="Enter your username"
-               label="coverImage"
-               id="coverImage"
-               validationError="This is not a valid coverImage"
-               onChange={handleChange("coverImage")}
+               label="background_img"
+               id="background_img"
+               validationError="This is not a valid background_img"
+               onChange={handleChange("background_img")}
                InputProps={{ classes: { root: classes.inputRoot } }}
                InputLabelProps={{
                   classes: {

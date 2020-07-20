@@ -29,7 +29,7 @@ const LoginForm = (props) => {
     try {
       setLoading(true)
       setMessage("")
-      const payload = props.store.LoginStore;
+      const payload = props.store.User;
       console.log("login", payload);
       const res = await props.store.apiRequests.loginUser({ username: payload.username, password: payload.password })
       console.log(res);
@@ -68,7 +68,7 @@ const LoginForm = (props) => {
   };
 
   const handleChange = (key) => (event) => {
-    props.store.LoginStore.setUserData({ key, value: event.target.value })
+    props.store.User.setUserData({ key, value: event.target.value })
   };
 
   const classes = useStyles();
@@ -85,7 +85,7 @@ const LoginForm = (props) => {
 
       <Formsy className="mb-10" onSubmit={handelSubmitLoginForm}>
         <MyInput
-          value={props.store.LoginStore.email}
+          value={props.store.User.email}
           name="text"
           type="text"
           fullWidth
@@ -112,7 +112,7 @@ const LoginForm = (props) => {
         />
 
         <MyInput
-          value={props.store.LoginStore.password}
+          value={props.store.User.password}
           name="password"
           type="password"
           fullWidth

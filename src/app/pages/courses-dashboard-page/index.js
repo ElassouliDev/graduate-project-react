@@ -5,6 +5,8 @@ import { withStyles } from "@material-ui/core";
 import { inject, observer } from 'mobx-react';
 import Box from '@material-ui/core/Box';
 import AddClassRoom from "./component/AddClassRoom";
+import Axios from "axios";
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -16,9 +18,15 @@ function BlogPost(props) {
     useEffect(
         () => {
             async function fetchData() {
-                // await apiRequests.getClassRooms()
+                try {
+                    let res = await props.store.apiRequests.getClassRooms();
+                    console.log("res", res);
+                    props.store.ClassRoomStore.setClassRooms(res.data);
+                } catch (error) {
+                    console.log("mappedClassRooms", error.message);
+                }
             }
-            // fetchData();
+            fetchData();
         }, []);
     return (
         <div style={{ width: '100%' }}>

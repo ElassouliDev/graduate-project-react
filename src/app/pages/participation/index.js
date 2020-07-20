@@ -23,7 +23,7 @@ function BlogPost(props) {
   return (
     <div>
       <CustomClassroomLayout
-      // coverImage={props.store.ClassRoomStore.getCover(props.match.params.id)}
+      // background_img={props.store.ClassRoomStore.getCover(props.match.params.id)}
       >
         <Grid container className={[classes.root, "pt-12"]} spacing={2}>
           <Grid item xs={12} sm={8} md={9}>

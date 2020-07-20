@@ -1,5 +1,5 @@
 import { types } from 'mobx-state-tree';
-import User from '../../auth/stores/LoginStore';
+import User from '../../auth/stores/User';
 const Comment = types.model('Comment', {
    id: types.optional(types.identifierNumber, 0),
    createdBy: types.optional(User, {}),

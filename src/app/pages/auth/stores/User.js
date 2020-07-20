@@ -1,6 +1,6 @@
 import { flow, getParent, types } from 'mobx-state-tree';
 
-export default types.model('LoginStore', {
+export default types.model('User', {
    password: types.optional(types.string, ''),
    username: types.optional(types.string, ''),
    state: types.optional(types.string, ''),

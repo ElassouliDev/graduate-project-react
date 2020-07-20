@@ -3,7 +3,7 @@ import getConfig from '../../app/config';
 import LocalStorage from '../../app/services/LocalStorage';
 import getApiRequests from '../../app/services/apiRequestes';
 import UserStore from "../../app/pages/auth/stores/UserStore";
-import LoginStore from "../../app/pages/auth/stores/LoginStore";
+import User from "../../app/pages/auth/stores/User";
 import ClassRoomStore from "../../app/pages/courses-dashboard-page/stores/ClassroomStore";
 import { classRoom } from "../../app/pages/courses-dashboard-page/stores/ClassroomStore";
 import MaterialStore, { material } from "../../app/pages/material/stores"
@@ -16,8 +16,8 @@ const courseArray = [
         id: 1,
         title: "course 1",
         description: "course description 1",
-        coverImage: "./assets/images/backgrounds/header_classroom_default.png",
-        thumbnail: "./assets/images/backgrounds/informationSec.jpg",
+        background_img: "./assets/images/backgrounds/header_classroom_default.png",
+        logo_img: "./assets/images/backgrounds/informationSec.jpg",
         MaterialStore: MaterialStore.create({
             materials: [
                 material.create({
@@ -51,7 +51,7 @@ const courseArray = [
                         id: 1,
                         file_name: "file task",
                         file_path: "https://i.ytimg.com/vi/0KEv38tAWm4/maxresdefault.jpg",
-                        createdAt: LoginStore.create({
+                        createdAt: User.create({
                             id: 1,
                             username: "yahia qumboz",
                             image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
@@ -61,7 +61,7 @@ const courseArray = [
                         id: 2,
                         file_name: "file task",
                         file_path: "https://i.ytimg.com/vi/0KEv38tAWm4/maxresdefault.jpg",
-                        createdAt: LoginStore.create({
+                        createdAt: User.create({
                             id: 2,
                             username: "mohammed qumboz",
                             image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
@@ -72,23 +72,23 @@ const courseArray = [
                     description: "Lizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except AntarcticaLizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except AntarcticaLizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except AntarcticaLizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except Antarctica",
                     vaildUntill: "12-01-2020",
                     is_closed: false,
-                    teacher: LoginStore.create({
+                    teacher: User.create({
                         id: 1,
                         username: "yahia qumboz",
                         image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
                     }),
                     students: [
-                        LoginStore.create({
+                        User.create({
                             id: 2,
                             username: "mohammed qumboz",
                             image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
                         }),
-                        LoginStore.create({
+                        User.create({
                             id: 3,
                             username: "alaa qumboz",
                             image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
                         }),
-                        LoginStore.create({
+                        User.create({
                             id: 4,
                             username: "ezat qumboz",
                             image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
@@ -101,7 +101,7 @@ const courseArray = [
             Posts: [
                 {
                     id: 1,
-                    createdBy: LoginStore.create({
+                    createdBy: User.create({
                         id: 1,
                         username: "yahia qumboz",
                         image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
@@ -111,7 +111,7 @@ const courseArray = [
                     comments: [{
                         id: 1,
                         createdAt: "2020-04-18 20:20",
-                        createdBy: LoginStore.create({
+                        createdBy: User.create({
                             id: 2,
                             username: "mohammed qumboz",
                             image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
@@ -127,7 +127,7 @@ const courseArray = [
 const RootStore = types
     .model('RootStore', {
         UserStore: types.optional(UserStore, {}),
-        LoginStore: types.optional(LoginStore, {
+        User: types.optional(User, {
             jwtToken: "asdklaskdals",
             username: "yahia",
         }),

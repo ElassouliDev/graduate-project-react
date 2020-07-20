@@ -40,7 +40,7 @@ const Room = (props) => {
          </Typography>
          <hr></hr>
          <Typography variant="button">
-            <Link to={`./${classRoom.id}/videos`}>
+            <Link to={`./${classRoom.id}/courses`}>
                <strong>
                   Room tutorial videos <Settings />
                </strong>

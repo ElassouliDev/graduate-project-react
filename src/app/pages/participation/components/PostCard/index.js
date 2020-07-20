@@ -31,7 +31,7 @@ function PostCard(props) {
       </CardContent>
 
       <Divider />
-      {/* <CommentList comments={post.comments} user={store.LoginStore} /> */}
+      {/* <CommentList comments={post.comments} user={store.User} /> */}
 
       {/* <div className={"px-10 py-10   "}>
         <Grid row container className=" mb-10 ">

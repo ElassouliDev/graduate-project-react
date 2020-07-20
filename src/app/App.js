@@ -76,7 +76,7 @@ function App() {
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
-          <Route path=" ">
+          <Route path="/Room/:id/courses">
             <CustomPageLayout
 
               aside_show={false}

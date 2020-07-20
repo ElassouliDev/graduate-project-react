@@ -35,7 +35,7 @@ const AddMaterial = (props) => {
       try {
          setLoading(true)
          setMessage("")
-         const payload = props.store.LoginStore;
+         const payload = props.store.User;
          console.log("login", payload);
          const res = await props.store.apiRequests.loginUser({ username: payload.username, password: payload.password })
          console.log(res);

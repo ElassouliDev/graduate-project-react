@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\pages",
+    "\\src\\app\\pages\\courses-dashboard-page",
+    "\\src\\app\\pages\\courses-dashboard-page\\stores",
+    "\\src\\shared"
+  ],
+  "SelectedNode": "\\src\\app\\pages\\courses-dashboard-page\\stores\\ClassroomStore.js",
+  "PreviewInSolutionExplorer": false
+}
