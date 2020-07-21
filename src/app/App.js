@@ -19,6 +19,7 @@ import Settings from "./pages/courses-dashboard-page/settings"
 import Room from "./pages/Room/index.js"
 import UpdateMaterial from "./pages/material/components/UpdateMaterial";
 import RequestSubscribeToClassRoom from './pages/request_subscribe-list';
+import ClassroomStudentList from './pages/classroom_student_list';
 function App() {
   return (
     <Router>
@@ -87,10 +88,17 @@ function App() {
             </CustomPageLayout>
           </Route>
 
-                <Route exact path="/Room/:id/request/subscribe">
+          <Route exact path="/Room/:id/request/subscribe">
             <CustomPageLayout>
               <CustomClassroomLayout>
                 <RequestSubscribeToClassRoom />
+              </CustomClassroomLayout>
+            </CustomPageLayout>
+          </Route>
+          <Route exact path="/Room/:id/student/list">
+            <CustomPageLayout>
+              <CustomClassroomLayout>
+                <ClassroomStudentList />
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
