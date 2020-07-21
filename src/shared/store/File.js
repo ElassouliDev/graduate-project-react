@@ -4,6 +4,6 @@ const File = types.model({
    id: types.optional(types.identifierNumber, 0),
    file_name: types.optional(types.string, ''),
    file_path: types.optional(types.string, ''),
-   createdAt: types.optional(User, {}),
+   created_at: types.optional(User, {}),
 })
 export default File;

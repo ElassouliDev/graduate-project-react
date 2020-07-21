@@ -6,7 +6,7 @@ import { Button, CircularProgress } from "@material-ui/core";
 import { CardActions } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
 import { inject, observer } from 'mobx-react';
-
+import { classRoom } from "../stores/ClassroomStore"
 
 const useStyles = makeStyles((theme) => ({
    labelRoot: {
@@ -22,12 +22,18 @@ const useStyles = makeStyles((theme) => ({
 const AddClassRoom = (props) => {
    const [isLoading, setLoading] = useState(false);
    const [helperText, setHelperText] = useState("");
-
+   const [classRoomData, setClassRoomData] = useState({ ...classRoom.create({}).toJSON() })
    const handelSubmitAddClassRoom = async () => {
       try {
          setLoading(true)
-
-         props.store.ClassRoomStore.addNewClassRoom();
+         let formData = new FormData();
+         delete classRoomData.id
+         let cRData = (({ title, description, background_img }) => ({ title, description, background_img }))(classRoomData)
+         for (var key in cRData) {
+            formData.append(key, classRoomData[key]);
+         }
+         const res = await props.store.apiRequests.addClassRoom(formData)
+         props.store.ClassRoomStore.addClassRoom(res.data);
 
       } catch (err) {
 
@@ -41,7 +47,20 @@ const AddClassRoom = (props) => {
 
    const handleChange = (key) => (event) => {
       const value = event.target.value;
-      props.store.ClassRoomStore.setClassRoomData({ key, value })
+      let preClassRoomData = classRoomData;
+      preClassRoomData[key] = value
+      setClassRoomData(preClassRoomData)
+      console.log(classRoomData);
+   };
+
+   const handleChangeFile = (key) => (event) => {
+      if (event.target.files.length > 0) {
+         const value = event.target.files[0];
+         let preClassRoomData = classRoomData;
+         preClassRoomData[key] = value
+         setClassRoomData(preClassRoomData)
+         console.log(classRoomData);
+      }
    };
    const classes = useStyles();
 
@@ -57,7 +76,7 @@ const AddClassRoom = (props) => {
 
          <Formsy className="mb-10" onSubmit={handelSubmitAddClassRoom}>
             <MyInput
-               value={props.store.ClassRoomStore.newClassRoom.title}
+               value={classRoomData.title}
                name="title"
                type="text"
                fullWidth
@@ -83,7 +102,7 @@ const AddClassRoom = (props) => {
                required
             />
             <MyInput
-               value={props.store.ClassRoomStore.newClassRoom.description}
+               value={classRoomData.description}
                name="description"
                type="text"
                fullWidth
@@ -109,7 +128,7 @@ const AddClassRoom = (props) => {
                required
             />
             <MyInput
-               value={props.store.ClassRoomStore.newClassRoom.logo_img}
+               value={classRoomData.logo_img}
                name="logo_img"
                type="file"
                fullWidth
@@ -117,7 +136,7 @@ const AddClassRoom = (props) => {
                label="logo_img"
                id="logo_img"
                validationError="This is not a valid logo_img"
-               onChange={handleChange("logo_img")}
+               onChange={handleChangeFile("logo_img")}
                InputProps={{ classes: { root: classes.inputRoot } }}
                InputLabelProps={{
                   classes: {
@@ -133,7 +152,7 @@ const AddClassRoom = (props) => {
                }}
             />
             <MyInput
-               value={props.store.ClassRoomStore.newClassRoom.background_img}
+               value={classRoomData.background_img}
                name="background_img"
                type="file"
                fullWidth
@@ -141,7 +160,7 @@ const AddClassRoom = (props) => {
                label="background_img"
                id="background_img"
                validationError="This is not a valid background_img"
-               onChange={handleChange("background_img")}
+               onChange={handleChangeFile("background_img")}
                InputProps={{ classes: { root: classes.inputRoot } }}
                InputLabelProps={{
                   classes: {

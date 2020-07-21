@@ -20,7 +20,7 @@ function PostCard(props) {
             {post.createdBy.username}
           </Typography>
         }
-        subheader={post.createdAt}
+        subheader={post.created_at}
       />
       <Divider />
 

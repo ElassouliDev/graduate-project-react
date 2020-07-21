@@ -1,19 +1,23 @@
 import { Card } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 // import { TextField } from "@material-ui/core";
 import MyInput from "../../../../shared/components/formasy-input";
 import { Button, CardContent, CardActions, CardActionArea } from "@material-ui/core";
 import { inject, observer } from "mobx-react"
 import { withRouter } from "react-router";
 import Formsy from "formsy-react";
+import { Post } from "../stores/index"
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
   }
 }));
 const CreateParticipationForm = (props) => {
+  const [isLoading, setLoading] = useState(false);
+  const [postData, setPostData] = useState({ ...Post.create({}).toJSON() })
 
+  const [content, setContent] = useState("")
   const classes = useStyles();
   const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
   if (!classRoom) {
@@ -21,16 +25,31 @@ const CreateParticipationForm = (props) => {
       class room not found
     </div>
   }
-  if (!classRoom.PostStore) {
-    return <div>
-      faild to load post addition form
-  </div>
-  }
-  const handleSubmit = (event) => {
-    classRoom.PostStore.addPost()
+  const handleSubmit = async (event) => {
+    try {
+      setLoading(true)
+      let formData = new FormData();
+      delete postData.id
+      let cRData = (({ content }) => ({ content }))(postData)
+      for (var key in cRData) {
+        formData.append(key, postData[key]);
+      }
+      const res = await props.store.apiRequests.addPost(formData, props.match.params.id)
+      classRoom.posts.addPost(res.data)
+
+    } catch (err) {
+
+      setLoading(false)
+    } finally {
+      setLoading(false)
+    }
   }
   const handleChange = (key) => (event) => {
-    classRoom.PostStore.setData({ key, value: event.target.value })
+    const value = event.target.value;
+    let prePostData = postData;
+    prePostData[key] = value
+    setPostData(prePostData)
+    console.log(prePostData);
   };
   return (
     <>
@@ -38,7 +57,7 @@ const CreateParticipationForm = (props) => {
         <Formsy onSubmit={handleSubmit}>
           <CardContent className='mr-5'>
             <MyInput
-              value={classRoom.PostStore.newPost.content}
+              value={postData.content}
               name="text"
               type="text"
               fullWidth
@@ -74,6 +93,7 @@ const CreateParticipationForm = (props) => {
               variant="contained"
               color="primary"
               type="submit"
+              disabled={isLoading}
             >
               Post
             </Button>

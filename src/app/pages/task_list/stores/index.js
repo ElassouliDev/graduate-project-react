@@ -20,13 +20,13 @@ export const task = types.model(modal).views((self) => ({
 
    get getStudentsWhoAnswered() {
       return values(self.SubmittedSolutions).map(solution => {
-         return solution.createdAt
+         return solution.created_at
       });
    },
    get getStudentsWhoDidntAnswered() {
       let ids = []
       ids = values(self.SubmittedSolutions).map(solution => {
-         return solution.createdAt.id
+         return solution.created_at.id
       });
       return values(self.students).filter((std) => {
          return !ids.includes(std.id)

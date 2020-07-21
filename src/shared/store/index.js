@@ -51,7 +51,7 @@ const courseArray = [
                         id: 1,
                         file_name: "file task",
                         file_path: "https://i.ytimg.com/vi/0KEv38tAWm4/maxresdefault.jpg",
-                        createdAt: User.create({
+                        created_at: User.create({
                             id: 1,
                             username: "yahia qumboz",
                             image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
@@ -61,7 +61,7 @@ const courseArray = [
                         id: 2,
                         file_name: "file task",
                         file_path: "https://i.ytimg.com/vi/0KEv38tAWm4/maxresdefault.jpg",
-                        createdAt: User.create({
+                        created_at: User.create({
                             id: 2,
                             username: "mohammed qumboz",
                             image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
@@ -107,10 +107,10 @@ const courseArray = [
                         image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
                     }),
                     content: "React is a great tech devloped by Facebook",
-                    createdAt: "2020-04-18",
+                    created_at: "2020-04-18",
                     comments: [{
                         id: 1,
-                        createdAt: "2020-04-18 20:20",
+                        created_at: "2020-04-18 20:20",
                         createdBy: User.create({
                             id: 2,
                             username: "mohammed qumboz",
@@ -127,10 +127,7 @@ const courseArray = [
 const RootStore = types
     .model('RootStore', {
         UserStore: types.optional(UserStore, {}),
-        User: types.optional(User, {
-            jwtToken: "asdklaskdals",
-            username: "yahia",
-        }),
+        User: types.optional(User, {}),
         ClassRoomStore: types.optional(ClassRoomStore, {
             classRooms: courseArray,
         }),

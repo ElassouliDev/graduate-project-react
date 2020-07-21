@@ -39,13 +39,37 @@ export default types.model('ClassRoomStore', {
       return selectedClassRoom.background_img ? selectedClassRoom.background_img : ""
    }
 })).actions((self) => ({
-   addNewClassRoom: () => {
-      self.classRooms.push(
-         classRoom.create({
-            ...self.newClassRoom.toJSON(),
-            id: self.classRooms.length + 1
-         })
-      )
+   addClassRoom: (cR) => {
+      // let nMaterialStore = MaterialStore.create({
+      //    materials: cR.material
+      // })
+      // let nPostStore = PostStore.create({
+      //    Posts: cR.posts
+      // })
+      // let nAttachments = MaterialStore.create({
+      //    materials: cR.attachments
+      // })
+
+      let nRoom = classRoom.create({
+         id: cR.id,
+         title: cR.title,
+         description: cR.description,
+         // background_img: cR.background_img && "",
+         // logo_iog: cR.logo_iog,
+         // material: nMaterialStore,
+         // student_objects: cR.student_objects,
+         // student_requests_objects: cR.student_requests_objects,
+         created_at: cR.created_at,
+         modified_at: cR.modified_at,
+         // posts: nPostStore,
+         // promo_code: cR.promo_code,
+         // allow_student_participation: cR.allow_student_participation,
+         // auto_accept_students: cR.auto_accept_students,
+         // archived: cR.archived,
+         // attachments: nAttachments
+
+      })
+      self.classRooms.push(nRoom)
    },
    editClassRoom: (payload) => {
       let edited = false;

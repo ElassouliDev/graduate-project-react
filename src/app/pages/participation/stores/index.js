@@ -1,20 +1,20 @@
 import { types } from 'mobx-state-tree';
 import User from '../../auth/stores/User';
-const Comment = types.model('Comment', {
+export const Comment = types.model('Comment', {
    id: types.optional(types.identifierNumber, 0),
    createdBy: types.optional(User, {}),
    content: types.optional(types.string, ''),
-   createdAt: types.optional(types.string, ''),
+   created_at: types.optional(types.string, ''),
 }).actions((self) => ({
    setData: (payload) => {
       self[payload.key] = payload.value;
    }
 }))
-const Post = types.model('Post', {
+export const Post = types.model('Post', {
    id: types.optional(types.identifierNumber, 0),
    createdBy: types.optional(User, {}),
    content: types.optional(types.string, ''),
-   createdAt: types.optional(types.string, ''),
+   created_at: types.optional(types.string, ''),
    comments: types.array(Comment)
 }).views((self) => ({
 

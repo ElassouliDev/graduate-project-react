@@ -8,6 +8,7 @@ import CustomClassroomLayout from "../../../shared/components/custom-classroom-l
 import PostCard from './components/PostCard';
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
+import { useEffect } from "react"
 
 
 const useStyles = makeStyles(theme => ({
@@ -19,7 +20,19 @@ function BlogPost(props) {
   let { slug } = useParams();
   // const [data, setData] = useState({ post: {} });
   const classes = useStyles();
-
+  useEffect(
+    () => {
+      async function fetchData() {
+        try {
+          let res = await props.store.apiRequests.getClassRooms();
+          console.log("res", res);
+          props.store.ClassRoomStore.setClassRooms(res.data);
+        } catch (error) {
+          console.log("mappedClassRooms", error.message);
+        }
+      }
+      fetchData();
+    }, []);
   return (
     <div>
       <CustomClassroomLayout
@@ -29,7 +42,7 @@ function BlogPost(props) {
           <Grid item xs={12} sm={8} md={9}>
             <CreateParticipationCard />
             {
-              props.store.ClassRoomStore.getClassRoom(props.match.params.id).PostStore.Posts.map((post) => {
+              props.store.ClassRoomStore.getClassRoom(props.match.params.id).posts.Posts.map((post) => {
                 return <PostCard post={post} />
               })
             }
