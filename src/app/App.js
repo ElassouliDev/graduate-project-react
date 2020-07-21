@@ -18,6 +18,7 @@ import TaskStudentsList from "./pages/task_students_list";
 import Settings from "./pages/courses-dashboard-page/settings"
 import Room from "./pages/Room/index.js"
 import UpdateMaterial from "./pages/material/components/UpdateMaterial";
+import RequestSubscribeToClassRoom from './pages/request_subscribe-list';
 function App() {
   return (
     <Router>
@@ -59,6 +60,13 @@ function App() {
               <Settings />
             </CustomPageLayout>
           </Route>
+          <Route path="/Room/:id/videos/manage">
+            <CustomPageLayout>
+              <CustomClassroomLayout>
+                <CourseList />
+              </CustomClassroomLayout>
+            </CustomPageLayout>
+          </Route>
           <Route path="/Room/:id/videos">
             <CustomPageLayout>
               <Videos />
@@ -78,14 +86,16 @@ function App() {
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
-          <Route path="/course/list">
+
+                <Route exact path="/Room/:id/request/subscribe">
             <CustomPageLayout>
               <CustomClassroomLayout>
-                <CourseList />
+                <RequestSubscribeToClassRoom />
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
-          <Route path="/course/list">
+
+          {/* <Route path="/course/list">
             <CustomPageLayout
 
               aside_show={false}
@@ -98,7 +108,7 @@ function App() {
                 <CourseList />
               </CustomClassroomLayout>
             </CustomPageLayout>
-          </Route>
+          </Route> */}
           <Route path="/task/list">
             <CustomPageLayout>
               <TaskList />
