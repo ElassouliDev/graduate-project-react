@@ -22,81 +22,81 @@ const Room = (props) => {
     return <Typography>class room not found</Typography>;
   }
   const classes = {
-   root:{
-      textAlign:'center'
+    root: {
+      textAlign: 'center'
 
-   },
-   chat:{
+    },
+    chat: {
       fontSize: 100
-   }
+    }
   };
   return (
     <div>
       <Typography variant="h2" className={"py-5  "}>{classRoom.title}</Typography>
-      <Divider/>
+      <Divider />
       <Grid container spacing={3} className={"py-5 !mt-5 "}>
         <Grid item lg={3} md={3} sm={12} spacing={3}>
           <Card>
-          <Link to={`./${classRoom.id}/settings`}>
+            <Link to={`./${classRoom.id}/settings`}>
 
-            <CardActionArea className={"!py-6 "} style={classes.root}>
+              <CardActionArea className={"!py-6 "} style={classes.root}>
 
                 <Settings style={classes.chat} />
-              <Typography variant="h4" className={'text-center py-5'}>
+                <Typography variant="h4" className={'text-center py-5'}>
 
-              Room Settings
+                  Room Settings
 
                 </Typography>
-            </CardActionArea>
+              </CardActionArea>
             </Link>
 
           </Card>
         </Grid>
         <Grid item lg={3} md={3} sm={12} spacing={3}>
           <Card>
-          <Link to={`./${classRoom.id}/participation`}>
+            <Link to={`./${classRoom.id}/participation`}>
 
-            <CardActionArea className={"!py-6 "} style={classes.root}>
+              <CardActionArea className={"!py-6 "} style={classes.root}>
 
                 <Chat style={classes.chat} />
-              <Typography variant="h4" className={'text-center py-5'}>
+                <Typography variant="h4" className={'text-center py-5'}>
 
-                      Room participation space
+                  Room participation space
 
                 </Typography>
-            </CardActionArea>
-            </Link>
-
-          </Card>
-        </Grid>
-      <Grid item lg={3} md={3} sm={12} spacing={3}>
-          <Card>
-          <Link to={`./${classRoom.id}/videos`}>
-
-            <CardActionArea className={"!py-6 "} style={classes.root}>
-
-                <OndemandVideo style={classes.chat} />
-              <Typography variant="h4" className={'text-center py-5'}>
-
-              Room tutorial videos
-                </Typography>
-            </CardActionArea>
+              </CardActionArea>
             </Link>
 
           </Card>
         </Grid>
         <Grid item lg={3} md={3} sm={12} spacing={3}>
           <Card>
-          <Link to={`./${classRoom.id}/material`}>
+            <Link to={`./${classRoom.id}/videos`}>
 
-            <CardActionArea className={"!py-6 "} style={classes.root}>
+              <CardActionArea className={"!py-6 "} style={classes.root}>
+
+                <OndemandVideo style={classes.chat} />
+                <Typography variant="h4" className={'text-center py-5'}>
+
+                  Room tutorial videos
+                </Typography>
+              </CardActionArea>
+            </Link>
+
+          </Card>
+        </Grid>
+        <Grid item lg={3} md={3} sm={12} spacing={3}>
+          <Card>
+            <Link to={`./${classRoom.id}/material`}>
+
+              <CardActionArea className={"!py-6 "} style={classes.root}>
 
                 <Attachment style={classes.chat} />
-              <Typography variant="h4" className={'text-center py-5'}>
+                <Typography variant="h4" className={'text-center py-5'}>
 
-              Room materials
+                  Room materials
                 </Typography>
-            </CardActionArea>
+              </CardActionArea>
             </Link>
 
           </Card>
@@ -105,7 +105,7 @@ const Room = (props) => {
 
       </Grid>
 
-   </div>
+    </div>
   );
 };
 export default inject("store")(observer(withRouter(Room)));
