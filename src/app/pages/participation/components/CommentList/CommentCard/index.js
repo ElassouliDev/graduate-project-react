@@ -6,13 +6,18 @@ export default function CommentCard(props) {
     <Grid row container className=" mb-10 ">
       <Grid item md={1}>
         <Avatar
-          alt={props.comment.commenter?.user.name}
-          src={props.comment.commenter?.image}
+          alt={props.comment.user_info.fullName}
+          src={props.comment.user_info.image}
         ></Avatar>
       </Grid>
       <Grid item md={11}>
-        <Paper elevation={3} className="p-10">
-          <Typography variant="h6" className="!my-2">
+        <Paper elevation={3} className="">
+
+        <Typography variant="h6" className="!px-3 py-5">
+            {props.comment.user_info.fullName}
+          </Typography>
+          <hr/>
+          <Typography variant="h6"className="!my-2 p-10" >
             {props.comment.content}
           </Typography>
         </Paper>

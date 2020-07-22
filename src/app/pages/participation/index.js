@@ -30,6 +30,7 @@ function BlogPost(props) {
             return
           let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
           console.log("res", res);
+
           props.store.ClassRoomStore.setOneClassRoom(res.data);
         } catch (error) {
           console.log("mappedClassRooms", error.message);

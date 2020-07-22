@@ -8,6 +8,8 @@ import { inject, observer } from "mobx-react"
 import { withRouter } from "react-router";
 import Formsy from "formsy-react";
 import { Post } from "../stores/index"
+import classNames from 'classnames';
+import { Send } from "@material-ui/icons";
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
@@ -42,6 +44,9 @@ const CreateParticipationForm = (props) => {
       setLoading(false)
     } finally {
       setLoading(false)
+             let prePostData = postData;
+       prePostData['content'] = ''
+       setPostData(prePostData)
     }
   }
   const handleChange = (key) => (event) => {
@@ -53,7 +58,7 @@ const CreateParticipationForm = (props) => {
   };
   return (
     <>
-      <Card className={classes.root} className='my-10'>
+      <Card className={classNames(classes.root,'my-10 ',!props.show?'hidden':"")}>
         <Formsy onSubmit={handleSubmit}>
           <CardContent className='mr-5'>
             <MyInput
@@ -95,7 +100,7 @@ const CreateParticipationForm = (props) => {
               type="submit"
               disabled={isLoading}
             >
-              Post
+              Post <Send/>
             </Button>
           </CardActions>
 
