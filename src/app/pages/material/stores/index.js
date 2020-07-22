@@ -3,8 +3,8 @@
 import { types, getParent } from 'mobx-state-tree';
 export const material = types.model({
    id: types.optional(types.identifierNumber, 0),
-   file: types.optional(types.string, ''),
-   created_at: types.optional(types.string, ''),
+   file: types.optional(types.maybeNull(types.string), null),
+   created_at: types.optional(types.maybeNull(types.string), null),
 }).actions((self) => ({
    setNewData: (payload) => {
       self[payload.key] = payload.value;

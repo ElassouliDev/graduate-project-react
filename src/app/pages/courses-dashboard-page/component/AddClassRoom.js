@@ -28,7 +28,7 @@ const AddClassRoom = (props) => {
          setLoading(true)
          let formData = new FormData();
          delete classRoomData.id
-         let cRData = (({ title, description, background_img }) => ({ title, description, background_img }))(classRoomData)
+         let cRData = (({ title, description, background_img, logo_img }) => ({ title, description, background_img, logo_img }))(classRoomData)
          for (var key in cRData) {
             formData.append(key, classRoomData[key]);
          }

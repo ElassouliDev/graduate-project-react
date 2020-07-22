@@ -30,7 +30,6 @@ import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import AddMaterial from "./components/AddMaterial"
 import { Checkbox } from '@material-ui/core'
-import { values } from "mobx";
 // import { Button } from "@material-ui/core";
 
 function createData({ id, title, file, uploaded_at }) {
@@ -85,7 +84,7 @@ const headCells = [
     id: "created_at",
     numeric: false,
     disablePadding: false,
-    label: "uploaded_at",
+    label: "created at",
   },
 
 
@@ -322,8 +321,15 @@ function EnhancedTable(props) {
     setPage(0);
   };
 
-  const handleDelete = (id) => (event) => {
-    classRoom.material.delete(id)
+  const handleDelete = (id) => async (event) => {
+    try {
+      const res = await props.store.apiRequests.deleteMaterial(props.match.params.id, id)
+      if (res.status == 204) {
+        classRoom.material.delete(id)
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   }
   const handleUpdate = (id) => (event) => {
     const pathname = props.history.location.pathname;
@@ -386,7 +392,7 @@ function EnhancedTable(props) {
                 scope="row"
                 padding="defualt"
               >
-                {row.uploaded_at}
+                {row.created_at}
               </TableCell>
               <TableCell align="left">
                 <DropSettingMenu id={row.id} options={
@@ -451,7 +457,7 @@ function EnhancedTable(props) {
             />
             <TableRows
               Materials={
-                values(props.store.ClassRoomStore.getClassRoom(props.match.params.id).material.materials).map(m => createData(m))
+                props.store.ClassRoomStore.getClassRoom(props.match.params.id).material.materials.toJSON().map(m => createData(m))
               }></TableRows>
           </Table>
         </TableContainer>

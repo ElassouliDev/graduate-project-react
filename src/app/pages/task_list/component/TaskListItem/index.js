@@ -1,5 +1,5 @@
 import { Card, Divider, CardHeader } from "@material-ui/core";
-import React from "react";
+import React, { useEffect } from "react";
 import { Chip } from '@material-ui/core';
 import { Typography } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
@@ -8,6 +8,9 @@ import { Avatar } from '@material-ui/core';
 
 
 export default function TaskListItem(props) {
+  useEffect(() => {
+
+  }, []);
 
   return (
     <Card className="my-20">
@@ -15,13 +18,13 @@ export default function TaskListItem(props) {
         <CardHeader
           avatar={
             <Avatar
-              alt={props.taskData.User.name}
-              src={props.taskData.User.image}
+              alt={props.taskData.user_info.username}
+              src={props.taskData.user_info.image}
             ></Avatar>
           }
           title={
             <Typography variant="h6" className="!mb-2">
-              {props.taskData.User.name}
+              {props.taskData.user_info.username}
             </Typography>
           }
           subheader={props.taskData.created_at}
