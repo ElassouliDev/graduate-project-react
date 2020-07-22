@@ -3,19 +3,22 @@ import getConfig from '../../app/config';
 import LocalStorage from '../../app/services/LocalStorage';
 import getApiRequests from '../../app/services/apiRequestes';
 import UserStore from "../../app/pages/auth/stores/UserStore";
-import LoginStore from "../../app/pages/auth/stores/LoginStore";
-import ClassRoomStore from "../../app/pages/courses-dashboard-page/stores/ClassRoomStore";
-import { classRoom } from "../../app/pages/courses-dashboard-page/stores/ClassRoomStore";
-import MaterialStore, { material } from "../../app/pages/material/stores"
+import User from "../../app/pages/auth/stores/User";
+import ClassRoomStore from "../../app/pages/courses-dashboard-page/stores/ClassroomStore";
+import { classRoom } from "../../app/pages/courses-dashboard-page/stores/ClassroomStore";
+import materialStore, { material } from "../../app/pages/material/stores"
+import TaskStore, { task } from "../../app/pages/task_list/stores"
+import File from "../../shared/store/File"
+import PostStore from '../../app/pages/participation/stores';
 // Root store for all stores and models
 const courseArray = [
     classRoom.create({
         id: 1,
         title: "course 1",
         description: "course description 1",
-        coverImage: "./assets/images/backgrounds/header_classroom_default.png",
-        thumbnail: "./assets/images/backgrounds/informationSec.jpg",
-        MaterialStore: MaterialStore.create({
+        background_img: "./assets/images/backgrounds/header_classroom_default.png",
+        logo_img: "./assets/images/backgrounds/informationSec.jpg",
+        material: materialStore.create({
             materials: [
                 material.create({
                     id: 0,
@@ -40,50 +43,93 @@ const courseArray = [
                 }),
             ]
         }),
+        TaskStore: TaskStore.create({
+            tasks: [
+                task.create({
+                    id: 1,
+                    taskFile: File.create({
+                        id: 1,
+                        file_name: "file task",
+                        file_path: "https://i.ytimg.com/vi/0KEv38tAWm4/maxresdefault.jpg",
+                        created_at: User.create({
+                            id: 1,
+                            username: "yahia qumboz",
+                            image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
+                        })
+                    }),
+                    SubmittedSolutions: [File.create({
+                        id: 2,
+                        file_name: "file task",
+                        file_path: "https://i.ytimg.com/vi/0KEv38tAWm4/maxresdefault.jpg",
+                        created_at: User.create({
+                            id: 2,
+                            username: "mohammed qumboz",
+                            image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
+                        })
+                    })],
+                    created_at: "12-12-2020",
+                    title: "Task Test 1",
+                    description: "Lizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except AntarcticaLizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except AntarcticaLizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except AntarcticaLizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except Antarctica",
+                    vaildUntill: "12-01-2020",
+                    is_closed: false,
+                    teacher: User.create({
+                        id: 1,
+                        username: "yahia qumboz",
+                        image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
+                    }),
+                    students: [
+                        User.create({
+                            id: 2,
+                            username: "mohammed qumboz",
+                            image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
+                        }),
+                        User.create({
+                            id: 3,
+                            username: "alaa qumboz",
+                            image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
+                        }),
+                        User.create({
+                            id: 4,
+                            username: "ezat qumboz",
+                            image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
+                        })
+                    ]
+                })
+            ]
+        }),
+        PostStore: PostStore.create({
+            Posts: [
+                {
+                    id: 1,
+                    createdBy: User.create({
+                        id: 1,
+                        username: "yahia qumboz",
+                        image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
+                    }),
+                    content: "React is a great tech devloped by Facebook",
+                    created_at: "2020-04-18",
+                    comments: [{
+                        id: 1,
+                        created_at: "2020-04-18 20:20",
+                        createdBy: User.create({
+                            id: 2,
+                            username: "mohammed qumboz",
+                            image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
+                        }),
+                        content: "Indeed 😁"
+                    }]
+                },
+            ]
+        })
 
-    }),
-    classRoom.create({
-        id: 2,
-        title: "course 2",
-        description: "course description 1",
-        coverImage: "./assets/images/backgrounds/header_classroom_default.png",
-        thumbnail: "./assets/images/backgrounds/informationSec.jpg"
-    }),
-    classRoom.create({
-        id: 3,
-        title: "course 3",
-        description: "course description 1",
-        coverImage: "./assets/images/backgrounds/header_classroom_default.png",
-        thumbnail: "./assets/images/backgrounds/informationSec.jpg"
-    }),
-    classRoom.create({
-        id: 4,
-        title: "course 4",
-        description: "course description 1",
-        coverImage: "./assets/images/backgrounds/header_classroom_default.png",
-        thumbnail: "./assets/images/backgrounds/informationSec.jpg"
-    }),
-    classRoom.create({
-        id: 5,
-        title: "course 5",
-        description: "course description 1",
-        coverImage: "./assets/images/backgrounds/header_classroom_default.png",
-        thumbnail: "./assets/images/backgrounds/informationSec.jpg"
-    }),
-    classRoom.create({
-        id: 6,
-        title: "course 6",
-        description: "course description 1",
-        coverImage: "./assets/images/backgrounds/header_classroom_default.png",
-        thumbnail: "./assets/images/backgrounds/informationSec.jpg"
     }),
 ]
 const RootStore = types
     .model('RootStore', {
         UserStore: types.optional(UserStore, {}),
-        LoginStore: types.optional(LoginStore, {}),
+        User: types.optional(User, {}),
         ClassRoomStore: types.optional(ClassRoomStore, {
-            classRooms: courseArray,
+            // classRooms: courseArray,
         }),
 
     }).views(self => ({

@@ -1,23 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
-import { Typography, Container, Grid, Icon, Card, Divider } from "@material-ui/core";
+import { Typography, Grid, Card, Divider } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import classNames from "classnames";
 import { Attachment } from '@material-ui/icons';
-import { OndemandVideo } from '@material-ui/icons';
 import { Chat } from '@material-ui/icons';
-import { IconButton } from "@material-ui/core";
 import { CardActionArea } from "@material-ui/core";
 import { Settings } from "@material-ui/icons";
 const Room = (props) => {
 
-  const [classRoom, setClassRoom] = useState({});
-  useEffect(() => {
-    setClassRoom(
-      props.store.ClassRoomStore.getClassRoom(+props.match.params.id)
-    );
-  }, []);
+  const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
+  useEffect(
+    () => {
+      async function fetchData() {
+        try {
+          if (classRoom)
+            return
+          let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
+          console.log("res", res);
+          props.store.ClassRoomStore.setOneClassRoom(res.data);
+        } catch (error) {
+          console.log("mappedClassRooms", error.message);
+        }
+      }
+      fetchData();
+    }, []);
   if (!classRoom) {
     return <Typography>class room not found</Typography>;
   }
@@ -66,23 +73,20 @@ const Room = (props) => {
                 </Typography>
               </CardActionArea>
             </Link>
-
           </Card>
         </Grid>
         <Grid item lg={3} md={3} sm={12} spacing={3}>
           <Card>
-            <Link to={`./${classRoom.id}/videos`}>
+            <Link to={`./${classRoom.id}/courses`}>
 
               <CardActionArea className={"!py-6 "} style={classes.root}>
 
-                <OndemandVideo style={classes.chat} />
+                <Attachment style={classes.chat} />
                 <Typography variant="h4" className={'text-center py-5'}>
-
                   Room tutorial videos
                 </Typography>
               </CardActionArea>
             </Link>
-
           </Card>
         </Grid>
         <Grid item lg={3} md={3} sm={12} spacing={3}>
@@ -98,14 +102,24 @@ const Room = (props) => {
                 </Typography>
               </CardActionArea>
             </Link>
-
           </Card>
         </Grid>
+        <Grid item lg={3} md={3} sm={12} spacing={3}>
+          <Card>
+            <Link to={`./${classRoom.id}/tasks`}>
 
+              <CardActionArea className={"!py-6 "} style={classes.root}>
 
+                <Attachment style={classes.chat} />
+                <Typography variant="h4" className={'text-center py-5'}>
+                  Room Tasks
+                </Typography>
+              </CardActionArea>
+            </Link>
+          </Card>
+        </Grid>
       </Grid>
-
     </div>
-  );
-};
-export default inject("store")(observer(withRouter(Room)));
+  )
+}
+export default inject('store')(withRouter(observer(Room)))

@@ -50,7 +50,7 @@ class Request {
         this.post = this.post.bind(this);
     }
 
-    async send(method, url, data = {}) {
+    send(method, url, data = {}) {
         let jwtToken = window.localStorage.getItem('jwtToken');
 
 
@@ -66,8 +66,6 @@ class Request {
                     Authorization: `Token ${jwtToken}`,
                 },
             })
-                .then(response => response)
-                .catch(error => handleError(error));
         }
         console.log(url, "dfdfdfdfdfdfdfdfdf")
         return axios({
@@ -75,8 +73,6 @@ class Request {
             method,
             data,
         })
-            .then(response => response)
-            .catch(error => handleError(error));
     }
 
     del(url) {
@@ -107,11 +103,13 @@ const requests = (localStorage, config) => {
     console.log(baseUrl, 'baseUrl')
     const requestInstance = new Request(localStorage, baseUrl);
     return {
-        getClassRooms: () => requestInstance.get(`${baseUrl}/classroom`),
-        createNewClassroom: (payload) => requestInstance.post(`${config.webUrl}/classroom/create/`, payload),
+        getClassRooms: () => requestInstance.get(`${baseUrl}/classrooms/`),
+        getOneClassRoom: (id) => requestInstance.get(`${baseUrl}/classrooms/${id}`),
         registerUser: (payload) => requestInstance.post(`${config.webUrl}/api/users/`, payload),
         loginUser: (payload) => requestInstance.post(`${config.webUrl}/api/login/`, payload),
-
+        addClassRoom: (payload) => requestInstance.post(`${baseUrl}/classrooms/`, payload),
+        addPost: (payload, classRoomId) => requestInstance.post(`${baseUrl}/classrooms/${classRoomId}/posts/`, payload),
+        addComment: (payload, postId) => requestInstance.post(`${baseUrl}/posts/${postId}/comments/`, payload),
         requestInstance
     }
 };

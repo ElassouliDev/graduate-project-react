@@ -1,13 +1,12 @@
-import { Typography, makeStyles, withStyles } from "@material-ui/core";
-import React, { Component, useState } from "react";
+import { Typography, makeStyles } from "@material-ui/core";
+import React, { useState } from "react";
 import MyInput from "../../../../shared/components/formasy-input";
 import Formsy from "formsy-react";
 import { Button, CircularProgress } from "@material-ui/core";
 import { CardActions } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
-import { FormControlLabel } from "@material-ui/core";
-import { useHistory } from "react-router-dom"
 import { inject, observer } from 'mobx-react';
+import { classRoom } from "../stores/ClassroomStore"
 
 const useStyles = makeStyles((theme) => ({
    labelRoot: {
@@ -23,14 +22,18 @@ const useStyles = makeStyles((theme) => ({
 const AddClassRoom = (props) => {
    const [isLoading, setLoading] = useState(false);
    const [helperText, setHelperText] = useState("");
-
+   const [classRoomData, setClassRoomData] = useState({ ...classRoom.create({}).toJSON() })
    const handelSubmitAddClassRoom = async () => {
       try {
          setLoading(true)
-         let payload = props.store.ClassRoomStore.newClassRoom;
-         console.log(payload);
-
-         props.store.ClassRoomStore.addNewClassRoom(payload);
+         let formData = new FormData();
+         delete classRoomData.id
+         let cRData = (({ title, description, background_img }) => ({ title, description, background_img }))(classRoomData)
+         for (var key in cRData) {
+            formData.append(key, classRoomData[key]);
+         }
+         const res = await props.store.apiRequests.addClassRoom(formData)
+         props.store.ClassRoomStore.addClassRoom(res.data);
 
       } catch (err) {
 
@@ -44,7 +47,20 @@ const AddClassRoom = (props) => {
 
    const handleChange = (key) => (event) => {
       const value = event.target.value;
-      props.store.ClassRoomStore.setClassRoomData({ key, value })
+      let preClassRoomData = classRoomData;
+      preClassRoomData[key] = value
+      setClassRoomData(preClassRoomData)
+      console.log(classRoomData);
+   };
+
+   const handleChangeFile = (key) => (event) => {
+      if (event.target.files.length > 0) {
+         const value = event.target.files[0];
+         let preClassRoomData = classRoomData;
+         preClassRoomData[key] = value
+         setClassRoomData(preClassRoomData)
+         console.log(classRoomData);
+      }
    };
    const classes = useStyles();
 
@@ -60,14 +76,14 @@ const AddClassRoom = (props) => {
 
          <Formsy className="mb-10" onSubmit={handelSubmitAddClassRoom}>
             <MyInput
-               value={props.store.ClassRoomStore.newClassRoom.title}
+               value={classRoomData.title}
                name="title"
                type="text"
                fullWidth
                placeholder="Enter Title"
                label="Title"
                id="title"
-               validations="isSpecialWords"
+               validations="isExisty"
                validationError="This is not a valid title"
                onChange={handleChange("title")}
                InputProps={{ classes: { root: classes.inputRoot } }}
@@ -86,14 +102,14 @@ const AddClassRoom = (props) => {
                required
             />
             <MyInput
-               value={props.store.ClassRoomStore.newClassRoom.description}
+               value={classRoomData.description}
                name="description"
                type="text"
                fullWidth
                placeholder="Enter your description"
                label="Descrption"
                id="description"
-               validations="isSpecialWords"
+               validations="isExisty"
                validationError="This is not a valid description"
                onChange={handleChange("description")}
                InputProps={{ classes: { root: classes.inputRoot } }}
@@ -112,15 +128,15 @@ const AddClassRoom = (props) => {
                required
             />
             <MyInput
-               value={props.store.ClassRoomStore.newClassRoom.thumbnail}
-               name="thumbnail"
+               value={classRoomData.logo_img}
+               name="logo_img"
                type="file"
                fullWidth
-               placeholder="Enter your thumbnail"
-               label="Thumbnail"
-               id="thumbnail"
-               validationError="This is not a valid thumbnail"
-               onChange={handleChange("thumbnail")}
+               placeholder="Enter your logo_img"
+               label="logo_img"
+               id="logo_img"
+               validationError="This is not a valid logo_img"
+               onChange={handleChangeFile("logo_img")}
                InputProps={{ classes: { root: classes.inputRoot } }}
                InputLabelProps={{
                   classes: {
@@ -136,15 +152,15 @@ const AddClassRoom = (props) => {
                }}
             />
             <MyInput
-               value={props.store.ClassRoomStore.newClassRoom.coverImage}
-               name="coverImage"
+               value={classRoomData.background_img}
+               name="background_img"
                type="file"
                fullWidth
                placeholder="Enter your username"
-               label="coverImage"
-               id="coverImage"
-               validationError="This is not a valid coverImage"
-               onChange={handleChange("coverImage")}
+               label="background_img"
+               id="background_img"
+               validationError="This is not a valid background_img"
+               onChange={handleChangeFile("background_img")}
                InputProps={{ classes: { root: classes.inputRoot } }}
                InputLabelProps={{
                   classes: {

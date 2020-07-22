@@ -10,7 +10,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import { inject, observer } from 'mobx-react';
 import { red } from "@material-ui/core/colors";
 import { Redirect } from "react-router-dom";
-
+import DescriptionAlerts from "../../../../../shared/components/alert"
+import { withRouter } from "react-router-dom"
 const styles = (theme) => ({
   labelRoot: {
     fontSize: "1.75rem",
@@ -27,7 +28,9 @@ class SignUpForm extends React.Component {
   state = {
     isLoading: false,
     helperText: "",
-    isLoggedIn: false
+    isLoggedIn: false,
+    status: 0,
+    message: ""
   }
   // handleChange1 = (event) => {
   //   this.props.store.UserStore.setNewUser({ ...values, [event.target.name]: event.target.value });
@@ -43,11 +46,17 @@ class SignUpForm extends React.Component {
       this.setState({ isLoading: true, helperText: "" })
       const res = await this.props.store.apiRequests.registerUser({ ...body, groups: [body.groups] });
       if (res.data.token) {
+        this.setState({ isLoggedIn: true, status: 1, message: "You are registerd, you will be redirected in 5 secounds" })
+        setTimeout(() => {
+          console.log("props.history.push('/')");
+          this.props.history.push("/")
+        }, 6000);
         this.props.store.UserStore.setNewUser(values)
         window.localStorage.setItem('jwtToken', res.data.token)
-        this.setState({ isLoggedIn: true })
       }
     } catch (err) {
+      this.setState({ status: 2, message: err.message })
+
       this.setState({ isLoading: false, helperText: err.message })
       window.localStorage.clear()
 
@@ -72,9 +81,6 @@ class SignUpForm extends React.Component {
     console.log(this.props.store, "dsdfdsfdsf")
     const { classes } = this.props;
     const { email = "", password = "", confirmPassword = "", username = "", groups = "", first_name = "", last_name = "" } = (this.props.store.UserStore);
-    if (this.state.isLoggedIn) {
-      return <Redirect to={"/"} />
-    }
     return (
       <CardContent>
         <Typography
@@ -96,7 +102,7 @@ class SignUpForm extends React.Component {
                 placeholder="Enter your first name"
                 label="First Name"
                 id="first_name"
-                validations="isSpecialWords"
+                validations="isExisty"
                 validationError="first name not a valid"
                 onChange={this.handleChange("first_name")}
                 InputProps={{ classes: { root: classes.inputRoot } }}
@@ -124,7 +130,7 @@ class SignUpForm extends React.Component {
                 placeholder="Enter your last name"
                 label="First Name"
                 id="first_name"
-                validations="isSpecialWords"
+                validations="isExisty"
                 onChange={this.handleChange("last_name")}
                 validationError="first name not a valid"
                 InputProps={{ classes: { root: classes.inputRoot } }}
@@ -152,7 +158,7 @@ class SignUpForm extends React.Component {
                 placeholder="Enter your last name"
                 label="User Name"
                 id="user_name"
-                validations="isSpecialWords"
+                validations="isExisty"
                 onChange={this.handleChange("username")}
                 validationError="user name is not a valid"
                 InputProps={{ classes: { root: classes.inputRoot } }}
@@ -281,7 +287,8 @@ class SignUpForm extends React.Component {
             }}
             required
           />
-          <FormHelperText color={red[200]}>{this.state.helperText}</FormHelperText>
+          <DescriptionAlerts status={this.state.status} message={this.state.message} />
+
           <CardActions className="!px-0 !mt-10">
             <Button
               fullWidth
@@ -304,4 +311,4 @@ class SignUpForm extends React.Component {
 
 };
 
-export default withStyles(styles)(inject('store')(observer(SignUpForm)));
+export default withStyles(styles)(inject('store')(withRouter(observer(SignUpForm))));

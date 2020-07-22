@@ -1,86 +1,60 @@
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { useParams } from "react-router-dom";
-import React, { useEffect, useState, Component } from "react";
-
+import { withRouter } from "react-router-dom";
 import TaskListItem from "./component/TaskListItem";
-import { Divider } from "@material-ui/core";
-import { Typography } from "@material-ui/core";
-
-import { CardActionArea, Button } from "@material-ui/core";
-import { Card } from "@material-ui/core";
+import { Divider, Typography } from "@material-ui/core";
+import getNextPath from "../../../shared/middleware/getNexPath"
+import { observer, inject } from "mobx-react";
+import AddTask from "./component/AddTask";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  labelRoot: {
+    fontSize: "1.75rem",
+  },
+  inputRoot: {
+    fontSize: "1.75rem",
+  },
+  containedSizeLarge: {
+    fontSize: "1.75rem",
+  },
 }));
+const TaskList = (props) => {
 
-export default class TaskList extends Component {
-  constructor(props) {
-    super(props);
-    this.dense = false;
-    this.secondary = false;
-    this.taskListData = [
-      {
-        teacher: {
-          name: "Yehia Elas",
-          image:
-            "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
-        },
-        id: 1,
-        title: "Task Test2",
-        desc:
-          "Lizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except AntarcticaLizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except AntarcticaLizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except AntarcticaLizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except Antarctica",
-        status: "notSended",
-        is_closed: false,
-        created_at: "September 14, 2016",
-      },
-      {
-        teacher: {
-          name: "Yehia Elas",
-          image:
-            "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
-        },
-        id: 1,
-        title: "Task Test3",
-        desc:
-          "Lizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except AntarcticaLizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except AntarcticaLizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except AntarcticaLizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except Antarctica",
-        status: "sended",
-        is_closed: true,
-        created_at: "September 14, 2016",
-      },
-      {
-        teacher: {
-          name: "Yehia Elas",
-          image:
-            "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
-        },
-        id: 1,
-        title: "Task Test",
-        desc:
-          "Lizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except AntarcticaLizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except AntarcticaLizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except AntarcticaLizards are a widespread group of squamate reptiles, with ove 6,000 species, ranging across all continents except Antarctica",
-        status: "sended",
-        is_closed: false,
-        created_at: "September 14, 2016",
-      },
-    ];
+  const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
+  if (!classRoom) {
+    return <div>
+      class room not found
+  </div>
+  }
+  if (!classRoom.TaskStore) {
+    return <div>
+      faild to load tassks
+  </div>
   }
 
-  componentDidMount() { }
-
-  render() {
-    return (
-      <div className="container m-auto my-20  ">
-        <Typography variant="h2" className="!mb-5">
-          Task List
-        </Typography>
-        <Divider />
-        <div className="my-10">
-          {this.taskListData.map((taskData) => (
-            <TaskListItem link="/task/1" taskData={taskData} />
-          ))}
-        </div>
+  return (
+    <div className="container m-auto my-20  ">
+      <Typography variant="h2" className="!mb-5">
+        Task List
+      </Typography>
+      <Divider />
+      <div className="my-10">
+        <AddTask></AddTask>
       </div>
-    );
-  }
+      <Divider />
+      <div className="my-10">
+        {
+          classRoom.TaskStore.tasks.map(
+            (taskData) => (
+              <TaskListItem link={getNextPath(props.history.location.pathname, taskData.id)} taskData={taskData} />
+            )
+          )
+        }
+      </div>
+    </div>
+  );
 }
+export default inject('store')(withRouter(observer(TaskList)));

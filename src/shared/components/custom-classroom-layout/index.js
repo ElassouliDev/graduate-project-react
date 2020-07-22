@@ -1,6 +1,5 @@
 import React from "react";
 import ClassRoomHeader from '../classroom_header';
-import { Container } from '@material-ui/core';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from "react-router";
 
@@ -9,13 +8,13 @@ const CustomClassroomLayout = (props) => {
   return (
     <div style={{ paddingTop: "1.5rem" }}>
       <ClassRoomHeader
-        Title={classRoom.title}
+        Title={classRoom ? classRoom.title : ""}
         code={"123456"}
-        image={classRoom.coverImage}
+        image={classRoom ? classRoom.background_img : ""}
       />
       {props.children}
     </div>
   );
 };
 
-export default inject('store')(observer(withRouter(CustomClassroomLayout)));
+export default inject('store')(withRouter(observer(CustomClassroomLayout)));

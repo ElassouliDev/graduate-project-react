@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import CustomPageLayout from "../shared/components/custom-page-layout";
 import CoursesDashboardPage from "./pages/courses-dashboard-page";
-import ParticipationClassroomPage from "./pages/participation/participation";
+import ParticipationClassroomPage from "./pages/participation";
 import Auth from "./pages/auth";
 import Material from "./pages/material";
 import CustomClassroomLayout from "../shared/components/custom-classroom-layout";
@@ -12,10 +12,10 @@ import Videos from "./pages/videos";
 import Protected from "../shared/components/Protected/Protected"
 import IsLoggedIn from "../shared/components/Protected/IsLoggedIn"
 import CourseList from "./pages/course-list";
-import TaskInfo from "./pages/task_info";
+import TaskInfo from "./pages/task_list/component/task_info";
 import TaskList from "./pages/task_list";
-import TaskStudentsList from "./pages/task_students_list";
-import Settings from "./pages/courses-dashboard-page/settings"
+import TaskStudentsList from "./pages/task_list/component/task_students_list";
+import Settings from "./pages/Room/settings"
 import Room from "./pages/Room/index.js"
 import UpdateMaterial from "./pages/material/components/UpdateMaterial";
 import Chat from './pages/chat';
@@ -37,8 +37,6 @@ function App() {
             </Route>
           </IsLoggedIn>
         </Route>
-
-
         <Protected>
           <Route exact path="/">
             <CustomPageLayout>
@@ -57,10 +55,10 @@ function App() {
           </Route>
           <Route path="/Room/:id/settings">
             <CustomPageLayout>
-            <CustomClassroomLayout>
+              <CustomClassroomLayout>
 
-              <Settings />
-          </CustomClassroomLayout>
+                <Settings />
+              </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
           <Route path="/Room/:id/videos">
@@ -82,20 +80,7 @@ function App() {
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
-          <Route path="/course/list">
-            <CustomPageLayout>
-              <CustomClassroomLayout>
-                <CourseList />
-              </CustomClassroomLayout>
-            </CustomPageLayout>
-          </Route>
-
-          <Route path="/chat">
-              <CustomPageLayout>
-                <Chat />
-              </CustomPageLayout>
-          </Route>
-          <Route path="/course/list">
+          <Route path="/Room/:id/courses">
             <CustomPageLayout
 
               aside_show={false}
@@ -109,12 +94,25 @@ function App() {
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
-          <Route path="/task/list">
+          <Route path="/chat">
             <CustomPageLayout>
-              <TaskList />
+              <Chat />
             </CustomPageLayout>
           </Route>
-          <Route path="/task/:id">
+          <Route exact path="/Room/:id/tasks">
+            <CustomPageLayout
+              aside_show={false}
+              nav_item={true}
+              add_calssroom={false}
+              is_teacher={"teacher" == "teacher"} // check if user is tracher
+              nav_action={true}
+            >
+              <CustomClassroomLayout>
+                <TaskList />
+              </CustomClassroomLayout>
+            </CustomPageLayout>
+          </Route>
+          <Route exact path="/Room/:id/tasks/:tId">
             <CustomPageLayout
               aside_show={false}
               nav_item={true}
@@ -127,7 +125,7 @@ function App() {
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
-          <Route path="/classroon/:classroom_id/task/:task_id/student">
+          <Route exact path="/classroon/:classroom_id/task/:task_id/student">
             <CustomPageLayout
 
               aside_show={false}

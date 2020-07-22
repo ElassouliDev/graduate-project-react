@@ -22,17 +22,20 @@ const useStyles = makeStyles((theme) => ({
    },
 }));
 const AddMaterial = (props) => {
+   const { store: {
+      ClassRoomStore: { getClassRoom },
+   } } = props;
+   let classRoom = getClassRoom(props.match.params.id);
+
    const [isLoading, setLoading] = useState(false);
    const [helperText, setHelperText] = useState("");
-   let classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
 
-   const handelSubmitAdd = async () => {
+   const handelSubmit = async () => {
       try {
          setLoading(true)
+         classRoom.material.addNewMaterial();
 
-         props.store.ClassRoomStore.getClassRoom(props.match.params.id).MaterialStore.addNewMaterial();
 
-         props.onAddition(props.store.ClassRoomStore.getClassRoom(props.match.params.id).MaterialStore.materials)
       } catch (err) {
 
          setLoading(false)
@@ -43,9 +46,11 @@ const AddMaterial = (props) => {
       }
    };
 
+
+
    const handleChange = (key) => (event) => {
       const value = event.target.value;
-      props.store.ClassRoomStore.getClassRoom(props.match.params.id).MaterialStore.setNewData({ key, value })
+      getClassRoom(props.match.params.id).material.setNewData({ key, value })
    };
    const classes = useStyles();
    const fields = [
@@ -66,13 +71,6 @@ const AddMaterial = (props) => {
       {
          name: "url",
          type: "file",
-         validations: "isExisty",
-         validationError: "This is not a valid",
-         required: true
-      },
-      {
-         name: "uploadedAt",
-         type: "date",
          validations: "isExisty",
          validationError: "This is not a valid",
          required: true
@@ -101,11 +99,11 @@ const AddMaterial = (props) => {
             Add New Material
         </Typography>
 
-         <Formsy className="mb-10" onSubmit={handelSubmitAdd}>
+         <Formsy className="mb-10" onSubmit={handelSubmit}>
             {
                fields.map((field) =>
                   <MyInput
-                     value={classRoom.MaterialStore.newMaterial[field.name]}
+                     value={classRoom.material.newMaterial[field.name]}
                      name={field.name}
                      type={field.type}
                      fullWidth
@@ -150,4 +148,4 @@ const AddMaterial = (props) => {
       </CardContent>
    );
 }
-export default inject('store')(observer(withRouter(AddMaterial)));
+export default inject('store')(withRouter(observer(AddMaterial)));

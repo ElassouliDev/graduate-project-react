@@ -34,7 +34,7 @@ const UpdateMaterial = (props) => {
             formData.append(key, material.key)
          });
          formData.append("url", file)
-         classRoom.MaterialStore.editMaterial((material.id, material));
+         classRoom.material.editMaterial((material.id, material));
 
       } catch (err) {
 
@@ -48,7 +48,7 @@ const UpdateMaterial = (props) => {
    useEffect(() => {
       try {
 
-         const materialRes = classRoom.MaterialStore.get(props.match.params.mId)
+         const materialRes = classRoom.material.get(props.match.params.mId)
          setMaterial(materialRes)
       } catch (error) {
          console.log("err message", error.message);
@@ -169,4 +169,4 @@ const UpdateMaterial = (props) => {
       </CardContent>
    );
 }
-export default inject('store')(observer(withRouter(UpdateMaterial)));
+export default inject('store')(withRouter(observer(UpdateMaterial)));

@@ -1,13 +1,10 @@
-import React ,{ useState, useEffect }from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
-import classNames from "classnames";
 import DropSettingMenu from '../../../app/pages/course-list/components/dropSettingMenu';
 import { Sort } from '@material-ui/icons';
 import { Add } from '@material-ui/icons';
 import { Fab } from '@material-ui/core';
-import { AddCircle } from "@material-ui/icons";
-import { Cached } from "@material-ui/icons";
 import { lighten, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -20,17 +17,13 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
-import { Button } from "@material-ui/core";
 
-function createData(id,name, date) {
-    return {id ,  name, date};
+function createData(id, name, date) {
+    return { id, name, date };
 }
 
 // function createData(name, calories, fat, carbs, protein) {
@@ -38,10 +31,10 @@ function createData(id,name, date) {
 // }
 
 const rows = [
-    createData("1","Donut",'15/2/2020'),
-    createData("1","Donut",'15/2/2020'),
-    createData("1","Donut",'15/2/2020'),
-    createData("1","Donut",'15/2/2020'),
+    createData("1", "Donut", '15/2/2020'),
+    createData("1", "Donut", '15/2/2020'),
+    createData("1", "Donut", '15/2/2020'),
+    createData("1", "Donut", '15/2/2020'),
 
 
 ];
@@ -52,7 +45,7 @@ const headCells = [
         numeric: true,
         disablePadding: true,
         label: "Date",
-    },{
+    }, {
         id: "option",
         numeric: true,
         disablePadding: false,
@@ -123,8 +116,8 @@ function EnhancedTableHead(props) {
                             {headCell.label}
                             {orderBy === headCell.id ? (
                                 <span className={classes.visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </span>
+                                    {order === "desc" ? "sorted descending" : "sorted ascending"}
+                                </span>
                             ) : null}
                         </TableSortLabel>
                     </TableCell>
@@ -187,25 +180,25 @@ const EnhancedTableToolbar = (props) => {
                     {numSelected} selected
                 </Typography>
             ) : (
-                <>
-                    <Typography
-                        className={classes.title}
-                        variant="h6"
-                        id="tableTitle"
-                        component="div"
-                    >
-                        Material
+                    <>
+                        <Typography
+                            className={classes.title}
+                            variant="h6"
+                            id="tableTitle"
+                            component="div"
+                        >
+                            Material
 
                         <Tooltip title="Add" aria-label="add">
-                            <Fab color="primary" className={classes.fab}>
-                                <Add />
-                            </Fab>
-                        </Tooltip>
-                    </Typography>
+                                <Fab color="primary" className={classes.fab}>
+                                    <Add />
+                                </Fab>
+                            </Tooltip>
+                        </Typography>
 
 
-                </>
-            )}
+                    </>
+                )}
 
             {numSelected > 0 ? (
                 <Tooltip title="Delete">
@@ -215,21 +208,21 @@ const EnhancedTableToolbar = (props) => {
                 </Tooltip>
 
             ) : (
-                <>
-                    <Tooltip title="Filter list">
-                        <IconButton aria-label="filter list">
-                            <FilterListIcon />
-                        </IconButton>
+                    <>
+                        <Tooltip title="Filter list">
+                            <IconButton aria-label="filter list">
+                                <FilterListIcon />
+                            </IconButton>
 
-                    </Tooltip>
-                    <Tooltip title="Sort ">
-                        <IconButton aria-label="Sort">
-                            <Sort />
-                        </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Sort ">
+                            <IconButton aria-label="Sort">
+                                <Sort />
+                            </IconButton>
 
-                    </Tooltip>
-                </>
-            )}
+                        </Tooltip>
+                    </>
+                )}
         </Toolbar>
     );
 };
@@ -304,7 +297,7 @@ export default function EnhancedTable() {
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
-                <EnhancedTableToolbar  />
+                <EnhancedTableToolbar />
                 <TableContainer>
                     <Table
                         className={classes.table}

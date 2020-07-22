@@ -1,13 +1,13 @@
 import { Typography, makeStyles, withStyles } from "@material-ui/core";
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import MyInput from "../../../../../shared/components/formasy-input";
 import Formsy from "formsy-react";
 import { Button, CircularProgress } from "@material-ui/core";
 import { CardActions } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
-import { FormControlLabel } from "@material-ui/core";
-import { useHistory } from "react-router-dom"
+import { withRouter } from "react-router-dom"
 import { inject, observer } from 'mobx-react';
+import DescriptionAlerts from "../../../../../shared/components/alert"
 
 const useStyles = makeStyles((theme) => ({
   labelRoot: {
@@ -22,37 +22,44 @@ const useStyles = makeStyles((theme) => ({
 }));
 const LoginForm = (props) => {
   const [isLoading, setLoading] = useState(false);
-  const [helperText, setHelperText] = useState("");
-  let history = useHistory();
-
+  let [status, setStatus] = useState(0);
+  let [message, setMessage] = useState("");
 
   const handelSubmitLoginForm = async () => {
     try {
       setLoading(true)
-      setHelperText("")
-      const payload = props.store.LoginStore;
+      setMessage("")
+      const payload = props.store.User;
       console.log("login", payload);
       const res = await props.store.apiRequests.loginUser({ username: payload.username, password: payload.password })
       console.log(res);
 
       if (res.data.auth_token) {
+        setStatus(1)
+        setMessage("You are logged in, you will be redirected in 5 secounds")
+        props.store.User.setUser(res.data)
         window.localStorage.setItem('jwtToken', res.data.auth_token)
-        history.push("/")
+        setTimeout(() => {
+          console.log("props.history.push('/')");
+          props.history.push("/")
+        }, 6000);
       }
     } catch (err) {
       window.localStorage.clear()
       if (err.non_field_errors) {
         if (err.non_field_errors.length > 0) {
-          setHelperText(err.non_field_errors[0])
+          setStatus(2)
+          setMessage(err.non_field_errors[0])
           return;
         } else {
-          setHelperText("The provided password and email is not correct")
+          setStatus(2)
+          setMessage("The provided password and email is not correct")
           return;
         }
       } else {
         if (err.message) {
-          setHelperText(err.message)
-
+          setStatus(2)
+          setMessage(err.message)
         }
       }
     } finally {
@@ -61,7 +68,7 @@ const LoginForm = (props) => {
   };
 
   const handleChange = (key) => (event) => {
-    props.store.LoginStore.setUserData({ key, value: event.target.value })
+    props.store.User.setUserData({ key, value: event.target.value })
   };
 
   const classes = useStyles();
@@ -78,14 +85,14 @@ const LoginForm = (props) => {
 
       <Formsy className="mb-10" onSubmit={handelSubmitLoginForm}>
         <MyInput
-          value={props.store.LoginStore.email}
+          value={props.store.User.email}
           name="text"
           type="text"
           fullWidth
           placeholder="Enter your username"
-          label="Email"
+          label="Username"
           id="username"
-          validations="isSpecialWords"
+          validations="isExisty"
           validationError="This is not a valid username"
           onChange={handleChange("username")}
           InputProps={{ classes: { root: classes.inputRoot } }}
@@ -105,7 +112,7 @@ const LoginForm = (props) => {
         />
 
         <MyInput
-          value={props.store.LoginStore.password}
+          value={props.store.User.password}
           name="password"
           type="password"
           fullWidth
@@ -130,7 +137,7 @@ const LoginForm = (props) => {
           }}
           required
         />
-        {helperText}
+        <DescriptionAlerts status={status} message={message} />
         <CardActions className="!px-0 !mt-10">
           <Button
             fullWidth
@@ -148,4 +155,4 @@ const LoginForm = (props) => {
   );
 }
 
-export default withStyles(useStyles)(inject('store')(observer(LoginForm)));
+export default withStyles(useStyles)(inject('store')(withRouter(observer(LoginForm))));

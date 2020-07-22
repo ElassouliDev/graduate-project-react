@@ -14,7 +14,6 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import classNames from "classnames";
 import Tabs from "./components/Tabs";
-import { Modal } from '@material-ui/core';
 import { AccountBox } from "@material-ui/icons";
 import { ExitToApp } from "@material-ui/icons";
 import { Add } from "@material-ui/icons";

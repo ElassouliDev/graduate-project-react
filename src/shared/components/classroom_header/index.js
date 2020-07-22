@@ -11,8 +11,8 @@ export default function ClassRoomHeader(props) {
   };
 
   let image_path = "/assets/images/backgrounds/header_classroom_default.png";
-  if (props.coverImage) {
-    image_path = props.coverImage;
+  if (props.background_img) {
+    image_path = props.background_img;
   }
   let classroom_code_header_field = null;
   if (props.code) {

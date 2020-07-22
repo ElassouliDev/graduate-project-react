@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 // import { Icon } from "@material-ui/core/icons";
 // import classNames from "classnames";
 import DropSettingMenu from '../../../shared/components/three-dots-menu';
 import { Sort } from '@material-ui/icons';
-import { Add } from '@material-ui/icons';
-import { Fab } from '@material-ui/core';
 // import { AddCircle } from "@material-ui/icons";
 // import { Cached } from "@material-ui/icons";
 import { lighten, makeStyles } from "@material-ui/core/styles";
@@ -32,12 +30,12 @@ import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import AddMaterial from "./components/AddMaterial"
 import { Checkbox } from '@material-ui/core'
+import { values } from "mobx";
 // import { Button } from "@material-ui/core";
 
-function createData({ id, title, description, url, uploadedAt }) {
-  return { id, title, description, url, uploadedAt };
+function createData({ id, title, file, uploaded_at }) {
+  return { id, title, file, uploaded_at };
 }
-
 // function createData(name, calories, fat, carbs, protein) {
 //   return { name, calories, fat, carbs, protein };
 // }
@@ -76,23 +74,18 @@ const headCells = [
     numeric: false,
     disablePadding: false,
     label: "Title",
-  }, {
-    id: "description",
-    numeric: false,
-    disablePadding: false,
-    label: "Description",
   },
   {
-    id: "url",
+    id: "file",
     numeric: false,
     disablePadding: false,
     label: "File Donwload Link",
   },
   {
-    id: "uploadedAt",
+    id: "created_at",
     numeric: false,
     disablePadding: false,
-    label: "uploadedAt",
+    label: "uploaded_at",
   },
 
 
@@ -155,9 +148,8 @@ function EnhancedTableHead(props) {
         >
           <TableSortLabel
             active={false}
-            direction={"asc"}
-          >
-            "Actions"
+            direction={"asc"}>
+            Actions
             </TableSortLabel>
         </TableCell>
       </TableRow>
@@ -321,26 +313,6 @@ function EnhancedTable(props) {
     setSelected([]);
   };
 
-  // const handleClick = (event, name) => {
-  //   const selectedIndex = selected.indexOf(name);
-  //   let newSelected = [];
-
-  //   if (selectedIndex === -1) {
-  //     newSelected = newSelected.concat(selected, name);
-  //   } else if (selectedIndex === 0) {
-  //     newSelected = newSelected.concat(selected.slice(1));
-  //   } else if (selectedIndex === selected.length - 1) {
-  //     newSelected = newSelected.concat(selected.slice(0, -1));
-  //   } else if (selectedIndex > 0) {
-  //     newSelected = newSelected.concat(
-  //       selected.slice(0, selectedIndex),
-  //       selected.slice(selectedIndex + 1)
-  //     );
-  //   }
-
-  //   setSelected(newSelected);
-  // };
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -349,8 +321,9 @@ function EnhancedTable(props) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
   const handleDelete = (id) => (event) => {
-    classRoom.MaterialStore.delete(id)
+    classRoom.material.delete(id)
 
   }
   const handleUpdate = (id) => (event) => {
@@ -383,7 +356,6 @@ function EnhancedTable(props) {
               key={row.id}
               selected={isItemSelected}
             >
-
               <TableCell
                 component="th"
                 id={labelId}
@@ -406,33 +378,26 @@ function EnhancedTable(props) {
                 scope="row"
                 padding="defualt"
               >
-                {row.description}
+                <a href={row.file}>Download</a>
               </TableCell>
               <TableCell
+
                 component="th"
                 id={labelId}
                 scope="row"
                 padding="defualt"
               >
-                <a href={row.url}>Download</a>
-              </TableCell>
-              <TableCell
-                component="th"
-                id={labelId}
-                scope="row"
-                padding="defualt"
-              >
-                {row.uploadedAt}
+                {row.uploaded_at}
               </TableCell>
               <TableCell align="left">
                 <DropSettingMenu id={row.id} options={
                   [
-                    { id: "delete", onClick: handleDelete(row.id) }
-                    , { id: "update", onClick: handleUpdate(row.id) }
+                    { id: "delete", onClick: handleDelete(row.id) },
+                    { id: "update", onClick: handleUpdate(row.id) }
                   ]} />
               </TableCell>
               {/* <TableCell align="right">{row.carbs}</TableCell>
-            <TableCell align="right">{row.protein}</TableCell> */}
+                        <TableCell align="right">{row.protein}</TableCell> */}
             </TableRow>
           );
         })}
@@ -444,36 +409,31 @@ function EnhancedTable(props) {
     </TableBody>);
   }
   const isSelected = (name) => selected.indexOf(name) !== -1;
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-  const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
-  if (!classRoom) {
-    return (<div>
-      classRoom not found
-    </div>
-    )
-  }
-  /**x
-   *       id: types.optional(types.identifierNumber, 0),
-     url: types.optional(types.string, ''),
-     uploadedAt: types.optional(types.string, ''),
-     title: types.optional(types.string, ''),
-     description:types.optional(types.string,'')
-   */
-  const getRows = function () {
-    const id = +props.match.params.id;
-    if (id === undefined) {
-      return []
-    }
-    let classRoom = props.store.ClassRoomStore.getClassRoom(id);
-    if (!classRoom)
-      return [];
 
-    const Rows = classRoom.MaterialStore.materials.map((m) => createData(m));
-    return Rows
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
+  React.useEffect(
+    () => {
+      async function fetchData() {
+        try {
+          if (classRoom)
+            return
+          let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
+          console.log("res", res);
+          props.store.ClassRoomStore.setOneClassRoom(res.data);
+        } catch (error) {
+          console.log("mappedClassRooms", error.message);
+        }
+      }
+      fetchData();
+    }, []);
+  if (!classRoom) {
+    return <Typography>class room not found</Typography>;
   }
+
   return (
     <div className={classes.root}>
+      {props.store.ClassRoomStore.getClassRoom(props.match.params.id).material.materials.length}
       <Paper className={classes.paper}>
         <EnhancedTableToolbar />
         <TableContainer>
@@ -490,7 +450,10 @@ function EnhancedTable(props) {
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
             />
-            <TableRows Materials={getRows()}></TableRows>
+            <TableRows
+              Materials={
+                values(props.store.ClassRoomStore.getClassRoom(props.match.params.id).material.materials).map(m => createData(m))
+              }></TableRows>
           </Table>
         </TableContainer>
         <TablePagination
@@ -503,10 +466,8 @@ function EnhancedTable(props) {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-      <Paper>
-        <AddMaterial />
-      </Paper>
-    </div >
+      <AddMaterial />
+    </div>
   );
 }
-export default inject('store')(observer(withRouter(EnhancedTable)))
+export default inject('store')(withRouter(observer(EnhancedTable)))

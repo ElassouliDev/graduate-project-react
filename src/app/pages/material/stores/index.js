@@ -3,24 +3,22 @@
 import { types, getParent } from 'mobx-state-tree';
 export const material = types.model({
    id: types.optional(types.identifierNumber, 0),
-   url: types.optional(types.string, ''),
-   uploadedAt: types.optional(types.string, ''),
-   title: types.optional(types.string, ''),
-   description: types.optional(types.string, '')
+   file: types.optional(types.string, ''),
+   created_at: types.optional(types.string, ''),
 }).actions((self) => ({
    setNewData: (payload) => {
       self[payload.key] = payload.value;
    }
 }));
-const MaterialStore = types.model({
+const materialStore = types.model({
    materials: types.array(material),
    newMaterial: types.optional(material, {})
 }).actions((self) => ({
-   addNewMaterial: (payload) => {
+   addNewMaterial: () => {
       self.materials.push(
          material.create({
-            id: self.materials.length + 1,
-            ...self.newMaterial
+            ...self.newMaterial.toJSON(),
+            id: self.materials.length + 1
          })
       )
    },
@@ -56,4 +54,4 @@ const MaterialStore = types.model({
       return deleted
    }
 }))
-export default MaterialStore;
+export default materialStore;
