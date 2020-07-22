@@ -10,7 +10,7 @@ export const classRoom = types.model({
    title: types.optional(types.string, ''),
    description: types.optional(types.string, ''),
    background_img: types.optional(types.string, ''),
-   logo_iog: types.optional(types.string, ''),
+   logo_img: types.optional(types.string, ''),
    material: types.optional(materialStore, {}),
    TaskStore: types.optional(TaskStore, {}),
    student_objects: types.array(User, {}),
