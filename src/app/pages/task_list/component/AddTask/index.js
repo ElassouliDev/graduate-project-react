@@ -10,8 +10,6 @@ import { withRouter } from 'react-router';
 import MyInput from "../../../../../shared/components/formasy-input"
 import DescriptionAlerts from "../../../../../shared/components/alert";
 
-
-
 const useStyles = makeStyles((theme) => ({
    labelRoot: {
       fontSize: "1.75rem",
@@ -24,11 +22,11 @@ const useStyles = makeStyles((theme) => ({
    },
 }));
 const AddMaterial = (props) => {
+
    const [isLoading, setLoading] = useState(false);
    const [helperText, setHelperText] = useState("");
    let [status, setStatus] = useState(0);
    let [message, setMessage] = useState("");
-
    let classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
 
    const handelSubmit = async () => {
@@ -75,9 +73,11 @@ const AddMaterial = (props) => {
 
    const handleChange = (key) => (event) => {
       const value = event.target.value;
-      props.store.ClassRoomStore.getClassRoom(props.match.params.id).MaterialStore.setNewData({ key, value })
+      props.store.ClassRoomStore.getClassRoom(props.match.params.id).material.setNewData({ key, value })
    };
+
    const classes = useStyles();
+
    const fields = [
       {
          name: "title",
@@ -115,12 +115,14 @@ const AddMaterial = (props) => {
          required: true
       }
    ]
+
    function capitalizeFLetter(input) {
       if (input.length == 0)
          return ""
       return input[0].toUpperCase() +
          input.slice(1);
    }
+
    if (!classRoom) {
       return <div>
          class room not found
@@ -141,7 +143,7 @@ const AddMaterial = (props) => {
             {
                fields.map((field) =>
                   <MyInput
-                     value={classRoom.MaterialStore.newMaterial[field.name]}
+                     value={classRoom.material.newMaterial[field.name]}
                      name={field.name}
                      type={field.type}
                      fullWidth
@@ -155,13 +157,11 @@ const AddMaterial = (props) => {
                      InputLabelProps={{
                         classes: {
                            root: classes.labelRoot,
-                           // focused: classes.labelFocused
                         },
                      }}
                      FormHelperTextProps={{
                         classes: {
                            root: classes.labelRoot,
-                           // focused: classes.labelFocused
                         },
                      }}
                      required
@@ -181,7 +181,7 @@ const AddMaterial = (props) => {
                   size="large"
                   type="submit"
                   className={classes.containedSizeLarge}>
-                  Add Material {isLoading && <CircularProgress />}
+                  Add{isLoading && <CircularProgress />}
                </Button>
             </CardActions>
          </Formsy>

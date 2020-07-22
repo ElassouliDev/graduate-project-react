@@ -33,7 +33,7 @@ const AddMaterial = (props) => {
    const handelSubmit = async () => {
       try {
          setLoading(true)
-         classRoom.MaterialStore.addNewMaterial();
+         classRoom.material.addNewMaterial();
 
 
       } catch (err) {
@@ -50,7 +50,7 @@ const AddMaterial = (props) => {
 
    const handleChange = (key) => (event) => {
       const value = event.target.value;
-      getClassRoom(props.match.params.id).MaterialStore.setNewData({ key, value })
+      getClassRoom(props.match.params.id).material.setNewData({ key, value })
    };
    const classes = useStyles();
    const fields = [
@@ -103,7 +103,7 @@ const AddMaterial = (props) => {
             {
                fields.map((field) =>
                   <MyInput
-                     value={classRoom.MaterialStore.newMaterial[field.name]}
+                     value={classRoom.material.newMaterial[field.name]}
                      name={field.name}
                      type={field.type}
                      fullWidth

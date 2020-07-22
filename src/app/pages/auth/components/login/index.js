@@ -37,7 +37,7 @@ const LoginForm = (props) => {
       if (res.data.auth_token) {
         setStatus(1)
         setMessage("You are logged in, you will be redirected in 5 secounds")
-
+        props.store.User.setUser(res.data)
         window.localStorage.setItem('jwtToken', res.data.auth_token)
         setTimeout(() => {
           console.log("props.history.push('/')");

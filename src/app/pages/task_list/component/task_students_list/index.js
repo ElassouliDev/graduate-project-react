@@ -51,18 +51,18 @@ const TaskStudentsList = (props) => {
             size="medium"
             label={
               Task.getStudentsWhoAnswered.length +
-              " / " +
-              Task.students.length
+              " / "
+              // Task.students.length
             }
           />
         </Typography>
 
         {
           Task.getStudentsWhoAnswered.map(
-            (created_at) => {
+            (student) => {
               return <UserItem
-                student={created_at}
-                key={created_at.id + created_at.username}
+                student={student.created_at}
+                key={student.id + student.username}
               />
             }
           )
@@ -87,7 +87,7 @@ const TaskStudentsList = (props) => {
             (created_at) => {
               return <UserItem
                 student={created_at}
-                key={created_at.id + created_at.username}
+                key={created_at}
               />
             }
           )

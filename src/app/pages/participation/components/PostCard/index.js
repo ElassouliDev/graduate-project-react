@@ -1,11 +1,12 @@
 import React from "react";
-import { Card, Divider, CardHeader } from "@material-ui/core";
+import { Card, Divider, CardHeader, Paper, Grid } from "@material-ui/core";
 import { CardContent, Typography, Avatar } from "@material-ui/core";
 import CommentList from '../CommentList';
 import { inject, observer } from "mobx-react";
+import CommentForm from "../CommentList/CommentForm";
 
 function PostCard(props) {
-  const { post } = props
+  const { post, store } = props
   return (
     <Card className="my-20">
       <CardHeader
@@ -31,14 +32,14 @@ function PostCard(props) {
       </CardContent>
 
       <Divider />
-      {/* <CommentList comments={post.comments} user={store.User} /> */}
-
-      {/* <div className={"px-10 py-10   "}>
+      <CommentList post={post} comments={post.comments} />
+      {/* 
+      <div className={"px-10 py-10   "}>
         <Grid row container className=" mb-10 ">
           <Grid item md={1}>
             <Avatar
-              alt={post.user.name}
-              src={post.user.image}
+              alt={"user image goes here"}
+              src={"post.user.image"}
             ></Avatar>
           </Grid>
           <Grid item md={11}>
@@ -47,17 +48,15 @@ function PostCard(props) {
                 {post.content}
               </Typography>
 
-              {/* <CommentForm post_id={1} /> */}
-      {/*} </Paper>
+              <CommentForm post_id={1} />
+            </Paper>
           </Grid>
         </Grid>
-
-
         <Grid row container className=" mb-10 ">
           <Grid item md={1}>
             <Avatar
-              alt={post.user.name}
-              src={post.user.image}
+              alt={"post.createdBy.username"}
+              src={"post.user.image"}
             ></Avatar>
           </Grid>
           <Grid item md={11}>
@@ -68,8 +67,8 @@ function PostCard(props) {
             </Paper>
           </Grid>
         </Grid>
-      </div>
-     */}
+      </div> */}
+
     </Card>
   );
 }

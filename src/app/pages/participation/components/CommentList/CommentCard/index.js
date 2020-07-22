@@ -6,8 +6,8 @@ export default function CommentCard(props) {
     <Grid row container className=" mb-10 ">
       <Grid item md={1}>
         <Avatar
-          alt={props.comment.user.name}
-          src={props.comment.user.image}
+          alt={props.comment.commenter?.user.name}
+          src={props.comment.commenter?.image}
         ></Avatar>
       </Grid>
       <Grid item md={11}>

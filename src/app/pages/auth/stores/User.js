@@ -15,6 +15,12 @@ export default types.model('User', {
    setUserData: (payload) => {
       self[payload.key] = payload.value;
    },
+   setUser: (payload) => {
+      Object.keys(payload).forEach(key => {
+
+         self[key] = payload[key];
+      });
+   },
    login: flow(function* loginUser() {
       try {
          const user = new FormData();

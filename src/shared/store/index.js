@@ -6,7 +6,7 @@ import UserStore from "../../app/pages/auth/stores/UserStore";
 import User from "../../app/pages/auth/stores/User";
 import ClassRoomStore from "../../app/pages/courses-dashboard-page/stores/ClassroomStore";
 import { classRoom } from "../../app/pages/courses-dashboard-page/stores/ClassroomStore";
-import MaterialStore, { material } from "../../app/pages/material/stores"
+import materialStore, { material } from "../../app/pages/material/stores"
 import TaskStore, { task } from "../../app/pages/task_list/stores"
 import File from "../../shared/store/File"
 import PostStore from '../../app/pages/participation/stores';
@@ -18,7 +18,7 @@ const courseArray = [
         description: "course description 1",
         background_img: "./assets/images/backgrounds/header_classroom_default.png",
         logo_img: "./assets/images/backgrounds/informationSec.jpg",
-        MaterialStore: MaterialStore.create({
+        material: materialStore.create({
             materials: [
                 material.create({
                     id: 0,
@@ -129,7 +129,7 @@ const RootStore = types
         UserStore: types.optional(UserStore, {}),
         User: types.optional(User, {}),
         ClassRoomStore: types.optional(ClassRoomStore, {
-            classRooms: courseArray,
+            // classRooms: courseArray,
         }),
 
     }).views(self => ({

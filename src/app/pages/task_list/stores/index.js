@@ -1,6 +1,6 @@
 /* eslint-disable eqeqeq */
 
-import { types } from 'mobx-state-tree';
+import { types, getParent } from 'mobx-state-tree';
 import { values } from "mobx";
 import User from '../../auth/stores/User';
 import File from "../../../../shared/store/File"
@@ -8,27 +8,30 @@ const modal = {
    id: types.optional(types.identifierNumber, 0),
    taskFile: types.optional(File, {}),
    created_at: types.optional(types.string, ''),
+   modified_at: types.optional(types.string, ''),
    title: types.optional(types.string, ''),
-   description: types.optional(types.string, ''),
+   content: types.optional(types.string, ''),
    User: types.optional(User, {}),
    status: types.optional(types.string, ''),
    validUntill: types.optional(types.boolean, false),
    SubmittedSolutions: types.array(File),
-   students: types.array(User)
+
+   // average_degree: types.optional(types.number, types.null),
+   // accept_solutions: types.optional(types.boolean, types.null),
+   // accept_solutions_due: types.optional(types.string, types.null),
+   // attachments: types.optional(types.array(types.File), []),
 };
 export const task = types.model(modal).views((self) => ({
 
    get getStudentsWhoAnswered() {
-      return values(self.SubmittedSolutions).map(solution => {
-         return solution.created_at
-      });
+      return self.SubmittedSolutions.toJSON();
    },
    get getStudentsWhoDidntAnswered() {
       let ids = []
       ids = values(self.SubmittedSolutions).map(solution => {
-         return solution.created_at.id
+         return solution.createdBy.id
       });
-      return values(self.students).filter((std) => {
+      return values(getParent(self).students).filter((std) => {
          return !ids.includes(std.id)
       })
    }
@@ -39,6 +42,7 @@ export const task = types.model(modal).views((self) => ({
 }));
 const TaskStore = types.model({
    tasks: types.array(task)
+
 })
    .actions((self) => ({
       addNewTask: (payload) => {

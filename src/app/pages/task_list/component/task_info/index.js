@@ -73,6 +73,7 @@ const TaskInfo = (props) => {
           <TaskStudentsList></TaskStudentsList>
         </Grid>
       </Grid>
+      taskInfo
     </div>
   );
 }

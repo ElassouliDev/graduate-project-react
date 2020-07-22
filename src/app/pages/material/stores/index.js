@@ -12,7 +12,7 @@ export const material = types.model({
       self[payload.key] = payload.value;
    }
 }));
-const MaterialStore = types.model({
+const materialStore = types.model({
    materials: types.array(material),
    newMaterial: types.optional(material, {})
 }).actions((self) => ({
@@ -56,4 +56,4 @@ const MaterialStore = types.model({
       return deleted
    }
 }))
-export default MaterialStore;
+export default materialStore;

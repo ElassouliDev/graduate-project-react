@@ -9,6 +9,7 @@ import PostCard from './components/PostCard';
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import { useEffect } from "react"
+import { Typography } from "@material-ui/core";
 
 
 const useStyles = makeStyles(theme => ({
@@ -17,6 +18,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 function BlogPost(props) {
+  const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id)
   let { slug } = useParams();
   // const [data, setData] = useState({ post: {} });
   const classes = useStyles();
@@ -24,15 +26,22 @@ function BlogPost(props) {
     () => {
       async function fetchData() {
         try {
-          let res = await props.store.apiRequests.getClassRooms();
+          if (classRoom)
+            return
+          let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
           console.log("res", res);
-          props.store.ClassRoomStore.setClassRooms(res.data);
+          props.store.ClassRoomStore.setOneClassRoom(res.data);
         } catch (error) {
           console.log("mappedClassRooms", error.message);
         }
       }
       fetchData();
     }, []);
+  if (!classRoom) {
+    return <Typography>
+      class room not found
+      </Typography>
+  }
   return (
     <div>
       <CustomClassroomLayout

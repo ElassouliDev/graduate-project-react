@@ -328,7 +328,7 @@ function EnhancedTable(props) {
   };
 
   const handleDelete = (id) => (event) => {
-    classRoom.MaterialStore.delete(id)
+    classRoom.material.delete(id)
 
   }
   const handleUpdate = (id) => (event) => {
@@ -435,7 +435,7 @@ function EnhancedTable(props) {
   }
   return (
     <div className={classes.root}>
-      {props.store.ClassRoomStore.getClassRoom(props.match.params.id).MaterialStore.materials.length}
+      {props.store.ClassRoomStore.getClassRoom(props.match.params.id).material.materials.length}
       <Paper className={classes.paper}>
         <EnhancedTableToolbar />
         <TableContainer>
@@ -454,7 +454,7 @@ function EnhancedTable(props) {
             />
             <TableRows
               Materials={
-                values(props.store.ClassRoomStore.getClassRoom(props.match.params.id).MaterialStore.materials).map(m => createData(m))
+                values(props.store.ClassRoomStore.getClassRoom(props.match.params.id).material.materials).map(m => createData(m))
               }></TableRows>
           </Table>
         </TableContainer>

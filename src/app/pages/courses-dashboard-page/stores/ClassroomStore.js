@@ -1,6 +1,6 @@
 /* eslint-disable eqeqeq */
 import { types } from 'mobx-state-tree';
-import MaterialStore from "../../material/stores"
+import materialStore from "../../material/stores"
 import TaskStore from "../../task_list/stores"
 import PostStore from "../../participation/stores"
 import User from '../../auth/stores/User';
@@ -11,7 +11,7 @@ export const classRoom = types.model({
    description: types.optional(types.string, ''),
    background_img: types.optional(types.string, ''),
    logo_iog: types.optional(types.string, ''),
-   material: types.optional(MaterialStore, {}),
+   material: types.optional(materialStore, {}),
    TaskStore: types.optional(TaskStore, {}),
    student_objects: types.array(User, {}),
    student_requests_objects: types.array(User),
@@ -22,13 +22,19 @@ export const classRoom = types.model({
    allow_student_participation: types.optional(types.boolean, true),
    auto_accept_students: types.optional(types.boolean, false),
    archived: types.optional(types.boolean, false),
-   attachments: types.optional(MaterialStore, {}),
+   attachments: types.optional(materialStore, {}),
 }).actions((self) => ({
    setClassData: (payload) => {
       if (payload.key === "background_img" || payload.key === "logo_iog") {
       }
       self[payload.key] = payload.value;
+   },
+   getPostById: (id) => {
+      return self.posts.Posts.find((p) => {
+         return p.id == id;
+      })
    }
+   ,
 }));
 export default types.model('ClassRoomStore', {
    classRooms: types.array(classRoom),
@@ -40,13 +46,13 @@ export default types.model('ClassRoomStore', {
    }
 })).actions((self) => ({
    addClassRoom: (cR) => {
-      // let nMaterialStore = MaterialStore.create({
+      // let nmaterial = material.create({
       //    materials: cR.material
       // })
       // let nPostStore = PostStore.create({
       //    Posts: cR.posts
       // })
-      // let nAttachments = MaterialStore.create({
+      // let nAttachments = material.create({
       //    materials: cR.attachments
       // })
 
@@ -56,7 +62,7 @@ export default types.model('ClassRoomStore', {
          description: cR.description,
          // background_img: cR.background_img && "",
          // logo_iog: cR.logo_iog,
-         // material: nMaterialStore,
+         // material: nmaterial,
          // student_objects: cR.student_objects,
          // student_requests_objects: cR.student_requests_objects,
          created_at: cR.created_at,
@@ -88,6 +94,7 @@ export default types.model('ClassRoomStore', {
       })
    }
    ,
+
    setClassRoomData: (payload) => {
       self.newClassRoom.setClassData(payload);
    },
@@ -105,13 +112,13 @@ export default types.model('ClassRoomStore', {
    setClassRooms: (res) => {
       self.classRooms = [];
       res.forEach(cR => {
-         let nMaterialStore = MaterialStore.create({
+         let nmaterial = materialStore.create({
             materials: cR.material
          })
          let nPostStore = PostStore.create({
             Posts: cR.posts
          })
-         let nAttachments = MaterialStore.create({
+         let nAttachments = materialStore.create({
             materials: cR.attachments
          })
 
@@ -121,7 +128,7 @@ export default types.model('ClassRoomStore', {
             description: cR.description,
             background_img: cR.background_img,
             logo_iog: cR.logo_iog,
-            material: nMaterialStore,
+            material: nmaterial,
             student_objects: cR.student_objects,
             student_requests_objects: cR.student_requests_objects,
             created_at: cR.created_at,
@@ -136,7 +143,44 @@ export default types.model('ClassRoomStore', {
          })
          self.classRooms.push(nRoom);
       });
-   }
+   },
+   setOneClassRoom: (cR) => {
+      if (self.classRooms.find(item => cR.id == item.id)) {
+         // class room found
+         return
+      }
+      let nmaterial = materialStore.create({
+         materials: cR.material
+      })
+      let nPostStore = PostStore.create({
+         Posts: cR.posts
+      })
+      let nAttachments = materialStore.create({
+         materials: cR.attachments
+      })
+
+      let nRoom = classRoom.create({
+         id: cR.id,
+         title: cR.title,
+         description: cR.description,
+         background_img: cR.background_img,
+         logo_iog: cR.logo_iog,
+         material: nmaterial,
+         student_objects: cR.student_objects,
+         student_requests_objects: cR.student_requests_objects,
+         created_at: cR.created_at,
+         modified_at: cR.modified_at,
+         posts: nPostStore,
+         promo_code: cR.promo_code,
+         allow_student_participation: cR.allow_student_participation,
+         auto_accept_students: cR.auto_accept_students,
+         archived: cR.archived,
+         attachments: nAttachments
+
+      })
+      self.classRooms.push(nRoom);
+   },
+
 }))
 
 const x = {

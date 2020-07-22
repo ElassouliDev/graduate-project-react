@@ -104,10 +104,12 @@ const requests = (localStorage, config) => {
     const requestInstance = new Request(localStorage, baseUrl);
     return {
         getClassRooms: () => requestInstance.get(`${baseUrl}/classrooms/`),
+        getOneClassRoom: (id) => requestInstance.get(`${baseUrl}/classrooms/${id}`),
         registerUser: (payload) => requestInstance.post(`${config.webUrl}/api/users/`, payload),
         loginUser: (payload) => requestInstance.post(`${config.webUrl}/api/login/`, payload),
         addClassRoom: (payload) => requestInstance.post(`${baseUrl}/classrooms/`, payload),
         addPost: (payload, classRoomId) => requestInstance.post(`${baseUrl}/classrooms/${classRoomId}/posts/`, payload),
+        addComment: (payload, postId) => requestInstance.post(`${baseUrl}/posts/${postId}/comments/`, payload),
         requestInstance
     }
 };

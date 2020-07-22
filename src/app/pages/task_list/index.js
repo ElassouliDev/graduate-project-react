@@ -42,7 +42,6 @@ const TaskList = (props) => {
       </Typography>
       <Divider />
       <div className="my-10">
-        Add Task
         <AddTask></AddTask>
       </div>
       <Divider />
