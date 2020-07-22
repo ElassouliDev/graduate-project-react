@@ -9,7 +9,7 @@ export default types.model('User', {
    last_name: types.optional(types.maybeNull(types.string), null),
    state: types.optional(types.maybeNull(types.string), null),
    responseMessage: types.optional(types.maybeNull(types.string), null),
-   profile: types.optional(Profile),
+   profile: types.optional(Profile, {}),
    groub: types.optional(types.maybeNull(types.string), null),
    id: types.optional(types.identifierNumber, 0),
    jwtToken: types.optional(types.maybeNull(types.string), null),

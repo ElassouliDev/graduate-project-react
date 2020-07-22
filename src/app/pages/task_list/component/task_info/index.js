@@ -21,17 +21,27 @@ const useStyles = makeStyles((theme) => ({
 
 const TaskInfo = (props) => {
   const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
+
+  const Task = classRoom ? classRoom.classroom_tasks_info.get(props.match.params.tId) : {}
+
+  useEffect(
+    () => {
+      async function fetchData() {
+        try {
+          let res = await props.store.apiRequests.getClassRooms();
+          console.log("res", res);
+          props.store.ClassRoomStore.setClassRooms(res.data);
+        } catch (error) {
+          console.log("mappedClassRooms", error.message);
+        }
+      }
+      fetchData();
+    }, []);
   if (!classRoom) {
     return <div>
       class room not found
   </div>
   }
-  if (!classRoom.classroom_tasks_info) {
-    return <div>
-      faild to load tasks
-  </div>
-  }
-  const Task = classRoom.classroom_tasks_info.get(props.match.params.tId)
   if (!Task) {
     return <div>
       faild to load task
@@ -45,11 +55,11 @@ const TaskInfo = (props) => {
             <CardHeader
               avatar={
                 <Avatar
-                  alt={Task.User.name}
-                  src={Task.User.image}
+                  alt={Task.user_info.fullName}
+                  src={Task.user_info.image}
                 ></Avatar>
               }
-              title={Task.User.name}
+              title={Task.user_info.fullName}
               subheader={Task.created_at}
             />
             <Divider />
@@ -60,7 +70,7 @@ const TaskInfo = (props) => {
               </Typography>
 
               <List>
-                <UploadFileListItem file={Task.taskFile} DeleteShow={false} />
+                <UploadFileListItem file={Task.attachments_info[0].file} DeleteShow={false} />
               </List>
             </CardContent>
           </Card>
