@@ -4,7 +4,7 @@ import materialStore from "../../material/stores"
 import TaskStore from "../../task_list/stores"
 import PostStore from "../../participation/stores"
 import User from '../../auth/stores/User';
-
+/** test comment */
 export const classRoom = types.model({
    id: types.optional(types.identifierNumber, 0),
    title: types.optional(types.string, ''),
