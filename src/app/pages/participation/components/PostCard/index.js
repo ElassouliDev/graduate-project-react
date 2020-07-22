@@ -7,18 +7,19 @@ import CommentForm from "../CommentList/CommentForm";
 
 function PostCard(props) {
   const { post, store } = props
+  console.log('psot', post.toJSON());
   return (
     <Card className="my-20">
       <CardHeader
         avatar={
           <Avatar
-            alt={post.createdBy.username}
-            src={post.createdBy.image}
+            alt={post.user_info.fullName}
+            src={post.user_info.image}
           ></Avatar>
         }
         title={
           <Typography variant="h6" className="!mb-2">
-            {post.createdBy.username}
+            {post.user_info.fullName}
           </Typography>
         }
         subheader={post.created_at}
@@ -33,7 +34,7 @@ function PostCard(props) {
 
       <Divider />
       <CommentList post={post} comments={post.comments} />
-      {/* 
+      {/*
       <div className={"px-10 py-10   "}>
         <Grid row container className=" mb-10 ">
           <Grid item md={1}>
