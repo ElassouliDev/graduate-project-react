@@ -110,6 +110,7 @@ const requests = (localStorage, config) => {
         addClassRoom: (payload) => requestInstance.post(`${baseUrl}/classrooms/`, payload),
         addPost: (payload, classRoomId) => requestInstance.post(`${baseUrl}/classrooms/${classRoomId}/posts/`, payload),
         addComment: (payload, postId) => requestInstance.post(`${baseUrl}/posts/${postId}/comments/`, payload),
+        getTasksForRoom: (classRoomId) => requestInstance.get(`${baseUrl}/classrooms/${classRoomId}/tasks/`),
         requestInstance
     }
 };

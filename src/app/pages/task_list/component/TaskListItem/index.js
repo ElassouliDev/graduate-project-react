@@ -15,13 +15,13 @@ export default function TaskListItem(props) {
         <CardHeader
           avatar={
             <Avatar
-              alt={props.taskData.User.name}
-              src={props.taskData.User.image}
+              alt={props.taskData.user_info.username}
+              src={props.taskData.profile[0].image}
             ></Avatar>
           }
           title={
             <Typography variant="h6" className="!mb-2">
-              {props.taskData.User.name}
+              {props.taskData.user_info.name}
             </Typography>
           }
           subheader={props.taskData.created_at}

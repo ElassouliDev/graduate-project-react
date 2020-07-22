@@ -26,12 +26,12 @@ const TaskInfo = (props) => {
       class room not found
   </div>
   }
-  if (!classRoom.TaskStore) {
+  if (!classRoom.classroom_tasks_info) {
     return <div>
       faild to load tasks
   </div>
   }
-  const Task = classRoom.TaskStore.get(props.match.params.tId)
+  const Task = classRoom.classroom_tasks_info.get(props.match.params.tId)
   if (!Task) {
     return <div>
       faild to load task

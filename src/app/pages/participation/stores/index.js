@@ -3,8 +3,8 @@ import User from '../../auth/stores/User';
 export const Comment = types.model('Comment', {
    id: types.optional(types.identifierNumber, 0),
    user_info: types.optional(User, {}),
-   content: types.optional(types.string, ''),
-   created_at: types.optional(types.string, ''),
+   content: types.optional(types.maybeNull(types.string), null),
+   created_at: types.optional(types.maybeNull(types.string), null),
 }).actions((self) => ({
    setData: (payload) => {
       self[payload.key] = payload.value;
@@ -13,8 +13,8 @@ export const Comment = types.model('Comment', {
 export const Post = types.model('Post', {
    id: types.optional(types.identifierNumber, 0),
    user_info: types.optional(User, {}),
-   content: types.optional(types.string, ''),
-   created_at: types.optional(types.string, ''),
+   content: types.optional(types.maybeNull(types.string), null),
+   created_at: types.optional(types.maybeNull(types.string), null),
    comments: types.array(Comment)
 }).views((self) => ({
 
