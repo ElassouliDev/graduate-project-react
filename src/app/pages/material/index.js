@@ -324,7 +324,6 @@ function EnhancedTable(props) {
 
   const handleDelete = (id) => (event) => {
     classRoom.material.delete(id)
-
   }
   const handleUpdate = (id) => (event) => {
     const pathname = props.history.location.pathname;
