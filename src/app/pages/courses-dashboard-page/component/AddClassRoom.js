@@ -6,7 +6,7 @@ import { Button, CircularProgress } from "@material-ui/core";
 import { CardActions } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
 import { inject, observer } from 'mobx-react';
-import { classRoom } from "../stores/ClassroomStore"
+import { classRoom } from "../stores/ClassRoomStore"
 
 const useStyles = makeStyles((theme) => ({
    labelRoot: {
