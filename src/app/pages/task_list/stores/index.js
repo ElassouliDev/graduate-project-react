@@ -4,18 +4,22 @@ import { types, getParent } from 'mobx-state-tree';
 import { values } from "mobx";
 import User from '../../auth/stores/User';
 import File from "../../../../shared/store/File"
+import { attachment } from "../../../../shared/store/Models"
 const modal = {
    id: types.optional(types.identifierNumber, 0),
    taskFile: types.optional(File, {}),
-   created_at: types.optional(types.string, ''),
-   modified_at: types.optional(types.string, ''),
-   title: types.optional(types.string, ''),
-   content: types.optional(types.string, ''),
-   User: types.optional(User, {}),
-   status: types.optional(types.string, ''),
+   created_at: types.optional(types.maybeNull(types.string), null),
+   modified_at: types.optional(types.maybeNull(types.string), null),
+   title: types.optional(types.maybeNull(types.string), null),
+   content: types.optional(types.maybeNull(types.string), null),
+   user_info: types.optional(User, {}),
+   status: types.optional(types.maybeNull(types.string), null),
    validUntill: types.optional(types.boolean, false),
    SubmittedSolutions: types.array(File),
-
+   accept_solutions: false,
+   accept_solutions_due: types.optional(types.maybeNull(types.string), null),
+   classroom: 1,
+   attachments_info: types.array(attachment)
    // average_degree: types.optional(types.number, types.null),
    // accept_solutions: types.optional(types.boolean, types.null),
    // accept_solutions_due: types.optional(types.string, types.null),
@@ -40,7 +44,7 @@ export const task = types.model(modal).views((self) => ({
       self[payload.key] = payload.value;
    }
 }));
-const TaskStore = types.model({
+const classroom_tasks_info = types.model({
    tasks: types.array(task)
 
 })
@@ -82,4 +86,4 @@ const TaskStore = types.model({
          return deleted
       }
    }))
-export default TaskStore;
+export default classroom_tasks_info;

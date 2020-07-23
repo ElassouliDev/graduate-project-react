@@ -1,12 +1,12 @@
 import { flow, getParent, types } from 'mobx-state-tree';
 
 export default types.model('UserStore', {
-    username: types.optional(types.string, ''),
-    first_name: types.optional(types.string, ''),
-    last_name: types.optional(types.string, ''),
-    password: types.optional(types.string, ''),
-    confirmPassword: types.optional(types.string, ''),
-    email: types.optional(types.string, ''),
+    username: types.optional(types.maybeNull(types.string), null),
+    first_name: types.optional(types.maybeNull(types.string), null),
+    last_name: types.optional(types.maybeNull(types.string), null),
+    password: types.optional(types.maybeNull(types.string), null),
+    confirmPassword: types.optional(types.maybeNull(types.string), null),
+    email: types.optional(types.maybeNull(types.string), null),
     groups: types.optional(types.integer, 1),
 }).views((self) => ({
     get isMatchingPassword() {

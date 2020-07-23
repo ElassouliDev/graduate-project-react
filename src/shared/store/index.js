@@ -7,7 +7,7 @@ import User from "../../app/pages/auth/stores/User";
 import ClassRoomStore from "../../app/pages/courses-dashboard-page/stores/ClassRoomStore";
 import { classRoom } from "../../app/pages/courses-dashboard-page/stores/ClassRoomStore";
 import materialStore, { material } from "../../app/pages/material/stores"
-import TaskStore, { task } from "../../app/pages/task_list/stores"
+import classroom_tasks_info, { task } from "../../app/pages/task_list/stores"
 import File from "../../shared/store/File"
 import PostStore from '../../app/pages/participation/stores';
 // Root store for all stores and models
@@ -43,7 +43,7 @@ const courseArray = [
                 }),
             ]
         }),
-        TaskStore: TaskStore.create({
+        classroom_tasks_info: classroom_tasks_info.create({
             tasks: [
                 task.create({
                     id: 1,

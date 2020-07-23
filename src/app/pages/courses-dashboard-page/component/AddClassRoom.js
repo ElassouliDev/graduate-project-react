@@ -1,4 +1,4 @@
-import { Typography, makeStyles, Grid, Card } from "@material-ui/core";
+import { Typography, makeStyles } from "@material-ui/core";
 import React, { useState } from "react";
 import MyInput from "../../../../shared/components/formasy-input";
 import Formsy from "formsy-react";
@@ -7,13 +7,6 @@ import { CardActions } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
 import { inject, observer } from 'mobx-react';
 import { classRoom } from "../stores/ClassRoomStore"
-import classNames from 'classnames';
-import { CardActionArea } from '@material-ui/core';
-import { Box } from '@material-ui/core';
-import { Backdrop } from '@material-ui/core';
-import { Fade } from '@material-ui/core';
-import { Modal } from '@material-ui/core';
-import { Add } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
    labelRoot: {
@@ -25,54 +18,17 @@ const useStyles = makeStyles((theme) => ({
    containedSizeLarge: {
       fontSize: "1.75rem",
    },
-   modal: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding:20
-    },
-    paper: {
-      backgroundColor: theme.palette.background.paper,
-      border: '2px solid #000',
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
-    },
-    icon: {
-      fontSize: 100
-    },
-    root: {
-      textAlign: 'center'
-
-    },
-    add_card: {
-      textAlign: 'center',
-      width: 321,
-      height: 306
-    }
 }));
 const AddClassRoom = (props) => {
-
    const [isLoading, setLoading] = useState(false);
    const [helperText, setHelperText] = useState("");
    const [classRoomData, setClassRoomData] = useState({ ...classRoom.create({}).toJSON() })
-   const [open, setOpen] = React.useState(false);
-
-   const handleOpen = () => {
-     setOpen(true);
-   };
-
-   const handleClose = () => {
-     setOpen(false);
-     setClassRoomData({ ...classRoom.create({}).toJSON() })
-   };
-
-
    const handelSubmitAddClassRoom = async () => {
       try {
          setLoading(true)
          let formData = new FormData();
          delete classRoomData.id
-         let cRData = (({ title, description, background_img ,logo_img }) => ({ title, description, background_img ,logo_img}))(classRoomData)
+         let cRData = (({ title, description, background_img, logo_img }) => ({ title, description, background_img, logo_img }))(classRoomData)
          for (var key in cRData) {
             formData.append(key, classRoomData[key]);
          }
@@ -86,10 +42,8 @@ const AddClassRoom = (props) => {
 
       } finally {
          setLoading(false)
-         handleClose()
       }
    };
-
 
    const handleChange = (key) => (event) => {
       const value = event.target.value;
@@ -111,41 +65,7 @@ const AddClassRoom = (props) => {
    const classes = useStyles();
 
    return (
-      <>
-
-         <Box p={1} >
-
-          <Card className={classNames(" !py-7", classes.add_card)}>
-
-              <CardActionArea className={classNames("!py-6 ",classes.add_card)}  onClick={handleOpen}>
-
-                <Add style={{fontSize: 100}} />
-                <Typography variant="h4" className={'text-center py-5'}>
-
-                  Add Classroom
-
-                </Typography>
-              </CardActionArea>
-
-          </Card>
-
-         </Box>
-
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <div className={classes.paper}>
-          <CardContent>
+      <CardContent>
          <Typography
             variant="h3"
             component="h3"
@@ -212,10 +132,10 @@ const AddClassRoom = (props) => {
                name="logo_img"
                type="file"
                fullWidth
-               placeholder="Enter classroom logo image"
-               label="logo image"
+               placeholder="Enter your logo_img"
+               label="logo_img"
                id="logo_img"
-               validationError="This is not a valid logo image"
+               validationError="This is not a valid logo_img"
                onChange={handleChangeFile("logo_img")}
                InputProps={{ classes: { root: classes.inputRoot } }}
                InputLabelProps={{
@@ -236,10 +156,10 @@ const AddClassRoom = (props) => {
                name="background_img"
                type="file"
                fullWidth
-               placeholder="Enter classroom  background img"
-               label="background image"
+               placeholder="Enter your username"
+               label="background_img"
                id="background_img"
-               validationError="This is not a valid background image"
+               validationError="This is not a valid background_img"
                onChange={handleChangeFile("background_img")}
                InputProps={{ classes: { root: classes.inputRoot } }}
                InputLabelProps={{
@@ -260,7 +180,7 @@ const AddClassRoom = (props) => {
             </Typography>
             <CardActions className="!px-0 !mt-10">
                <Button
-               disabled= {isLoading?true:false}
+                  fullWidth
                   variant="contained"
                   color="primary"
                   size="large"
@@ -268,22 +188,9 @@ const AddClassRoom = (props) => {
                   className={classes.containedSizeLarge}>
                   Add Class Room {isLoading && <CircularProgress />}
                </Button>
-               <Button
-                onClick={handleClose}
-                disabled= {isLoading?true:false}
-                  variant="contained"
-                  color="secondary"
-                  size="large"
-                  className={classes.containedSizeLarge}>
-                Cancel                </Button>
             </CardActions>
          </Formsy>
       </CardContent>
-
-          </div>
-        </Fade>
-      </Modal>
-    </>
-     );
+   );
 }
 export default inject('store')(observer(AddClassRoom));

@@ -30,7 +30,6 @@ import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import AddMaterial from "./components/AddMaterial"
 import { Checkbox } from '@material-ui/core'
-import { values } from "mobx";
 // import { Button } from "@material-ui/core";
 
 function createData({ id, title, file, uploaded_at }) {
@@ -85,7 +84,7 @@ const headCells = [
     id: "created_at",
     numeric: false,
     disablePadding: false,
-    label: "uploaded_at",
+    label: "created at",
   },
 
 
@@ -111,14 +110,14 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
+        {/* <TableCell padding="checkbox">
           <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{ "aria-label": "select all desserts" }}
           />
-        </TableCell>
+        </TableCell> */}
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -322,9 +321,15 @@ function EnhancedTable(props) {
     setPage(0);
   };
 
-  const handleDelete = (id) => (event) => {
-    classRoom.material.delete(id)
-
+  const handleDelete = (id) => async (event) => {
+    try {
+      const res = await props.store.apiRequests.deleteMaterial(props.match.params.id, id)
+      if (res.status == 204) {
+        classRoom.material.delete(id)
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   }
   const handleUpdate = (id) => (event) => {
     const pathname = props.history.location.pathname;
@@ -346,6 +351,7 @@ function EnhancedTable(props) {
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((row, index) => {
           const isItemSelected = isSelected(row.name);
+          console.log('tag', row)
           const labelId = `enhanced-table-checkbox-${row.id}`;
           return (
             <TableRow
@@ -378,7 +384,7 @@ function EnhancedTable(props) {
                 scope="row"
                 padding="defualt"
               >
-                <a href={row.file}>Download</a>
+                <a href={row.file} download >Download</a>
               </TableCell>
               <TableCell
 
@@ -387,13 +393,12 @@ function EnhancedTable(props) {
                 scope="row"
                 padding="defualt"
               >
-                {row.uploaded_at}
+                {row.created_at}
               </TableCell>
               <TableCell align="left">
                 <DropSettingMenu id={row.id} options={
                   [
-                    { id: "delete", onClick: handleDelete(row.id) },
-                    { id: "update", onClick: handleUpdate(row.id) }
+                    { id: "delete", onClick: handleDelete(row.id) }
                   ]} />
               </TableCell>
               {/* <TableCell align="right">{row.carbs}</TableCell>
@@ -452,7 +457,7 @@ function EnhancedTable(props) {
             />
             <TableRows
               Materials={
-                values(props.store.ClassRoomStore.getClassRoom(props.match.params.id).material.materials).map(m => createData(m))
+                props.store.ClassRoomStore.getClassRoom(props.match.params.id).material.materials.toJSON().map(m => createData(m))
               }></TableRows>
           </Table>
         </TableContainer>

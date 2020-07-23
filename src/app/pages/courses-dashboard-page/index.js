@@ -45,7 +45,6 @@ function BlogPost(props) {
                         </Box>
                     })
                 }
-
                 <AddClassRoom></AddClassRoom>
             </Box>
 
