@@ -97,7 +97,7 @@ export default function TableActionMenu(props) {
               {/* <SendIcon fontSize="small" /> */}
               {option.icon}
             </ListItemIcon>
-            <ListItemText primary={option.title} />
+            <ListItemText  primary={option.title} />
           </StyledMenuItem>
 
         ))}

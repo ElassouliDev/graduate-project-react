@@ -124,7 +124,7 @@ const Room = (props) => {
         </Grid>
         <Grid item lg={3} md={3} sm={12} spacing={3}>
           <Card>
-            <Link to={`./${classRoom.id}/tasks`}>
+            <Link to={`./${classRoom.id}/join-request`}>
 
               <CardActionArea className={"!py-6 "} style={classes.root}>
 

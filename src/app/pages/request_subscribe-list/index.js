@@ -14,7 +14,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Typography, Avatar } from "@material-ui/core";
-
+import { inject, observer } from "mobx-react";
+import { withRouter } from "react-router";
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
@@ -59,16 +60,41 @@ const rows = [
   ),
 ];
 
-export default function RequestSubscribeToClassRoom() {
+ function RequestSubscribeToClassRoom(props) {
   const classes = useStyles();
-  const handleOnAcceptFunction = (event)=>{
+  const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
 
-    console.log('handleOnAcceptFunction', event);
+
+  React.useEffect(
+    () => {
+      async function fetchData() {
+        try {
+          if (classRoom)
+            return
+          let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
+          console.log("res", res);
+          props.store.ClassRoomStore.setOneClassRoom(res.data);
+        } catch (error) {
+          console.log("mappedClassRooms", error.message);
+        }
+      }
+      fetchData();
+    }, []);
+  if (!classRoom) {
+    return <Typography>class room not found</Typography>;
+  }
+
+
+
+  const handleOnAcceptFunction = (id)=>{
+
+    console.log('handleOnAcceptFunction', id);
   };
-   const handleOnRejectFunction = (event)=>{
-    console.log('handleOnRejectFunction', event);
+   const handleOnRejectFunction = (id)=>{
+    console.log('handleOnRejectFunction', id);
 
   };
+
   const  action_menu_items = [
     {
       title:'accept',
@@ -89,7 +115,7 @@ export default function RequestSubscribeToClassRoom() {
         id="tableTitle"
         component="div"
       >
-       Subscribe  Request
+       Join  Request
         {/* <Tooltip title="Add" aria-label="add">
                 <Fab color="primary" className={classes.fab}>
                   <Add />
@@ -102,28 +128,28 @@ export default function RequestSubscribeToClassRoom() {
           <TableHead>
             <TableRow>
               <TableCell  component="th"  width="40"></TableCell>
-              <TableCell  component="th"  >Name</TableCell>
-              <TableCell  component="th"  align="left">Email or Username</TableCell>
-              <TableCell  component="th"  align="center">Action</TableCell>
+              <TableCell  component="th"  className="!text-3xl"  >Name</TableCell>
+              <TableCell  component="th"  className="!text-3xl"   align="left">Username</TableCell>
+              <TableCell  component="th"  className="!text-3xl"   align="center">Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {classRoom.student_requests_objects.map((row) => (
               <TableRow key={row.id}>
-                <TableCell align="left">
+                <TableCell align="left" >
                   <Avatar
-                    src={row.image}
+                    src={row.profile.avatar}
                     size="small"
                     className={classes.small}
                   ></Avatar>
                 </TableCell>
 
-                <TableCell component="th" scope="row " align="left">
-                  {row.name}
+                <TableCell  className="!text-2xl" component="th" scope="row " align="left">
+                  {row.fullName}
                 </TableCell>
-                <TableCell align="left">{row.email_or_user_name}</TableCell>
+                <TableCell className="!text-2xl" align="left">{row.username}</TableCell>
 
-                <TableCell align="center"><TableActionMenu items={action_menu_items} item_id={row.id} /></TableCell>
+                <TableCell className="!text-2xl" align="center"><TableActionMenu items={action_menu_items} item_id={row.id} /></TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -132,3 +158,4 @@ export default function RequestSubscribeToClassRoom() {
     </div>
   );
 }
+export default inject('store')(withRouter(observer(RequestSubscribeToClassRoom)))

@@ -89,7 +89,7 @@ function App() {
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
-          <Route exact path="/Room/:id/request/subscribe">
+          <Route exact path="/Room/:id/join-request">
             <CustomPageLayout>
               <CustomClassroomLayout>
                 <RequestSubscribeToClassRoom />
