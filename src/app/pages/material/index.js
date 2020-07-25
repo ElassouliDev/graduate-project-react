@@ -4,7 +4,7 @@ import clsx from "clsx";
 // import { Icon } from "@material-ui/core/icons";
 // import classNames from "classnames";
 import DropSettingMenu from '../../../shared/components/three-dots-menu';
-import { Sort } from '@material-ui/icons';
+import { Sort, Add } from '@material-ui/icons';
 // import { AddCircle } from "@material-ui/icons";
 // import { Cached } from "@material-ui/icons";
 import { lighten, makeStyles } from "@material-ui/core/styles";
@@ -29,15 +29,23 @@ import FilterListIcon from "@material-ui/icons/FilterList";
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import AddMaterial from "./components/AddMaterial"
+import { Fade } from '@material-ui/core';
+import { Backdrop } from '@material-ui/core';
+import { Modal } from '@material-ui/core';
+import { Fab } from '@material-ui/core';
 import { Checkbox } from '@material-ui/core'
 // import { Button } from "@material-ui/core";
 
-function createData({ id, title, file, uploaded_at }) {
-  return { id, title, file, uploaded_at };
-}
-// function createData(name, calories, fat, carbs, protein) {
-//   return { name, calories, fat, carbs, protein };
+// function createData({ id, title, file, created_at }) {
+//   return { id, title, file, created_at };
+
 // }
+
+function createData({ id, title,file, created_at }) {
+   title =file.split("/").reverse()[0];
+  return { id, title, file, created_at };
+}
+
 
 
 function descendingComparator(a, b, orderBy) {
@@ -68,12 +76,12 @@ function stableSort(array, comparator) {
 
 const headCells = [
   { id: "id", numeric: false, disablePadding: false, label: "Material No." },
-  {
-    id: "title",
-    numeric: false,
-    disablePadding: false,
-    label: "Title",
-  },
+   {
+     id: "title",
+     numeric: false,
+     disablePadding: false,
+     label: "Title",
+   },
   {
     id: "file",
     numeric: false,
@@ -110,14 +118,7 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ "aria-label": "select all desserts" }}
-          />
-        </TableCell>
+
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -195,60 +196,24 @@ const EnhancedTableToolbar = (props) => {
 
   return (
     <Toolbar
-      className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0,
-      })}
+      className={clsx(classes.root)}
     >
-      {numSelected > 0 ? (
-        <Typography
-          className={classes.title}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      ) : (
-          <>
-            <Typography
+
+
+    <Typography
               className={classes.title}
               variant="h6"
               id="tableTitle"
               component="div"
             >
-              Materials
+            Materials
+
+             <Tooltip title="Add" aria-label="add" onClick={props.onClick}>
+                <Fab color="primary" className={classes.fab}>
+                  <Add />
+                </Fab>
+              </Tooltip>
             </Typography>
-
-
-            {/* <Button>
-            <AddCircle color="secondary" / >
-          </Button> */}
-          </>
-        )}
-
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton aria-label="delete">
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-
-      ) : (
-          <>
-            <Tooltip title="Filter list">
-              <IconButton aria-label="filter list">
-                <FilterListIcon />
-              </IconButton>
-
-            </Tooltip>
-            <Tooltip title="Sort ">
-              <IconButton aria-label="Sort">
-                <Sort />
-              </IconButton>
-
-            </Tooltip>
-          </>
-        )}
     </Toolbar>
   );
 };
@@ -297,6 +262,15 @@ function EnhancedTable(props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState([]);
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -342,6 +316,8 @@ function EnhancedTable(props) {
       }
     }
   }
+
+
   const TableRows = ({ Materials }) => {
     let Rows = Materials.map((m) => createData(m))
     console.log("Rows", Rows);
@@ -383,7 +359,7 @@ function EnhancedTable(props) {
                 scope="row"
                 padding="defualt"
               >
-                <a href={row.file}>Download</a>
+                <a href={row.file} target="blank">Download</a>
               </TableCell>
               <TableCell
 
@@ -398,7 +374,7 @@ function EnhancedTable(props) {
                 <DropSettingMenu id={row.id} options={
                   [
                     { id: "delete", onClick: handleDelete(row.id) },
-                    { id: "update", onClick: handleUpdate(row.id) }
+                    // { id: "update", onClick: handleUpdate(row.id) }
                   ]} />
               </TableCell>
               {/* <TableCell align="right">{row.carbs}</TableCell>
@@ -406,17 +382,18 @@ function EnhancedTable(props) {
             </TableRow>
           );
         })}
-      {emptyRows > 0 && (
+      {/* {emptyRows > 0 && (
         <TableRow style={{ height: 53 * emptyRows }}>
           <TableCell colSpan={6} />
         </TableRow>
-      )}
+      )} */}
     </TableBody>);
   }
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
   const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
+
   React.useEffect(
     () => {
       async function fetchData() {
@@ -438,9 +415,8 @@ function EnhancedTable(props) {
 
   return (
     <div className={classes.root}>
-      {props.store.ClassRoomStore.getClassRoom(props.match.params.id).material.materials.length}
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar />
+        <EnhancedTableToolbar  onClick={handleOpen}/>
         <TableContainer>
           <Table
             className={classes.table}
@@ -471,7 +447,10 @@ function EnhancedTable(props) {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-      <AddMaterial />
+
+
+      <AddMaterial handleOpen={handleOpen} handleClose={handleClose} open={open}/>
+
     </div>
   );
 }
