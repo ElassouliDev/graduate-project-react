@@ -1,4 +1,4 @@
-import { Typography, makeStyles } from "@material-ui/core";
+import { Typography, makeStyles, Card } from "@material-ui/core";
 import React, { useState } from "react";
 import MyInput from "../../../../shared/components/formasy-input";
 import Formsy from "formsy-react";
@@ -7,6 +7,10 @@ import { CardActions } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
+import { Backdrop } from '@material-ui/core';
+import { Fade } from '@material-ui/core';
+import { Modal } from '@material-ui/core';
+import materialStore from "../stores";
 
 
 
@@ -29,12 +33,26 @@ const AddMaterial = (props) => {
 
    const [isLoading, setLoading] = useState(false);
    const [helperText, setHelperText] = useState("");
+   const [materialData, setMaterialData] = useState({ ...materialStore.create({}).toJSON() })
 
    const handelSubmit = async () => {
       try {
          setLoading(true)
-         classRoom.material.addNewMaterial();
 
+         console.table('material new ',classRoom.material.newMaterial['file'] );
+         let  formData = new FormData();
+         let cRData = (({ file}) => ({file}))(materialStore)
+         for (var key in cRData) {
+            formData.append(key, materialData[key]);
+         }
+         // formData.append('file',classRoom.material.newMaterial['file']);
+         // console.table('tests',formData );
+         const res = await props.store.apiRequests.addMaterial(formData, props.match.params.id);
+
+
+         console.log('material ', res)
+
+         classRoom.material.addNewMaterial(res.data);
 
       } catch (err) {
 
@@ -43,6 +61,8 @@ const AddMaterial = (props) => {
 
       } finally {
          setLoading(false)
+         props.handleClose()
+
       }
    };
 
@@ -50,26 +70,34 @@ const AddMaterial = (props) => {
 
    const handleChange = (key) => (event) => {
       const value = event.target.value;
-      getClassRoom(props.match.params.id).material.setNewData({ key, value })
+      let preMaterialData = materialData;
+      if(key == 'file')
+      preMaterialData[key] = event.target.files[0]
+
+      else
+         preMaterialData[key] = value
+      setMaterialData(preMaterialData)
+      console.log(materialData);
+      // getClassRoom(props.match.params.id).material.setNewData({ key, value })
    };
    const classes = useStyles();
    const fields = [
+      // {
+      //    name: "title",
+      //    type: "text",
+      //    validations: "isExisty",
+      //    validationError: "This is not a valid",
+      //    required: true
+      // },
+      // {
+      //    name: "description",
+      //    type: "text",
+      //    validations: "isExisty",
+      //    validationError: "This is not a valid",
+      //    required: true
+      // },
       {
-         name: "title",
-         type: "text",
-         validations: "isExisty",
-         validationError: "This is not a valid",
-         required: true
-      },
-      {
-         name: "description",
-         type: "text",
-         validations: "isExisty",
-         validationError: "This is not a valid",
-         required: true
-      },
-      {
-         name: "url",
+         name: "file",
          type: "file",
          validations: "isExisty",
          validationError: "This is not a valid",
@@ -90,6 +118,20 @@ const AddMaterial = (props) => {
    }
 
    return (
+        <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={props.open}
+        onClose={props.handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+                <Fade in={props.open}>
+      <Card className="w-1/2 mx-auto mt-20">
       <CardContent>
          <Typography
             variant="h3"
@@ -135,7 +177,6 @@ const AddMaterial = (props) => {
             </Typography>
             <CardActions className="!px-0 !mt-10">
                <Button
-                  fullWidth
                   variant="contained"
                   color="primary"
                   size="large"
@@ -143,9 +184,24 @@ const AddMaterial = (props) => {
                   className={classes.containedSizeLarge}>
                   Add Material {isLoading && <CircularProgress />}
                </Button>
+               <Button
+                  variant="contained"
+                  color="secondary"
+                  size="large"
+                  type="reset"
+                  className={classes.containedSizeLarge}
+                  onClick={props.handleClose}
+                  >
+                  Cancel
+               </Button>
             </CardActions>
          </Formsy>
       </CardContent>
+      </Card>
+      </Fade>
+
+      </Modal>
+
    );
 }
 export default inject('store')(withRouter(observer(AddMaterial)));
