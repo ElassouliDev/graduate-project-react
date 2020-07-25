@@ -19,6 +19,8 @@ import Settings from "./pages/Room/settings"
 import Room from "./pages/Room/index.js"
 import UpdateMaterial from "./pages/material/components/UpdateMaterial";
 import Chat from './pages/chat';
+import RequestSubscribeToClassRoom from './pages/request_subscribe-list';
+import ClassroomStudentList from './pages/classroom_student_list';
 function App() {
   return (
     <Router>
@@ -61,6 +63,13 @@ function App() {
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
+          <Route path="/Room/:id/videos/manage">
+            <CustomPageLayout>
+              <CustomClassroomLayout>
+                <CourseList />
+              </CustomClassroomLayout>
+            </CustomPageLayout>
+          </Route>
           <Route path="/Room/:id/videos">
             <CustomPageLayout>
               <Videos />
@@ -80,17 +89,17 @@ function App() {
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
-          <Route path="/Room/:id/courses">
-            <CustomPageLayout
-
-              aside_show={false}
-              nav_item={true}
-              add_calssroom={false}
-              is_teacher={"teacher" == "teacher"} // check if user is tracher
-              nav_action={true}
-            >
+          <Route exact path="/Room/:id/request/subscribe">
+            <CustomPageLayout>
               <CustomClassroomLayout>
-                <CourseList />
+                <RequestSubscribeToClassRoom />
+              </CustomClassroomLayout>
+            </CustomPageLayout>
+          </Route>
+          <Route exact path="/Room/:id/student/list">
+            <CustomPageLayout>
+              <CustomClassroomLayout>
+                <ClassroomStudentList />
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>

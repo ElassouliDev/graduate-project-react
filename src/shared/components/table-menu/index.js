@@ -56,7 +56,7 @@ const StyledMenuItem = withStyles((theme) => ({
   },
 }))(MenuItem);
 
-export default function DropSettingMenu() {
+export default function TableActionMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -91,13 +91,13 @@ export default function DropSettingMenu() {
           },
         }}
       >
-        {options.map((option) => (
-          <StyledMenuItem>
+        {props.items.map((option) => (
+          <StyledMenuItem  onClick={option.action(props.item_id)}>
             <ListItemIcon style={{ minWidth: '22px' }}>
-              <SendIcon fontSize="small" />
-              <SendIcon fontSize="small" />
+              {/* <SendIcon fontSize="small" /> */}
+              {option.icon}
             </ListItemIcon>
-            <ListItemText primary="Sent mail" />
+            <ListItemText primary={option.title} />
           </StyledMenuItem>
 
         ))}
