@@ -177,6 +177,8 @@ const AddMaterial = (props) => {
             </Typography>
             <CardActions className="!px-0 !mt-10">
                <Button
+                              disabled={isLoading}
+
                   variant="contained"
                   color="primary"
                   size="large"
@@ -185,6 +187,8 @@ const AddMaterial = (props) => {
                   Add Material {isLoading && <CircularProgress />}
                </Button>
                <Button
+                              disabled={isLoading}
+
                   variant="contained"
                   color="secondary"
                   size="large"
