@@ -3,6 +3,9 @@ import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import { Typography, Grid, Card, Divider } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { GroupAdd } from '@material-ui/icons';
+import { ListAlt } from '@material-ui/icons';
+import { OndemandVideo } from '@material-ui/icons';
 import { Attachment } from '@material-ui/icons';
 import { Chat } from '@material-ui/icons';
 import { CardActionArea } from "@material-ui/core";
@@ -81,7 +84,7 @@ const Room = (props) => {
 
               <CardActionArea className={"!py-6 "} style={classes.root}>
 
-                <Attachment style={classes.chat} />
+                <OndemandVideo style={classes.chat} />
                 <Typography variant="h4" className={'text-center py-5'}>
                   Room tutorial videos
                 </Typography>
@@ -94,8 +97,8 @@ const Room = (props) => {
             <Link to={`./${classRoom.id}/material`}>
 
               <CardActionArea className={"!py-6 "} style={classes.root}>
+              <Attachment style={classes.chat} />
 
-                <Attachment style={classes.chat} />
                 <Typography variant="h4" className={'text-center py-5'}>
 
                   Room materials
@@ -110,7 +113,7 @@ const Room = (props) => {
 
               <CardActionArea className={"!py-6 "} style={classes.root}>
 
-                <Attachment style={classes.chat} />
+              <ListAlt style={classes.chat} />
                 <Typography variant="h4" className={'text-center py-5'}>
                   Room Tasks
                 </Typography>
@@ -118,6 +121,23 @@ const Room = (props) => {
             </Link>
           </Card>
         </Grid>
+        <Grid item lg={3} md={3} sm={12} spacing={3}>
+          <Card>
+            <Link to={`./${classRoom.id}/tasks`}>
+
+              <CardActionArea className={"!py-6 "} style={classes.root}>
+
+                <GroupAdd style={classes.chat} />
+                <Typography variant="h4" className={'text-center py-5'}>
+                  Join Request
+                </Typography>
+              </CardActionArea>
+            </Link>
+          </Card>
+        </Grid>
+
+
+
       </Grid>
     </div>
   )

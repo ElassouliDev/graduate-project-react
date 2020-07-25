@@ -113,6 +113,7 @@ const requests = (localStorage, config) => {
         getTasksForRoom: (classRoomId) => requestInstance.get(`${baseUrl}/classrooms/${classRoomId}/tasks/`),
         getOneTask: (taskId) => requestInstance.get(`${baseUrl}/tasks/${taskId}/`),
         deleteMaterial: (ClassRoomID, TaskId) => requestInstance.del(`${baseUrl}/classrooms/${ClassRoomID}/materials/${TaskId}/`),
+        addMaterial: (payload,ClassRoomID) => requestInstance.post(`${baseUrl}/classrooms/${ClassRoomID}/materials/`,payload),
 
         requestInstance
     }

@@ -14,11 +14,12 @@ const materialStore = types.model({
    materials: types.array(material),
    newMaterial: types.optional(material, {})
 }).actions((self) => ({
-   addNewMaterial: () => {
+   addNewMaterial: (payload) => {
       self.materials.push(
          material.create({
-            ...self.newMaterial.toJSON(),
-            id: self.materials.length + 1
+               id: payload.id?payload.id:self.materials.length + 1,
+               ...payload
+
          })
       )
    },

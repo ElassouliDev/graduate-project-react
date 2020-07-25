@@ -1,4 +1,4 @@
-import { Typography, makeStyles } from "@material-ui/core";
+import { Typography, makeStyles, Card } from "@material-ui/core";
 import React, { useState } from "react";
 import MyInput from "../../../../shared/components/formasy-input";
 import Formsy from "formsy-react";
@@ -7,6 +7,12 @@ import { CardActions } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
 import { inject, observer } from 'mobx-react';
 import { classRoom } from "../stores/ClassRoomStore"
+import { Fab } from '@material-ui/core';
+import { Tooltip } from '@material-ui/core';
+import { Fade } from '@material-ui/core';
+import { Backdrop } from '@material-ui/core';
+import { Modal } from '@material-ui/core';
+import { Add } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
    labelRoot: {
@@ -18,11 +24,27 @@ const useStyles = makeStyles((theme) => ({
    containedSizeLarge: {
       fontSize: "1.75rem",
    },
+   addIconStyle:{
+      position: 'fixed',
+      right: 50,
+      bottom: 50
+   }
 }));
 const AddClassRoom = (props) => {
    const [isLoading, setLoading] = useState(false);
    const [helperText, setHelperText] = useState("");
    const [classRoomData, setClassRoomData] = useState({ ...classRoom.create({}).toJSON() })
+   const [open, setOpen] = React.useState(false);
+
+   const handleOpen = () => {
+     setOpen(true);
+   };
+
+   const handleClose = () => {
+     setOpen(false);
+     setClassRoomData({ ...classRoom.create({}).toJSON() })
+   };
+
    const handelSubmitAddClassRoom = async () => {
       try {
          setLoading(true)
@@ -42,6 +64,7 @@ const AddClassRoom = (props) => {
 
       } finally {
          setLoading(false)
+         handleClose()
       }
    };
 
@@ -65,6 +88,27 @@ const AddClassRoom = (props) => {
    const classes = useStyles();
 
    return (
+      <>
+
+<Tooltip className={classes.addIconStyle} title="Add" aria-label="add" onClick={handleOpen}>
+                <Fab color="primary" className={classes.fab}>
+                  <Add />
+                </Fab>
+              </Tooltip>
+      <Modal
+      aria-labelledby="transition-modal-title"
+      aria-describedby="transition-modal-description"
+      className={classes.modal}
+      open={open}
+      onClose={handleClose}
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500,
+      }}
+    >
+      <Fade in={open}>
+      <Card className="w-1/2 mx-auto mt-20">
       <CardContent>
          <Typography
             variant="h3"
@@ -179,8 +223,9 @@ const AddClassRoom = (props) => {
                {helperText}
             </Typography>
             <CardActions className="!px-0 !mt-10">
-               <Button
-                  fullWidth
+            <Button
+               disabled={isLoading}
+
                   variant="contained"
                   color="primary"
                   size="large"
@@ -188,9 +233,26 @@ const AddClassRoom = (props) => {
                   className={classes.containedSizeLarge}>
                   Add Class Room {isLoading && <CircularProgress />}
                </Button>
+               <Button
+
+               disabled={isLoading}
+                  variant="contained"
+                  color="secondary"
+                  size="large"
+                  type="reset"
+                  onClick={handleClose}
+                  className={classes.containedSizeLarge}>
+                     Cancel
+               </Button>
             </CardActions>
          </Formsy>
       </CardContent>
+
+      </Card>
+      </Fade>
+      </Modal>
+
+      </>
    );
 }
 export default inject('store')(observer(AddClassRoom));
