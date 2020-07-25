@@ -96,7 +96,7 @@ function App() {
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
-          <Route exact path="/Room/:id/student/list">
+          <Route exact path="/Room/:id/students">
             <CustomPageLayout>
               <CustomClassroomLayout>
                 <ClassroomStudentList />

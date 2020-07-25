@@ -3,6 +3,7 @@ import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import { Typography, Grid, Card, Divider } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { Group } from '@material-ui/icons';
 import { GroupAdd } from '@material-ui/icons';
 import { ListAlt } from '@material-ui/icons';
 import { OndemandVideo } from '@material-ui/icons';
@@ -130,6 +131,20 @@ const Room = (props) => {
                 <GroupAdd style={classes.chat} />
                 <Typography variant="h4" className={'text-center py-5'}>
                   Join Request
+                </Typography>
+              </CardActionArea>
+            </Link>
+          </Card>
+        </Grid>
+        <Grid item lg={3} md={3} sm={12} spacing={3}>
+          <Card>
+            <Link to={`./${classRoom.id}/students`}>
+
+              <CardActionArea className={"!py-6 "} style={classes.root}>
+
+                <Group style={classes.chat} />
+                <Typography variant="h4" className={'text-center py-5'}>
+                  Students
                 </Typography>
               </CardActionArea>
             </Link>
