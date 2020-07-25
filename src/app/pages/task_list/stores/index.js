@@ -29,7 +29,7 @@ const modal = {
 export const task = types.model(modal).views((self) => ({
 
    get getStudentsWhoAnswered() {
-      return self.SubmittedSolutions.toJSON();
+      return self.attachments.map(task => task.user_info).toJSON();
    },
    get getStudentsWhoDidntAnswered() {
 
