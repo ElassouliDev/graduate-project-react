@@ -5,6 +5,7 @@ import { values } from "mobx";
 import User from '../../auth/stores/User';
 import File from "../../../../shared/store/File"
 import { attachment } from "../../../../shared/store/Models"
+import { classRoom } from '../../courses-dashboard-page/stores/ClassRoomStore';
 const modal = {
    id: types.optional(types.identifierNumber, 0),
    taskFile: types.optional(File, {}),
@@ -31,13 +32,16 @@ export const task = types.model(modal).views((self) => ({
       return self.SubmittedSolutions.toJSON();
    },
    get getStudentsWhoDidntAnswered() {
+
       let ids = []
       ids = values(self.SubmittedSolutions).map(solution => {
          return solution.createdBy.id
       });
-      return values(getParent(self).students).filter((std) => {
-         return !ids.includes(std.id)
-      })
+      let StudentsWhoDidntAnswered = getParent(self).student_objects;
+      // return values(StudentsWhoDidntAnswered).filter((std) => {
+      //    return !ids.includes(std.id)
+      // })
+      return []
    }
 })).actions((self) => ({
    setNewData: (payload) => {

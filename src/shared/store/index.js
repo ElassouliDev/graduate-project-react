@@ -77,7 +77,7 @@ const courseArray = [
                         username: "yahia qumboz",
                         image: "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg",
                     }),
-                    students: [
+                    student_objects: [
                         User.create({
                             id: 2,
                             username: "mohammed qumboz",

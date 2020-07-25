@@ -66,11 +66,15 @@ const TaskInfo = (props) => {
 
             <CardContent className="!mb-2 p-5">
               <Typography variant="h6" className="!mb-2">
-                {Task.description}
+                {Task.content}
               </Typography>
 
               <List>
-                <UploadFileListItem file={Task.attachments_info[0].file} DeleteShow={false} />
+                {
+                  Task.attachments_info.length > 0 ?
+                    Task.attachments_info.map(file => <UploadFileListItem file={Task.attachments_info[0].file} DeleteShow={false} />) :
+                    "there is no attachments"
+                }
               </List>
             </CardContent>
           </Card>

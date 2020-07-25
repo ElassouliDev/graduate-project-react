@@ -50,9 +50,10 @@ const TaskStudentsList = (props) => {
             className="mx-5 !px-5 !text-lg"
             size="medium"
             label={
-              Task.getStudentsWhoAnswered.length +
-              " / "
-              // Task.students.length
+              // Task.getStudentsWhoAnswered.length +
+              // " / " +
+              // Task.student_objects.length
+              ""
             }
           />
         </Typography>
@@ -76,21 +77,21 @@ const TaskStudentsList = (props) => {
             className="mx-5 !px-5 !text-lg"
             size="medium"
             label={
-              Task.getStudentsWhoDidntAnswered.length
-              + " / " +
-              Task.students.length
+              Task.getStudentsWhoDidntAnswered.length +
+              " / "
+              // Task.student_objects.length
             }
           />
         </Typography>
         {
-          Task.getStudentsWhoDidntAnswered.map(
-            (created_at) => {
-              return <UserItem
-                student={created_at}
-                key={created_at}
-              />
-            }
-          )
+          // Task.getStudentsWhoDidntAnswered.map(
+          //   (created_at) => {
+          //     return <UserItem
+          //       student={created_at}
+          //       key={created_at}
+          //     />
+          //   }
+          // )
         }
       </Grid>
     </Fragment>
