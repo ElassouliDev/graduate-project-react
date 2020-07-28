@@ -19,7 +19,31 @@ import Settings from "./pages/Room/settings"
 import Room from "./pages/Room/index.js"
 import UpdateMaterial from "./pages/material/components/UpdateMaterial";
 import Chat from './pages/chat';
-function App() {
+import { inject, observer } from "mobx-react";
+
+const keys = {
+  groups: 'groups',
+  username: "username"
+}
+
+
+function App(props) {
+  React.useEffect(() => {
+    console.log("App useEffect");
+    // ? find out user groups and store it in the User
+    if (window.localStorage.getItem(keys.groups) != null) {
+      const groups = +window.localStorage.getItem(keys.groups)
+      props.store.User.setUserData(keys.groups, groups);
+    }
+    if (window.localStorage.getItem(keys.username) != null) {
+      const username = +window.localStorage.getItem(keys.username)
+      props.store.User.setUserData(keys.username, username);
+    }
+
+
+  }, [])
+  console.log("groups", props.store.User.groups);
+  console.log("groups", window.localStorage.getItem(keys.groups));
   return (
     <Router>
       <Switch>
@@ -149,4 +173,4 @@ function App() {
     </Router >
   );
 }
-export default App;
+export default inject("store")(observer(App));

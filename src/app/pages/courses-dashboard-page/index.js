@@ -45,7 +45,11 @@ function BlogPost(props) {
                         </Box>
                     })
                 }
-                <AddClassRoom></AddClassRoom>
+                {
+                    // is teacher
+                    window.localStorage.getItem("groups") == 1 ? <AddClassRoom></AddClassRoom> : "add student to classRoom"
+                }
+
             </Box>
 
         </div>
