@@ -41,13 +41,14 @@ const AddMaterial = (props) => {
 
          console.table('material new ',classRoom.material.newMaterial['file'] );
          let  formData = new FormData();
-         let cRData = (({ file}) => ({file}))(materialStore)
+         let cRData = (({ file ,title}) => ({file,title}))(materialStore)
          for (var key in cRData) {
             formData.append(key, materialData[key]);
          }
          // formData.append('file',classRoom.material.newMaterial['file']);
          // console.table('tests',formData );
-         const res = await props.store.apiRequests.addMaterial(formData, props.match.params.id);
+         const res = await props.store.apiRequests.addِAttachment(formData);
+         // const res = await props.store.apiRequests.addMaterial(formData, props.match.params.id);
 
 
          console.log('material ', res)
@@ -82,13 +83,13 @@ const AddMaterial = (props) => {
    };
    const classes = useStyles();
    const fields = [
-      // {
-      //    name: "title",
-      //    type: "text",
-      //    validations: "isExisty",
-      //    validationError: "This is not a valid",
-      //    required: true
-      // },
+       {
+          name: "title",
+          type: "text",
+          validations: "isExisty",
+          validationError: "This is not a valid",
+          required: true
+       },
       // {
       //    name: "description",
       //    type: "text",

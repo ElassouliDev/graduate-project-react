@@ -42,7 +42,7 @@ import { Checkbox } from '@material-ui/core'
 // }
 
 function createData({ id, title,file, created_at }) {
-   title =file.split("/").reverse()[0];
+  //  title =file.split("/").reverse()[0];
   return { id, title, file, created_at };
 }
 
@@ -405,6 +405,8 @@ function EnhancedTable(props) {
           props.store.ClassRoomStore.setOneClassRoom(res.data);
         } catch (error) {
           console.log("mappedClassRooms", error.message);
+        }finally{
+
         }
       }
       fetchData();

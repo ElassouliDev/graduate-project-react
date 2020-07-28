@@ -38,17 +38,22 @@ const AddStudent = (props) => {
       try {
          setLoading(true)
 
+
          let  formData = new FormData();
          let cRData = (({ username}) => ({username}))(User)
-         for (var key in cRData) {
-            formData.append(key, userData[key]);
-         }
+         // for (var key in cRData) {
+            formData.append('student', userData['username']);
+         // }
 
-        // const res = await props.store.apiRequests.addStudent(formData, props.match.params.id);
+         console.log(1);
+         console.log(userData['username']);
+         const res = await props.store.apiRequests.addStudent(formData, props.match.params.id);
+
+         console.log(res);
 
 
-
-        //  classRoom.student_objects.addNewUser(res.data);
+         if(res.status == 200 && res.data.user )
+         classRoom.addStudent(res.data.user);
 
       } catch (err) {
 

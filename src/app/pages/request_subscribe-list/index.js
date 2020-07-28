@@ -16,6 +16,7 @@ import Paper from "@material-ui/core/Paper";
 import { Typography, Avatar } from "@material-ui/core";
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
+import { Sync } from '@material-ui/icons';
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
@@ -32,33 +33,6 @@ const useStyles = makeStyles({
 function createData(id, name, email_or_user_name, image) {
   return { id, name, email_or_user_name, image };
 }
-
-const rows = [
-  createData(
-    "1",
-    "yehia elassouli",
-    "yehia@gmain.com",
-    "https://kooledge.com/assets/default_medium_avatar-57d58da4fc778fbd688dcbc4cbc47e14ac79839a9801187e42a796cbd6569847.png"
-  ),
-  createData(
-    "1",
-    "yehia elassouli",
-    "yehia@gmain.com",
-    "https://kooledge.com/assets/default_medium_avatar-57d58da4fc778fbd688dcbc4cbc47e14ac79839a9801187e42a796cbd6569847.png"
-  ),
-  createData(
-    "1",
-    "yehia elassouli",
-    "yehia@gmain.com",
-    "https://kooledge.com/assets/default_medium_avatar-57d58da4fc778fbd688dcbc4cbc47e14ac79839a9801187e42a796cbd6569847.png"
-  ),
-  createData(
-    "1",
-    "yehia elassouli",
-    "yehia@gmain.com",
-    "https://kooledge.com/assets/default_medium_avatar-57d58da4fc778fbd688dcbc4cbc47e14ac79839a9801187e42a796cbd6569847.png"
-  ),
-];
 
  function RequestSubscribeToClassRoom(props) {
   const classes = useStyles();
@@ -86,12 +60,52 @@ const rows = [
 
 
 
-  const handleOnAcceptFunction = (id)=>{
+  const handleOnAcceptFunction = (std_id)=> async (event) => {
 
-    console.log('handleOnAcceptFunction', id);
+    try {
+      console.log(1);
+      let  formData = new FormData();
+      formData.append('student',std_id);
+
+      const res = await props.store.apiRequests.acceptEnrollRequest(formData, props.match.params.id);
+
+      console.log('handleDeleteFunction', std_id);
+      console.log('res', res)
+       // if (res.status == 204) {
+          //classRoom.deleteStudent(std_id);
+
+     // }
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      console.log('finally');
+
+    }
+
+
   };
-   const handleOnRejectFunction = (id)=>{
-    console.log('handleOnRejectFunction', id);
+   const handleOnRejectFunction = (std_id)=> async (event) => {
+
+    try {
+      console.log(1);
+      let  formData = new FormData();
+      formData.append('student',std_id);
+
+      const res = await props.store.apiRequests.rejectEnrollRequest(formData, props.match.params.id);
+
+      console.log('handleDeleteFunction', std_id);
+      console.log('res', res)
+       // if (res.status == 204) {
+          classRoom.rejectJoinRequest(std_id);
+
+     // }
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      console.log('finally');
+
+    }
+
 
   };
 
@@ -134,7 +148,8 @@ const rows = [
             </TableRow>
           </TableHead>
           <TableBody>
-            {classRoom.student_requests_objects.map((row) => (
+          {classRoom.student_requests_objects.length> 0?
+           classRoom.student_requests_objects.map((row) => (
               <TableRow key={row.id}>
                 <TableCell align="left" >
                   <Avatar
@@ -151,7 +166,13 @@ const rows = [
 
                 <TableCell className="!text-2xl" align="center"><TableActionMenu items={action_menu_items} item_id={row.id} /></TableCell>
               </TableRow>
-            ))}
+            )) :
+            <TableRow >
+            <TableCell align="center" colSpan={4} className='!text-2xl'>
+                 No data exist
+              </TableCell>
+            </TableRow>
+            }
           </TableBody>
         </Table>
       </TableContainer>

@@ -3,6 +3,7 @@ import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import { Typography, Grid, Card, Divider } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import LoadingProgressPage from '../../../shared/components/loading-progress-page';
 import { Group } from '@material-ui/icons';
 import { GroupAdd } from '@material-ui/icons';
 import { ListAlt } from '@material-ui/icons';
@@ -12,24 +13,30 @@ import { Chat } from '@material-ui/icons';
 import { CardActionArea } from "@material-ui/core";
 import { Settings } from "@material-ui/icons";
 const Room = (props) => {
+  const [isLoading, setLoading] = React.useState(false);
 
   const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
   useEffect(
     () => {
       async function fetchData() {
         try {
-          if (classRoom)
+          setLoading(true)
+                if (classRoom)
             return
           let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
           console.log("res", res);
           props.store.ClassRoomStore.setOneClassRoom(res.data);
         } catch (error) {
           console.log("mappedClassRooms", error.message);
-        }
+          setLoading(false)
+
+        }finally {
+          setLoading(false)
+       }
       }
       fetchData();
     }, []);
-  if (!classRoom) {
+  if (!isLoading && !classRoom) {
     return <Typography>class room not found</Typography>;
   }
   const classes = {
@@ -42,7 +49,10 @@ const Room = (props) => {
     }
   };
   return (
+
     <div>
+      {isLoading ? <LoadingProgressPage/>:
+      <>
       <Typography variant="h2" className={"py-5  "}>{classRoom.title}</Typography>
       <Divider />
       <Grid container spacing={3} className={"py-5 !mt-5 "}>
@@ -81,7 +91,7 @@ const Room = (props) => {
         </Grid>
         <Grid item lg={3} md={3} sm={12} spacing={3}>
           <Card>
-            <Link to={`./${classRoom.id}/courses`}>
+            <Link to={`./${classRoom.id}/videos/manage`}>
 
               <CardActionArea className={"!py-6 "} style={classes.root}>
 
@@ -154,7 +164,10 @@ const Room = (props) => {
 
 
       </Grid>
-    </div>
+</>
+          }
+             </div>
+
   )
 }
 export default inject('store')(withRouter(observer(Room)))

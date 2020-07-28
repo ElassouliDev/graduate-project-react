@@ -6,6 +6,8 @@ import { inject, observer } from 'mobx-react';
 import Box from '@material-ui/core/Box';
 import AddClassRoom from "./component/AddClassRoom";
 import Axios from "axios";
+import LoadingProgressPage from '../../../shared/components/loading-progress-page';
+import { CircularProgress } from '@material-ui/core';
 
 
 const useStyles = makeStyles(theme => ({
@@ -14,17 +16,24 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 function BlogPost(props) {
+    const [isLoading, setLoading] = React.useState(false);
 
     useEffect(
         () => {
             async function fetchData() {
                 try {
+                    setLoading(true)
+
                     let res = await props.store.apiRequests.getClassRooms();
                     console.log("res", res);
                     props.store.ClassRoomStore.setClassRooms(res.data);
                 } catch (error) {
+                    setLoading(false)
+
                     console.log("mappedClassRooms", error.message);
-                }
+                } finally {
+                    setLoading(false)
+                 }
             }
             fetchData();
         }, []);
@@ -38,7 +47,9 @@ function BlogPost(props) {
                 bgcolor="background.paper"
                 css={{ width: '100%' }}
             >
-                {
+                 {isLoading ?
+                 <LoadingProgressPage/>
+                 :
                     props.store.ClassRoomStore.classRooms.map((classRoom) => {
                         return <Box p={1} >
                             <ClassCard {...classRoom} />

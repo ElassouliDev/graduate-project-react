@@ -20,6 +20,8 @@ import { Typography, Avatar } from "@material-ui/core";
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import AddStudent from "./components/addStudent";
+import { AlertTitle } from '@material-ui/lab';
+import { Alert } from '@material-ui/lab';
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
@@ -37,32 +39,7 @@ function createData(id, name, email_or_user_name, image) {
   return { id, name, email_or_user_name, image };
 }
 
-const rows = [
-  createData(
-    "1",
-    "yehia elassouli",
-    "yehia@gmain.com",
-    "https://kooledge.com/assets/default_medium_avatar-57d58da4fc778fbd688dcbc4cbc47e14ac79839a9801187e42a796cbd6569847.png"
-  ),
-  createData(
-    "1",
-    "yehia elassouli",
-    "yehia@gmain.com",
-    "https://kooledge.com/assets/default_medium_avatar-57d58da4fc778fbd688dcbc4cbc47e14ac79839a9801187e42a796cbd6569847.png"
-  ),
-  createData(
-    "1",
-    "yehia elassouli",
-    "yehia@gmain.com",
-    "https://kooledge.com/assets/default_medium_avatar-57d58da4fc778fbd688dcbc4cbc47e14ac79839a9801187e42a796cbd6569847.png"
-  ),
-  createData(
-    "1",
-    "yehia elassouli",
-    "yehia@gmain.com",
-    "https://kooledge.com/assets/default_medium_avatar-57d58da4fc778fbd688dcbc4cbc47e14ac79839a9801187e42a796cbd6569847.png"
-  ),
-];
+
 
 function ClassroomStudentList(props) {
   const classes = useStyles();
@@ -98,20 +75,27 @@ if (!classRoom) {
 }
 
 
-  const handleDelete = (id) => async (event) => {
+
+
+  const handleDeleteFunction = (std_id)=>async (event) =>{
     try {
-      const res = await props.store.apiRequests.deleteMaterial(props.match.params.id, id)
-      if (res.status == 204) {
-        classRoom.material.delete(id)
-      }
+      console.log(1);
+      let  formData = new FormData();
+      formData.append('student',std_id);
+      console.log("id", std_id)
+      console.log("classroom _id ", props.match.params.id)
+      const res = await props.store.apiRequests.deleteStudent(formData, props.match.params.id);
+
+      console.log('handleDeleteFunction', std_id);
+       // if (res.status == 204) {
+          classRoom.deleteStudent(std_id);
+
+       // classRoom.material.delete(id)
+     // }
     } catch (error) {
       console.log(error.message);
     }
-  }
 
-  const handleDeleteFunction = (event)=>{
-
-    console.log('handleDeleteFunction', event);
   };
 
   const  action_menu_items = [
@@ -136,6 +120,13 @@ if (!classRoom) {
                   <Add />
                 </Fab>
               </Tooltip>
+
+
+
+    {/* <Alert severity="success">
+  <AlertTitle>Success</AlertTitle>
+  This is a success alert — <strong>check it out!</strong>
+</Alert> */}
       </Typography>
 
       <TableContainer component={Paper}>
@@ -149,7 +140,8 @@ if (!classRoom) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {classRoom.student_objects.map((row) => (
+            {classRoom.student_objects.length> 0 ?
+            classRoom.student_objects.map((row) => (
               <TableRow key={row.id}>
                 <TableCell align="left">
                   <Avatar
@@ -166,7 +158,13 @@ if (!classRoom) {
 
                 <TableCell align="center"><TableActionMenu items={action_menu_items} item_id={row.id} /></TableCell>
               </TableRow>
-            ))}
+            )):
+            <TableRow >
+          <TableCell align="center" colSpan={4} className='!text-2xl'>
+               No data exist
+            </TableCell>
+          </TableRow>
+          }
           </TableBody>
         </Table>
       </TableContainer>

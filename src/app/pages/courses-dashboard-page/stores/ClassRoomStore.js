@@ -32,6 +32,36 @@ export const classRoom = types.model({
       return self.posts.Posts.find((p) => {
          return p.id == id;
       })
+   }, deleteStudent: ( stdID) => {
+      let deleted = false;
+      console.log('delete fundion ', stdID)
+      self.student_objects = self.student_objects.filter((cR) => {
+         if (cR.id == stdID)
+            deleted = true
+         return cR.id != stdID
+      });
+      return deleted
+   }, rejectJoinRequest: (stdID) => {
+      let deleted = false;
+      self.student_requests_objects = self.student_requests_objects.filter((cR) => {
+         if (cR.id == stdID)
+            deleted = true
+         return cR.id != stdID
+      });
+      return deleted
+   }
+   , addStudent: ( user) => {
+      let nUser = User.create({
+         id: user.id,
+         username: user.username,
+         first_name: user.first_name,
+         last_name: user.last_name,
+         last_name: user.last_name,
+         profile: user.profile,
+
+
+      })
+      self.student_objects.push(nUser)
    }
    ,
 }));
@@ -113,6 +143,7 @@ export default types.model('ClassRoomStore', {
    setOneClassRoom: (cR) => {
       self.classRooms.push(setClassRoomF(cR));
    },
+
 }))
 
 const setClassRoomF = (cR) => {
