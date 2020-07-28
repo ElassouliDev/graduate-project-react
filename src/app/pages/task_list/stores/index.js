@@ -49,16 +49,19 @@ export const task = types.model(modal).views((self) => ({
    }
 }));
 const classroom_tasks_info = types.model({
-   tasks: types.array(task)
+   tasks: types.array(task),
+   newTask: types.optional(task, {})
 
 })
    .actions((self) => ({
       addNewTask: (payload) => {
+         let _newtask = payload;
+         let user = payload.user_info
+         user.groups = "" + payload.user_info.groups[0].id
+         const created_user = User.create(user)
+         _newtask.user_info = created_user
          self.tasks.push(
-            task.create({
-               id: self.tasks.length + 1,
-               ...payload
-            })
+            task.create(_newtask)
          )
       },
       editTask: (payload) => {

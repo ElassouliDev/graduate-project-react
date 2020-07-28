@@ -28,52 +28,51 @@ const AddMaterial = (props) => {
    let [status, setStatus] = useState(0);
    let [message, setMessage] = useState("");
    let classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
-
+   let [fileTOupload, setFileToUpload] = useState(null);
    const handelSubmit = async () => {
       try {
          setLoading(true)
          setMessage("")
          const payload = props.store.User;
-         console.log("login", payload);
-         const res = await props.store.apiRequests.loginUser({ username: payload.username, password: payload.password })
+         console.log("add task", payload);
+         const task = classRoom.classroom_tasks_info.newTask;
+         const attachment = new FormData();
+         attachment.append('file', fileTOupload)
+         attachment.append('title', task.title)
+         attachment.append('_type', 2)
+
+         const attachments = await props.store.apiRequests.addAttachment(attachment)
+
+         const formData = new FormData();
+         formData.append('title', task.title)
+         formData.append('content', task.content)
+         formData.append('attachments', attachments.data.id)
+
+         const res = await props.store.apiRequests.addTask(classRoom.id, formData)
+         classRoom.classroom_tasks_info.addNewTask(res.data)
          console.log(res);
-
-         if (res.data.auth_token) {
-            setStatus(1)
-            setMessage("You are logged in, you will be redirected in 5 secounds")
-
-            window.localStorage.setItem('jwtToken', res.data.auth_token)
-            setTimeout(() => {
-               console.log("props.history.push('/')");
-               props.history.push("/")
-            }, 6000);
-         }
+         setStatus(1)
+         setMessage("task added successully")
       } catch (err) {
-         window.localStorage.clear()
-         if (err.non_field_errors) {
-            if (err.non_field_errors.length > 0) {
-               setStatus(2)
-               setMessage(err.non_field_errors[0])
-               return;
-            } else {
-               setStatus(2)
-               setMessage("The provided password and email is not correct")
-               return;
-            }
-         } else {
-            if (err.message) {
-               setStatus(2)
-               setMessage(err.message)
-            }
-         }
+         setStatus(2)
+         setMessage(err.message)
       } finally {
          setLoading(false)
       }
    };
 
    const handleChange = (key) => (event) => {
+      if (key == "taskFile") {
+         setFileToUpload(event.target.files[0])
+         return
+      }
+      if (key == "accept_solutions") {
+         const value = event.target.checked;
+         classRoom.classroom_tasks_info.newTask.setNewData({ key, value })
+         return
+      }
       const value = event.target.value;
-      props.store.ClassRoomStore.getClassRoom(props.match.params.id).material.setNewData({ key, value })
+      classRoom.classroom_tasks_info.newTask.setNewData({ key, value })
    };
 
    const classes = useStyles();
@@ -87,7 +86,7 @@ const AddMaterial = (props) => {
          required: true
       },
       {
-         name: "description",
+         name: "content",
          type: "text",
          validations: "isExisty",
          validationError: "This is not a valid",
@@ -101,14 +100,14 @@ const AddMaterial = (props) => {
          required: true
       },
       {
-         name: "vaildUntill",
+         name: "accept_solutions_due",
          type: "date",
          validations: "isExisty",
          validationError: "This is not a valid",
          required: true
       },
       {
-         name: "is_closed",
+         name: "accept_solutions",
          type: "checkbox",
          validations: "isExisty",
          validationError: "This is not a valid",
@@ -143,7 +142,9 @@ const AddMaterial = (props) => {
             {
                fields.map((field) =>
                   <MyInput
-                     value={classRoom.material.newMaterial[field.name]}
+                     value={
+                        field.name == "taskFile" ? fileTOupload :
+                           classRoom.material.newMaterial[field.name]}
                      name={field.name}
                      type={field.type}
                      fullWidth
@@ -189,3 +190,14 @@ const AddMaterial = (props) => {
    );
 }
 export default inject('store')(withRouter(observer(AddMaterial)));
+
+/**
+ * [mobx-state-tree] Error while converting
+ *  `{"id":24,"user_info":{"id":3,
+ * "username":"amintest123","first_name":"amin",
+ * "last_name":"alakhras","groups":[{"id":1,"name":"teachers"}],
+ * "profile":{"avatar":null}},
+ * "attachments_info":[{"id":14,"attachment_type":"task solution",
+ * "created_at":"2020-07-28T17:08:53.973128Z","mo......":[14]}`
+ *  to `AnonymousModel`: at path "/user_info/groups" snapshot `[{"id":1,"name":"teachers"}]` is not assignable to type: `(string | null)` (No type is applicable for the union). at path "/user_info/groups" snapshot `[{"id":1,"name":"teachers"}]` is not assignable to type: `(string | null)` (Value is not a string). at path "/user_info/groups" snapshot `[{"id":1,"name":"teachers"}]` is not assignable to type: `(string | null)` (Value is not a null).
+ */

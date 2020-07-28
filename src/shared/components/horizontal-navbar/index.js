@@ -18,6 +18,7 @@ import { AccountBox } from "@material-ui/icons";
 import { ExitToApp } from "@material-ui/icons";
 import { Add } from "@material-ui/icons";
 import { Avatar } from "@material-ui/core";
+import { withRouter } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -47,7 +48,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PrimarySearchAppBar({
+
+
+export default withRouter(function PrimarySearchAppBar({
   toggleDrawer,
   anchor,
   aside_show = true,
@@ -55,6 +58,7 @@ export default function PrimarySearchAppBar({
   add_calssroom = true,
   is_teacher = false,
   nav_action = true,
+  history
 }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -79,6 +83,9 @@ export default function PrimarySearchAppBar({
   };
   const handleLogOut = () => {
     console.log("logout action ");
+    window.localStorage.clear()
+    history.push("/")
+
   };
 
   const handleMobileMenuOpen = (event) => {
@@ -102,14 +109,14 @@ export default function PrimarySearchAppBar({
         <IconButton aria-label="show 4 new mails" color="inherit">
           <AccountBox />
         </IconButton>
-        My account
-      </MenuItem>
+          My account
+        </MenuItem>
       <MenuItem onClick={handleLogOut}>
         <IconButton aria-label="show 4 new mails" color="inherit">
           <ExitToApp />
         </IconButton>
-        Logo Out
-      </MenuItem>
+          Logo Out
+        </MenuItem>
     </Menu>
   );
 
@@ -197,18 +204,18 @@ export default function PrimarySearchAppBar({
                   : ""}
 
                 {/* <IconButton aria-label="show 4 new mails" color="inherit">
-                  <Badge badgeContent={4} color="secondary">
-                    <MailIcon />
-                  </Badge>
-                </IconButton> */}
+                    <Badge badgeContent={4} color="secondary">
+                      <MailIcon />
+                    </Badge>
+                  </IconButton> */}
                 {/* <IconButton
-                  aria-label="show 17 new notifications"
-                  color="inherit"
-                >
-                  <Badge badgeContent={17} color="secondary">
-                    <NotificationsIcon />
-                  </Badge>
-                </IconButton> */}
+                    aria-label="show 17 new notifications"
+                    color="inherit"
+                  >
+                    <Badge badgeContent={17} color="secondary">
+                      <NotificationsIcon />
+                    </Badge>
+                  </IconButton> */}
                 <IconButton
                   edge="end"
                   aria-label="account of current user"
@@ -241,9 +248,8 @@ export default function PrimarySearchAppBar({
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-
-
-
     </div>
   );
 }
+
+)
