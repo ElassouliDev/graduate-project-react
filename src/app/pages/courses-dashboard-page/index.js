@@ -8,6 +8,7 @@ import AddClassRoom from "./component/AddClassRoom";
 import Axios from "axios";
 import LoadingProgressPage from '../../../shared/components/loading-progress-page';
 import { CircularProgress } from '@material-ui/core';
+import EnrollClassRoom from "./component/EnrollClassRoom";
 
 
 const useStyles = makeStyles(theme => ({
@@ -58,7 +59,7 @@ function BlogPost(props) {
                 }
                 {
                     // is teacher
-                    window.localStorage.getItem("groups") == 1 ? <AddClassRoom></AddClassRoom> : "add student to classRoom"
+                    window.localStorage.getItem("groups") == 1 ? <AddClassRoom></AddClassRoom> : <EnrollClassRoom/>
                 }
 
             </Box>
