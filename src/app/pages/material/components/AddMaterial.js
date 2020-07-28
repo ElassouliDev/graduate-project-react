@@ -11,6 +11,7 @@ import { Backdrop } from '@material-ui/core';
 import { Fade } from '@material-ui/core';
 import { Modal } from '@material-ui/core';
 import materialStore from "../stores";
+import { attachment } from '../../../../shared/store/Models';
 
 
 
@@ -34,6 +35,7 @@ const AddMaterial = (props) => {
    const [isLoading, setLoading] = useState(false);
    const [helperText, setHelperText] = useState("");
    const [materialData, setMaterialData] = useState({ ...materialStore.create({}).toJSON() })
+   const [attachmentData, setAttachmentData] = useState({ ...attachment.create({}).toJSON() })
 
    const handelSubmit = async () => {
       try {
@@ -41,19 +43,30 @@ const AddMaterial = (props) => {
 
          console.table('material new ',classRoom.material.newMaterial['file'] );
          let  formData = new FormData();
-         let cRData = (({ file ,title}) => ({file,title}))(materialStore)
+         let cRData = (({ file ,title}) => ({file,title}))(attachment)
+         // let cRData = (({ file ,title}) => ({file,title}))(materialStore)
          for (var key in cRData) {
             formData.append(key, materialData[key]);
          }
+         formData.append('_type', 2);
+
+         const res_attachment = await props.store.apiRequests.addAttachment(formData);
+
+
+           formData = new FormData();
+         formData.append('attachment', res_attachment.data.id);
+
+         const res = await props.store.apiRequests.addMaterial(formData, props.match.params.id);
+         classRoom.material.addNewMaterial(res.data);
+
+
          // formData.append('file',classRoom.material.newMaterial['file']);
          // console.table('tests',formData );
-         const res = await props.store.apiRequests.addِAttachment(formData);
          // const res = await props.store.apiRequests.addMaterial(formData, props.match.params.id);
 
 
          console.log('material ', res)
 
-         classRoom.material.addNewMaterial(res.data);
 
       } catch (err) {
 
@@ -90,13 +103,7 @@ const AddMaterial = (props) => {
           validationError: "This is not a valid",
           required: true
        },
-      // {
-      //    name: "description",
-      //    type: "text",
-      //    validations: "isExisty",
-      //    validationError: "This is not a valid",
-      //    required: true
-      // },
+
       {
          name: "file",
          type: "file",

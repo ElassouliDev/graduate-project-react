@@ -1,10 +1,11 @@
 /* eslint-disable eqeqeq */
 
 import { types, getParent } from 'mobx-state-tree';
+import { attachment } from '../../../../shared/store/Models';
 export const material = types.model({
    id: types.optional(types.identifierNumber, 0),
-   file: types.optional(types.maybeNull(types.string), null),
-   title: types.optional(types.maybeNull(types.string), null),
+   attachment_info: types.optional(types.maybeNull(attachment), null),
+   //title: types.optional(types.maybeNull(types.string), null),
    created_at: types.optional(types.maybeNull(types.string), null),
 }).actions((self) => ({
    setNewData: (payload) => {

@@ -41,9 +41,18 @@ import { Checkbox } from '@material-ui/core'
 
 // }
 
-function createData({ id, title,file, created_at }) {
-  //  title =file.split("/").reverse()[0];
-  return { id, title, file, created_at };
+// function createData({ id, title,file, created_at }) {
+//   //  title =file.split("/").reverse()[0];
+//   return { id, title, file, created_at };
+// }
+
+function createData(m) {
+
+console.log('tag', m)
+  ///title = attachment_info?attachment_info['title']:"";
+  //file = attachment_info?attachment_info['file']:"";
+
+  return m ;// { id: m.id, title:m.attachment_info.title, file:m.attachment_info.file, created_at:m.created_at };
 }
 
 
@@ -322,7 +331,7 @@ function EnhancedTable(props) {
     console.log("Rows", Rows);
 
     return (<TableBody>
-      {stableSort(Rows, getComparator(order, orderBy))
+      {Rows.length > 0  ? stableSort(Rows, getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((row, index) => {
           const isItemSelected = isSelected(row.name);
@@ -381,7 +390,11 @@ function EnhancedTable(props) {
                         <TableCell align="right">{row.protein}</TableCell> */}
             </TableRow>
           );
-        })}
+        }):
+        <TableRow >
+          <TableCell colSpan={4}  align="center" className="!text-2xl">No Data Exists</TableCell>
+        </TableRow>
+        }
       {/* {emptyRows > 0 && (
         <TableRow style={{ height: 53 * emptyRows }}>
           <TableCell colSpan={6} />
@@ -435,7 +448,7 @@ function EnhancedTable(props) {
             />
             <TableRows
               Materials={
-                props.store.ClassRoomStore.getClassRoom(props.match.params.id).material.materials.toJSON().map(m => createData(m))
+                classRoom.material.materials.toJSON().map(m => createData(m))
               }></TableRows>
           </Table>
         </TableContainer>
