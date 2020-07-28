@@ -114,12 +114,12 @@ const requests = (localStorage, config) => {
         getTasksForRoom: (classRoomId) => requestInstance.get(`${baseUrl}/classrooms/${classRoomId}/tasks/`),
         getOneTask: (taskId) => requestInstance.get(`${baseUrl}/tasks/${taskId}/`),
         deleteMaterial: (ClassRoomID, TaskId) => requestInstance.del(`${baseUrl}/classrooms/${ClassRoomID}/materials/${TaskId}/`),
-        addMaterial: (payload,ClassRoomID) => requestInstance.post(`${baseUrl}/classrooms/${ClassRoomID}/materials/`,payload),
-        addِAttachment: (payload) => requestInstance.post(`${baseUrl}/attachments/`,payload),
-        addStudent: (payload,ClassRoomID) => requestInstance.post(`${baseUrl}/classrooms/${ClassRoomID}/add_student`,payload),
-        deleteStudent: (payload,ClassRoomID) => requestInstance.post(`${baseUrl}/classrooms/${ClassRoomID}/unroll`,payload),
-        acceptEnrollRequest: (payload,ClassRoomID) => requestInstance.post(`${baseUrl}/classrooms/${ClassRoomID}/accept`,payload),
-        rejectEnrollRequest: (payload,ClassRoomID) => requestInstance.post(`${baseUrl}/classrooms/${ClassRoomID}/reject`,payload),
+        addMaterial: (payload, ClassRoomID) => requestInstance.post(`${baseUrl}/classrooms/${ClassRoomID}/materials/`, payload),
+        addAttachment: (payload) => requestInstance.post(`${baseUrl}/attachments/`, payload),
+        addStudent: (payload, ClassRoomID) => requestInstance.post(`${baseUrl}/classrooms/${ClassRoomID}/add_student`, payload),
+        deleteStudent: (payload, ClassRoomID) => requestInstance.post(`${baseUrl}/classrooms/${ClassRoomID}/unroll`, payload),
+        acceptEnrollRequest: (payload, ClassRoomID) => requestInstance.post(`${baseUrl}/classrooms/${ClassRoomID}/accept`, payload),
+        rejectEnrollRequest: (payload, ClassRoomID) => requestInstance.post(`${baseUrl}/classrooms/${ClassRoomID}/reject`, payload),
         enrollClassRoom: (ClassRoomCode) => requestInstance.post(`${baseUrl}/classrooms/${ClassRoomCode}/enroll`),
 
         requestInstance
