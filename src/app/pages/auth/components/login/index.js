@@ -9,6 +9,12 @@ import { withRouter } from "react-router-dom"
 import { inject, observer } from 'mobx-react';
 import DescriptionAlerts from "../../../../../shared/components/alert"
 
+const keys = {
+  groups: 'groups',
+  userName: "username",
+  jwtToken: 'jwtToken'
+}
+
 const useStyles = makeStyles((theme) => ({
   labelRoot: {
     fontSize: "1.75rem",
@@ -35,10 +41,12 @@ const LoginForm = (props) => {
       console.log(res);
 
       if (res.data.auth_token) {
-        setStatus(1)
-        setMessage("You are logged in, you will be redirected in 5 secounds")
         props.store.User.setUser(res.data)
-        window.localStorage.setItem('jwtToken', res.data.auth_token)
+        window.localStorage.setItem(keys.jwtToken, res.data.auth_token)
+        window.localStorage.setItem(keys.groups, res.data.user.groups[0].id)
+        window.localStorage.setItem(keys.userName, res.data.user.username)
+        setMessage("You are logged in, you will be redirected in 5 secounds")
+        setStatus(1)
         setTimeout(() => {
           console.log("props.history.push('/')");
           props.history.push("/")

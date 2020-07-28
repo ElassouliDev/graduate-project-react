@@ -13,6 +13,7 @@ import getConfig from "../../config";
 import { apiRequests } from "../../services/apiRequestes";
 
 
+
 function TabPanel(props) {
   console.log("tab panel ", props);
   const { value, index, children, ...other } = props;
@@ -34,8 +35,8 @@ export default function Auth(props) {
   const classes = useStyles();
 
   useEffect(() => {
-//   props.router.push('/foo')
-    console.log('router ',props);
+    //   props.router.push('/foo')
+    console.log('router ', props);
     if (props.tabValue) {
       setTabValue(props.tabValue);
     }

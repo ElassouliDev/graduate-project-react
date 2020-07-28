@@ -33,7 +33,7 @@ function BlogPost(props) {
                     console.log("mappedClassRooms", error.message);
                 } finally {
                     setLoading(false)
-                 }
+                }
             }
             fetchData();
         }, []);
@@ -47,16 +47,20 @@ function BlogPost(props) {
                 bgcolor="background.paper"
                 css={{ width: '100%' }}
             >
-                 {isLoading ?
-                 <LoadingProgressPage/>
-                 :
+                {isLoading ?
+                    <LoadingProgressPage />
+                    :
                     props.store.ClassRoomStore.classRooms.map((classRoom) => {
                         return <Box p={1} >
                             <ClassCard {...classRoom} />
                         </Box>
                     })
                 }
-                <AddClassRoom></AddClassRoom>
+                {
+                    // is teacher
+                    window.localStorage.getItem("groups") == 1 ? <AddClassRoom></AddClassRoom> : "add student to classRoom"
+                }
+
             </Box>
 
         </div>

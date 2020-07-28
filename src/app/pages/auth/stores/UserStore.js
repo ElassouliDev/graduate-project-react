@@ -19,7 +19,7 @@ export default types.model('UserStore', {
         self.confirmPassword = payload.confirmPassword;
         self.first_name = payload.first_name;
         self.last_name = payload.last_name;
-        self.groubs = payload.groubs;
+        self.groups = payload.groups;
     },
     setNewUserData: (payload) => {
         self[payload.key] = payload.value;

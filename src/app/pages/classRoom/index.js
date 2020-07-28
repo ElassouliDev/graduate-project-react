@@ -11,15 +11,8 @@ const useStyles = makeStyles(theme => ({
         flexGrow: 1,
     },
 }));
-function BlogPost(props) {
-
-    useEffect(
-        () => {
-            async function fetchData() {
-                // await apiRequests.getClassRooms()
-            }
-            // fetchData();
-        }, []);
+const classRoom = (props) => {
+    console.log(props.store.User.groups, "groups", typeof props.store.User.groups);
     return (
         <div style={{ width: '100%' }}>
             <Box
@@ -37,10 +30,17 @@ function BlogPost(props) {
                         </Box>
                     })
                 }
-                <AddClassRoom></AddClassRoom>
+                {console.log("groups", window.localStorage.getItem("groups"), window.localStorage.getItem("groups") == 1)}
+                {
+
+                    // is teacher
+
+                    window.localStorage.getItem("groups") == 1 ? <AddClassRoom></AddClassRoom> : "laskd"
+                }
+
             </Box>
 
         </div>
     );
 }
-export default withStyles(useStyles)(inject('store')(observer(BlogPost)));
+export default withStyles(useStyles)(inject('store')(observer(classRoom)));
