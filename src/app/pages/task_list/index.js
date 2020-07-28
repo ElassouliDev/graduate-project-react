@@ -6,6 +6,7 @@ import { Divider, Typography } from "@material-ui/core";
 import getNextPath from "../../../shared/middleware/getNexPath"
 import { observer, inject } from "mobx-react";
 import AddTask from "./component/AddTask";
+import { DeleteForever } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,6 +53,24 @@ const TaskList = (props) => {
   </div>
   }
 
+
+  const handleDeleteFunction = async (taskID) => {
+
+    console.log('delete task ', taskID)
+
+    const res = await props.store.apiRequests.deleteTask(taskID);
+    classRoom.classroom_tasks_info.delete(taskID);
+
+
+  }
+  const  action_menu_items = [
+    {
+      title:'delete',
+      icon:<DeleteForever  fontSize="small"/>,
+      action:handleDeleteFunction
+    }
+  ];
+
   return (
     <div className="container m-auto my-20  ">
       <Typography variant="h2" className="!mb-5">
@@ -63,7 +82,7 @@ const TaskList = (props) => {
         {
           classRoom.classroom_tasks_info.tasks.map(
             (taskData) => (
-              <TaskListItem link={getNextPath(props.history.location.pathname, taskData.id)} taskData={taskData} />
+              <TaskListItem actions={action_menu_items} link={getNextPath(props.history.location.pathname, taskData.id)} taskData={taskData} />
             )
           )
         }
