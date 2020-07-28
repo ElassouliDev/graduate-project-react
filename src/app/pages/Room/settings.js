@@ -8,15 +8,27 @@ import { getSnapshot } from 'mobx-state-tree';
 import { red } from "@material-ui/core/colors";
 const Settings = (props) => {
    let { id } = useParams();
-   let [classRoom, setClassRoom] = useState();
+   const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
    let [deleted, setDeleted] = useState(false);
    let [status, setStatus] = useState(0);
    let [message, setMessage] = useState("");
-   useEffect(() => {
-      setClassRoom(
-         getSnapshot(props.store.ClassRoomStore.getClassRoom(id))
-      )
-   }, [])
+   useEffect(
+      () => {
+        async function fetchData() {
+          try {
+            if (classRoom)
+              return
+            let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
+            console.log("res", res);
+
+            props.store.ClassRoomStore.setOneClassRoom(res.data);
+          } catch (error) {
+            console.log("mappedClassRooms", error.message);
+          }
+        }
+        fetchData();
+      }, []);
+
    const HandleDeleteClass = () => {
       try {
          const res = props.store.ClassRoomStore.deleteClassRoom(id);

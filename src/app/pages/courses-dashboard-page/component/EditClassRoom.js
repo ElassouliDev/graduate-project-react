@@ -7,6 +7,7 @@ import { CardActions } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
 import { inject, observer } from 'mobx-react';
 import { getSnapshot } from 'mobx-state-tree'
+import { Switch } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
    labelRoot: {
@@ -26,6 +27,13 @@ const EditClassRoom = (props) => {
    const handelSubmit = async () => {
       try {
          setLoading(true)
+         let cRData = (({ title, description,auto_accept_students }) => ({ title, description, auto_accept_students }))(classRoom)
+         let formData = new FormData;
+         for (var key in cRData) {
+            formData.append(key, classRoom[key]);
+         }
+         const res = await props.store.apiRequests.editClassRoom(formData,classRoom.id)
+
          props.store.ClassRoomStore.editClassRoom((classRoom.id, classRoom));
 
       } catch (err) {
@@ -42,6 +50,10 @@ const EditClassRoom = (props) => {
    }, [])
    const handleChange = (key) => (event) => {
       setClassRoom({ ...classRoom, [key]: event.target.value })
+   };
+   const handleChangeSwitch =(event) => {
+
+      setClassRoom({ ...classRoom, [event.target.name]: event.target.checked  })
    };
    const classes = useStyles();
    if (!classRoom) {
@@ -106,55 +118,15 @@ const EditClassRoom = (props) => {
                }}
                required
             />
-            {/* 
-            <MyInput
-               value={classRoom.logo_img}
-               name="logo_img"
-               type="file"
-               fullWidth
-               placeholder="Enter your logo_img"
-               label="logo_img"
-               id="logo_img"
-               validationError="This is not a valid logo_img"
-               onChange={handleChange("logo_img")}
-               InputProps={{ classes: { root: classes.inputRoot } }}
-               InputLabelProps={{
-                  classes: {
-                     root: classes.labelRoot,
-                     // focused: classes.labelFocused
-                  },
-               }}
-               FormHelperTextProps={{
-                  classes: {
-                     root: classes.labelRoot,
-                     // focused: classes.labelFocused
-                  },
-               }}
-            />
-            <MyInput
-               value={classRoom.background_img}
-               name="background_img"
-               type="file"
-               fullWidth
-               placeholder="Enter your username"
-               label="background_img"
-               id="background_img"
-               validationError="This is not a valid background_img"
-               onChange={handleChange("background_img")}
-               InputProps={{ classes: { root: classes.inputRoot } }}
-               InputLabelProps={{
-                  classes: {
-                     root: classes.labelRoot,
-                     // focused: classes.labelFocused
-                  },
-               }}
-               FormHelperTextProps={{
-                  classes: {
-                     root: classes.labelRoot,
-                     // focused: classes.labelFocused
-                  },
-               }}
-            /> */}
+             <Switch
+        checked={classRoom.auto_accept_students}
+        onChange={handleChangeSwitch}
+        name="auto_accept_students"
+        color="primary"
+        label="auto accept students"
+        inputProps={{ 'aria-label': 'primary checkbox' }}
+      />
+
             <Typography>
                {helperText}
             </Typography>
