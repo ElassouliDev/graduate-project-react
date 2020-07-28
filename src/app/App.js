@@ -52,12 +52,20 @@ function App(props) {
         <Route path="/auth">
           <IsLoggedIn>
             <Route path="/auth/login">
-              <CustomPageLayout>
+              <CustomPageLayout
+               aside_show={false}
+               nav_item={false}
+               add_calssroom={false}
+              >
                 <Auth tabValue={0} />
               </CustomPageLayout>
             </Route>
             <Route path="/auth/register">
-              <CustomPageLayout>
+              <CustomPageLayout
+               aside_show={false}
+               nav_item={false}
+               add_calssroom={false}
+              >
                 <Auth tabValue={1} />
               </CustomPageLayout>
             </Route>

@@ -14,6 +14,7 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import classNames from "classnames";
 import Tabs from "./components/Tabs";
+import { Container } from '@material-ui/core';
 import { AccountBox } from "@material-ui/icons";
 import { ExitToApp } from "@material-ui/icons";
 import { Add } from "@material-ui/icons";
@@ -29,6 +30,8 @@ const useStyles = makeStyles((theme) => ({
   title: {
     display: "none",
     color: "#A79E9E",
+    fontWeight: 'bold',
+    fontSize: 21,
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
@@ -162,8 +165,10 @@ export default function PrimarySearchAppBar({
         position="static"
         color="transparent"
         style={{ minHeight: "5.5rem" }}
+
       >
-        <Toolbar style={{ minHeight: "5.5rem" }}>
+        <Container>
+        <Toolbar style={{ minHeight: "5.5rem" }} className="">
           {aside_show ? (
             <IconButton
               edge="start"
@@ -178,7 +183,8 @@ export default function PrimarySearchAppBar({
               ""
             )}
 
-          <Typography className={classes.title} variant="h6" noWrap>
+
+          <Typography className={classes.title} variant="h5" noWrap>
             CLASSROOM <span style={{ color: "#2FEFE4" }}> AUG </span>
           </Typography>
 
@@ -190,25 +196,9 @@ export default function PrimarySearchAppBar({
             <>
               <div className={classes.sectionDesktop}>
 
-                {add_calssroom ?
-                  <IconButton aria-label="show 4 new mails" color="inherit">
-                    <Add size="larg" className="!text-4xl" />
-                  </IconButton>
-                  : ""}
 
-                {/* <IconButton aria-label="show 4 new mails" color="inherit">
-                  <Badge badgeContent={4} color="secondary">
-                    <MailIcon />
-                  </Badge>
-                </IconButton> */}
-                {/* <IconButton
-                  aria-label="show 17 new notifications"
-                  color="inherit"
-                >
-                  <Badge badgeContent={17} color="secondary">
-                    <NotificationsIcon />
-                  </Badge>
-                </IconButton> */}
+
+
                 <IconButton
                   edge="end"
                   aria-label="account of current user"
@@ -238,6 +228,7 @@ export default function PrimarySearchAppBar({
               ""
             )}
         </Toolbar>
+        </Container>
       </AppBar>
       {renderMobileMenu}
       {renderMenu}

@@ -45,9 +45,11 @@ const EditClassRoom = (props) => {
          setLoading(false)
       }
    };
+
    useEffect(() => {
       setClassRoom(props.store.ClassRoomStore.getClassRoom(props.classRoom.id))
    }, [])
+
    const handleChange = (key) => (event) => {
       setClassRoom({ ...classRoom, [key]: event.target.value })
    };
