@@ -71,8 +71,8 @@ function createData(id, name, email_or_user_name, image) {
 
       console.log('handleDeleteFunction', std_id);
       console.log('res', res)
-       // if (res.status == 204) {
-          //classRoom.deleteStudent(std_id);
+       // if (res.user) {
+          //classRoom.addStudent(res.user);
 
      // }
     } catch (error) {
