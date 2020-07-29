@@ -46,13 +46,13 @@ import { Checkbox } from '@material-ui/core'
 //   return { id, title, file, created_at };
 // }
 
-function createData(m) {
+function createData({ id,attachment_info:{ title, file}, created_at }) {
 
-console.log('tag', m)
+ console.log('tag', { id, title, file, created_at })
   ///title = attachment_info?attachment_info['title']:"";
   //file = attachment_info?attachment_info['file']:"";
 
-  return m ;// { id: m.id, title:m.attachment_info.title, file:m.attachment_info.file, created_at:m.created_at };
+  return { id, title, file, created_at } ;// { id: m.id, title:m.attachment_info.title, file:m.attachment_info.file, created_at:m.created_at };
 }
 
 
@@ -327,8 +327,8 @@ function EnhancedTable(props) {
 
 
   const TableRows = ({ Materials }) => {
-    let Rows = Materials.map((m) => createData(m))
-    console.log("Rows", Rows);
+    let Rows =Materials // Materials.map((m) => createData(m))
+   // console.log("Rows", Rows);
 
     return (<TableBody>
       {Rows.length > 0  ? stableSort(Rows, getComparator(order, orderBy))

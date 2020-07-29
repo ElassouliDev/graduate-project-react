@@ -2,6 +2,12 @@ import { flow, getParent, types } from 'mobx-state-tree';
 const Profile = types.model({
    avatar: types.optional(types.maybeNull(types.string), null),
 })
+const Group = types.model({
+   id: types.optional(types.maybeNull(types.integer), null),
+   name: types.optional(types.maybeNull(types.string), null),
+})
+
+
 export default types.model('User', {
    password: types.optional(types.maybeNull(types.string), null),
    username: types.optional(types.maybeNull(types.string), null),
@@ -10,7 +16,7 @@ export default types.model('User', {
    state: types.optional(types.maybeNull(types.string), null),
    responseMessage: types.optional(types.maybeNull(types.string), null),
    profile: types.optional(Profile, {}),
-   groups: types.optional(types.maybeNull(types.string), null),
+   groups: types.optional(types.array(Group), []),
    id: types.optional(types.identifierNumber, 0),
    jwtToken: types.optional(types.maybeNull(types.string), null),
 }).views((self) => ({
