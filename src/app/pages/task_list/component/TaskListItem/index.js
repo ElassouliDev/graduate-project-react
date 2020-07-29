@@ -18,7 +18,6 @@ export default function TaskListItem(props) {
 
   return (
     <Card className="my-20">
-      <CardActionArea href={props.link}>
         <CardHeader
           avatar={
             <Avatar
@@ -36,18 +35,19 @@ export default function TaskListItem(props) {
           action={
           <>
           <Chip
-            className="mt-5"
+            className="mt-5 "
             size="larg"
             color={props.taskData.is_closed ? "secondary" : "primary"}
             label={<Typography variant="h6" >
               {props.taskData.is_closed ? "closed" : "open"}
             </Typography>}
           />
-        <TableActionMenu items={props.action_menu_items} item_id={props.id} />
+        <TableActionMenu styles={{ float: 'right',paddingTop: 10, margin: '0px 20px'}} items={props.action_menu_items} item_id={props.taskData.id} />
           </>
           }
         />
         <Divider />
+        <CardActionArea href={props.link}>
 
         <CardContent className="!mb-2 p-5">
           <Typography variant="h4" className="!mb-2">

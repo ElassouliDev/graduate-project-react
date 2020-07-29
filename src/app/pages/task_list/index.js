@@ -56,10 +56,11 @@ const TaskList = (props) => {
 
   const handleDeleteFunction = async (taskID) => {
 
+    // console.log('delete task ', event)
     console.log('delete task ', taskID)
 
-    const res = await props.store.apiRequests.deleteTask(taskID);
-    classRoom.classroom_tasks_info.delete(taskID);
+     const res = await props.store.apiRequests.deleteTask(taskID);
+     classRoom.classroom_tasks_info.delete(taskID);
 
 
   }
@@ -82,7 +83,7 @@ const TaskList = (props) => {
         {
           classRoom.classroom_tasks_info.tasks.map(
             (taskData) => (
-              <TaskListItem actions={action_menu_items} link={getNextPath(props.history.location.pathname, taskData.id)} taskData={taskData} />
+              <TaskListItem action_menu_items={action_menu_items} link={getNextPath(props.history.location.pathname, taskData.id)} taskData={taskData} />
             )
           )
         }

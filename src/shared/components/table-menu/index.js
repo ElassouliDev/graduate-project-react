@@ -69,7 +69,7 @@ export default function TableActionMenu(props) {
   };
 
   return (
-    <div>
+    <div style={props.styles?props.styles:{}}>
       <IconButton
         aria-label="more"
         aria-controls="long-menu"
@@ -92,7 +92,7 @@ export default function TableActionMenu(props) {
         }}
       >
         {props.items.map((option) => (
-          <StyledMenuItem  onClick={option.action(props.item_id)}>
+          <StyledMenuItem  onClick={option.action.bind(this,props.item_id)}>
             <ListItemIcon style={{ minWidth: '22px' }}>
               {/* <SendIcon fontSize="small" /> */}
               {option.icon}
