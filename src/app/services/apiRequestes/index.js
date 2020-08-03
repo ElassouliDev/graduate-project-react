@@ -122,7 +122,8 @@ const requests = (localStorage, config) => {
         deleteStudent: (payload, ClassRoomID) => requestInstance.post(`${baseUrl}/classrooms/${ClassRoomID}/unroll`, payload),
         acceptEnrollRequest: (payload, ClassRoomID) => requestInstance.post(`${baseUrl}/classrooms/${ClassRoomID}/accept`, payload),
         rejectEnrollRequest: (payload, ClassRoomID) => requestInstance.post(`${baseUrl}/classrooms/${ClassRoomID}/reject`, payload),
-        enrollClassRoom: (ClassRoomCode) => requestInstance.post(`${baseUrl}/classrooms/${ClassRoomCode}/enroll`),
+        addCourse: (payload) => requestInstance.post(`${baseUrl}/course/`,payload),
+        addMedia: (payload) => requestInstance.post(`${baseUrl}/media/`,payload),
 
         requestInstance
     }
