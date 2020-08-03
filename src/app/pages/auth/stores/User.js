@@ -16,7 +16,7 @@ export default types.model('User', {
    state: types.optional(types.maybeNull(types.string), null),
    responseMessage: types.optional(types.maybeNull(types.string), null),
    profile: types.optional(Profile, {}),
-   groups: types.optional(types.array(Group), []),
+   groups: types.optional(types.maybeNull(types.array(Group)), []),
    id: types.optional(types.identifierNumber, 0),
    jwtToken: types.optional(types.maybeNull(types.string), null),
 }).views((self) => ({
@@ -33,10 +33,10 @@ export default types.model('User', {
    setUser: (payload) => {
       Object.keys(payload).forEach(key => {
          if (key == "user") {
-            if (key == "groups") {
-               self[key] = payload.user.groups[0].id;
-               return
-            }
+            // if (key == "groups") {
+            //    self[key] = payload.user.groups[0].id;
+            //    return
+            // }
             self[key] = payload.user[key];
             return
          }
@@ -55,7 +55,7 @@ export default types.model('User', {
             self.jwtToken = res.body.auth_token
             self.state = "loggedIn"
             self.responseMessage = "logged in successfully"
-            self.groups = res.body.groups[0];
+            self.groups = res.body.groups;//[0];
          }
 
       } catch (error) {
