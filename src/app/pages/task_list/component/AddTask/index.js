@@ -9,6 +9,10 @@ import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
 import MyInput from "../../../../../shared/components/formasy-input"
 import DescriptionAlerts from "../../../../../shared/components/alert";
+import { Backdrop } from '@material-ui/core';
+import { Modal } from '@material-ui/core';
+import { Fade } from '@material-ui/core';
+import { Card } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
    labelRoot: {
@@ -29,6 +33,7 @@ const AddMaterial = (props) => {
    let [message, setMessage] = useState("");
    let classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
    let [fileTOupload, setFileToUpload] = useState(null);
+;
    const handelSubmit = async () => {
       try {
          setLoading(true)
@@ -106,13 +111,13 @@ const AddMaterial = (props) => {
          validationError: "This is not a valid",
          required: true
       },
-      {
-         name: "accept_solutions",
-         type: "checkbox",
-         validations: "isExisty",
-         validationError: "This is not a valid",
-         required: true
-      }
+      // {
+      //    name: "accept_solutions",
+      //    type: "checkbox",
+      //    validations: "isExisty",
+      //    validationError: "This is not a valid",
+      //    required: true
+      // }
    ]
 
    function capitalizeFLetter(input) {
@@ -129,6 +134,20 @@ const AddMaterial = (props) => {
    }
 
    return (
+              <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={props.open}
+        onClose={props.handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+                <Fade in={props.open}>
+      <Card className="w-1/2 mx-auto mt-20">
       <CardContent>
          <Typography
             variant="h3"
@@ -187,6 +206,9 @@ const AddMaterial = (props) => {
             </CardActions>
          </Formsy>
       </CardContent>
+      </Card>
+      </Fade>
+      </Modal>
    );
 }
 export default inject('store')(withRouter(observer(AddMaterial)));

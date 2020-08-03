@@ -6,7 +6,9 @@ import { Divider, Typography } from "@material-ui/core";
 import getNextPath from "../../../shared/middleware/getNexPath"
 import { observer, inject } from "mobx-react";
 import AddTask from "./component/AddTask";
-import { DeleteForever } from '@material-ui/icons';
+import { Fab } from '@material-ui/core';
+import { Tooltip } from '@material-ui/core';
+import { DeleteForever, Add } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +26,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 const TaskList = (props) => {
   const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  }
   React.useEffect(
     () => {
       async function fetchData() {
@@ -76,6 +87,11 @@ const TaskList = (props) => {
     <div className="container m-auto my-20  ">
       <Typography variant="h2" className="!mb-5">
         Task List
+        <Tooltip title="Add"   className="!mx-4" aria-label="add" onClick={handleOpen}>
+                <Fab color="primary" >
+                  <Add />
+                </Fab>
+              </Tooltip>
       </Typography>
       <Divider />
 
@@ -90,7 +106,7 @@ const TaskList = (props) => {
       </div>
       <Divider />
       <div className="my-10">
-        <AddTask></AddTask>
+        <AddTask handleOpen={handleOpen} handleClose={handleClose} open={open}></AddTask>
       </div>
     </div>
   );
