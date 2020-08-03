@@ -61,8 +61,11 @@ const AddMaterial = (props) => {
       } catch (err) {
          setStatus(2)
          setMessage(err.message)
+        props.handleClose();
       } finally {
          setLoading(false)
+         props.handleClose();
+
       }
    };
 
@@ -195,13 +198,24 @@ const AddMaterial = (props) => {
 
             <CardActions className="!px-0 !mt-10">
                <Button
-                  fullWidth
+                                    disabled={isLoading}
+
                   variant="contained"
                   color="primary"
                   size="large"
                   type="submit"
                   className={classes.containedSizeLarge}>
                   Add{isLoading && <CircularProgress />}
+               </Button>
+               <Button
+                  disabled={isLoading}
+                  variant="contained"
+                  color="secondary"
+                  size="large"
+                  type="button"
+                  onClick={ props.handleClose}
+                  className={classes.containedSizeLarge}>
+                  Cancel
                </Button>
             </CardActions>
          </Formsy>
