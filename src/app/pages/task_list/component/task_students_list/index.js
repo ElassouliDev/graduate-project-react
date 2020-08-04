@@ -25,6 +25,26 @@ const useStyles = makeStyles((theme) => ({
 const TaskStudentsList = (props) => {
   const [studentType, setStudentType] = useState("1");
   const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
+
+
+
+  React.useEffect(
+    () => {
+      async function fetchData() {
+        try {
+          if (classRoom)
+            return
+          let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
+          console.log("res", res);
+          props.store.ClassRoomStore.setOneClassRoom(res.data);
+        } catch (error) {
+          console.log("mappedClassRooms", error.message);
+        }
+      }
+      fetchData();
+    }, []);
+
+
   if (!classRoom) {
     return <div>
       class room not found

@@ -76,19 +76,17 @@ function createData(id, url, title) {
 
 
 
-   const handleDeleteFunction = (std_id)=> async (event) => {
+   const handleDeleteFunction = async(crs_id)=> {
 
     try {
       console.log(1);
-      let  formData = new FormData();
-      formData.append('student',std_id);
 
-      const res = await props.store.apiRequests.rejectEnrollRequest(formData, props.match.params.id);
 
-      console.log('handleDeleteFunction', std_id);
-      console.log('res', res)
+      const res = await props.store.apiRequests.deleteCourse(crs_id);
+      console.log("delete ", crs_id);
+
        // if (res.status == 204) {
-          classRoom.rejectJoinRequest(std_id);
+          classRoom.course.delete(crs_id);
 
      // }
     } catch (error) {
@@ -108,14 +106,14 @@ function createData(id, url, title) {
       action:handleDeleteFunction
     },
   ];
-  const rows = [
-    createData(1, "https://www.youtube.com/watch?v=eXqU-HWAMsc", "Donut", '15/2/2020'),
-    // createData("1", "https://www.youtube.com/watch?v=eXqU-HWAMsc", "Donut", '15/2/2020'),
-    // createData("1", "https://www.youtube.com/watch?v=eXqU-HWAMsc", "Donut", '15/2/2020'),
-    // createData("1", "https://www.youtube.com/watch?v=eXqU-HWAMsc", "Donut", '15/2/2020')
+  // const rows = [
+  //   createData(1, "https://www.youtube.com/watch?v=eXqU-HWAMsc", "Donut", '15/2/2020'),
+  //   // createData("1", "https://www.youtube.com/watch?v=eXqU-HWAMsc", "Donut", '15/2/2020'),
+  //   // createData("1", "https://www.youtube.com/watch?v=eXqU-HWAMsc", "Donut", '15/2/2020'),
+  //   // createData("1", "https://www.youtube.com/watch?v=eXqU-HWAMsc", "Donut", '15/2/2020')
 
 
-  ];
+  // ];
   return (
     <div className="mb-10">
       <Typography
@@ -144,15 +142,15 @@ function createData(id, url, title) {
           <TableBody>
           {/* {classRoom.student_requests_objects.length> 0?
            classRoom.student_requests_objects */}
-           {rows.length>0?
-           rows.map((row) => (
+           { classRoom.course.videos.length>0?
+           classRoom.course.videos.map((row) => (
               <TableRow key={row.id}>
 
 
                 <TableCell  className="!text-2xl" component="th" scope="row "  align="center">
                   {row.title}
                 </TableCell>
-                <TableCell className="!text-2xl" align="left">{row.url}</TableCell>
+                <TableCell className="!text-2xl" align="left">{row.media.path}</TableCell>
 
                 <TableCell className="!text-2xl" align="center"><TableActionMenu items={action_menu_items} item_id={row.id} /></TableCell>
               </TableRow>

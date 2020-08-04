@@ -32,6 +32,7 @@ const AddCourse = (props) => {
 
    const [isLoading, setLoading] = useState(false);
    const [helperText, setHelperText] = useState("");
+   const [videoUrl, setVideoUrl] = useState("");
    const [videoData, setVideoData] = useState({ ...video.create({}).toJSON() })
 
    const handelSubmit = async () => {
@@ -42,33 +43,29 @@ const AddCourse = (props) => {
          let  formData = new FormData();
          let cRData = (({ title,description}) => ({title , description}))(video)
           for (var key in cRData) {
+             console.log(key,  videoData[key])
             formData.append(key, videoData[key]);
           }
+          formData.append("classroom", props.match.params.id);
 
-
-    //    const res = await props.store.apiRequests.addCourse(formData);
-       // console.log('res', res.data)
-        cRData = (({ media_data}) => ({media_data}))(video)
-
-        console.log('res11', cRData)
-        console.log('path',classRoom.courses.newVideo.media_data);
+       const res = await props.store.apiRequests.addCourse(formData);
+        console.log('res', res.data)
 
         formData = new FormData();
-        formData.append('path',classRoom.courses.newVideo.media_data['path']);
+        formData.append('path',videoUrl);
 
-       // formData.append('course',res.data.id);
+        formData.append('course',res.data.id);
         formData.append('provider',1);
       //  console.log('id course', res.data.id)
-      //  const res1 = await props.store.apiRequests.addMedia(formData);
-      //  console.log('res1', res1.data)
+        const res1 = await props.store.apiRequests.addMedia(formData);
+        console.log('res1', res1.data)
 
    //     setVideoData(res.data);
-          let preVideoData =  videoData['apiRequests'];
-       //   preVideoData['apiRequests'] =res1.data;
-          setVideoData(preVideoData )
+       let  preVideoData =res.data;
+           preVideoData['media'] = res1.data;// preVideoData['apiRequests'];
+           console.log('all res', preVideoData)
 
-       //   if(res.status == 200 && res.data )
-       //   classRoom.course.addNewVideo(res.data);
+         classRoom.course.addNewVideo(preVideoData);
 
 
       } catch (err) {
@@ -87,8 +84,14 @@ const AddCourse = (props) => {
 
    const handleChange = (key) => (event) => {
       const value = event.target.value;
+      if(key == 'path'){
+         setVideoUrl(value)
+
+         return ;
+      }
       let preVideoData = videoData;
-      if(key == 'file')
+
+     if(key == 'file')
       videoData[key] = event.target.files[0]
       else
       preVideoData[key] = value
@@ -122,7 +125,7 @@ const AddCourse = (props) => {
         {
           title: "Url",
           name: "path",
-          value: classRoom.course.newVideo.media_data['path'],
+          value: videoUrl,
 
           type: "url",
           validations: "isExisty",

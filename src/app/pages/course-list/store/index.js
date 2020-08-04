@@ -15,7 +15,7 @@ export  const video = types.model({
     description:types.optional(types.string,""),
 
     // path:types.optional(types.maybeNull(types.string),""),
-    media_data:types.optional(media,{}),
+    media:types.optional(media,{}),
 }).actions((self)=>({
 setNewData:(payload)=>{
     self[payload.key]= payload.value;
@@ -28,6 +28,7 @@ export const classRoonCourses = types.model({
     newVideo :types.optional(video,{}),
 }).actions((self)=>({
     addNewVideo:(payload)=>{
+        console.log('add course', payload)
         self.videos.push(payload)
     },
     editVideo:(payload)=>{
@@ -48,12 +49,14 @@ export const classRoonCourses = types.model({
     },
     delete:($id) =>{
     let deleted =false ;
-    self.videos = self.videos.map((cR)=>{
-        if(cR.id == $id){
+    console.log('deletec couese',$id)
+    self.videos = self.videos.filter((cR)=>{
+        if(cR.id == $id)
             deleted = true ;
-            return cR.id != $id
-        }
+            return cR.id != $id;
+
     })
+    return deleted
 
     }
 }));
