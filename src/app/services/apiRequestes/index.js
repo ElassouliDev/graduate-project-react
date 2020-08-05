@@ -108,6 +108,7 @@ const requests = (localStorage, config) => {
         registerUser: (payload) => requestInstance.post(`${config.webUrl}/api/users/`, payload),
         loginUser: (payload) => requestInstance.post(`${config.webUrl}/api/login/`, payload),
         addClassRoom: (payload) => requestInstance.post(`${baseUrl}/classrooms/`, payload),
+        deleteClassRoom: (classRoomId) => requestInstance.del(`${baseUrl}/classrooms/${classRoomId}`),
         editClassRoom: (payload,classRoomId) => requestInstance.patch(`${baseUrl}/classrooms/${classRoomId}`, payload),
         addPost: (payload, classRoomId) => requestInstance.post(`${baseUrl}/classrooms/${classRoomId}/posts/`, payload),
         addComment: (payload, postId) => requestInstance.post(`${baseUrl}/posts/${postId}/comments/`, payload),
@@ -122,7 +123,9 @@ const requests = (localStorage, config) => {
         deleteStudent: (payload, ClassRoomID) => requestInstance.post(`${baseUrl}/classrooms/${ClassRoomID}/unroll`, payload),
         acceptEnrollRequest: (payload, ClassRoomID) => requestInstance.post(`${baseUrl}/classrooms/${ClassRoomID}/accept`, payload),
         rejectEnrollRequest: (payload, ClassRoomID) => requestInstance.post(`${baseUrl}/classrooms/${ClassRoomID}/reject`, payload),
-        enrollClassRoom: (ClassRoomCode) => requestInstance.post(`${baseUrl}/classrooms/${ClassRoomCode}/enroll`),
+        addCourse: (payload) => requestInstance.post(`${baseUrl}/course/`,payload),
+        deleteCourse: (courseId) => requestInstance.del(`${baseUrl}/course/${courseId}/`),
+        addMedia: (payload) => requestInstance.post(`${baseUrl}/media/`,payload),
 
         requestInstance
     }

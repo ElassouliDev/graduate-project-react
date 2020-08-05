@@ -29,11 +29,16 @@ const Settings = (props) => {
         fetchData();
       }, []);
 
-   const HandleDeleteClass = () => {
+   const HandleDeleteClass = async () => {
       try {
+         await props.store.apiRequests.deleteClassRoom(id);
+
          const res = props.store.ClassRoomStore.deleteClassRoom(id);
+
          if (res) {
             // process success
+
+
             setDeleted(true)
             setStatus(1)
             setMessage("Class Room Deleted, you will be redirected in 5sec...")

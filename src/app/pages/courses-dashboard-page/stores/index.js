@@ -4,6 +4,7 @@ import classroom_tasks_info from "../../task_list/stores"
 import PostStore from "../../participation/stores"
 import User from '../../auth/stores/User';
 /** test comment */
+import { classRoonCourses } from '../../course-list/store';
 export const classRoom = types.model({
    id: types.optional(types.identifierNumber, 0),
    title: types.maybeNull(types.string),
@@ -11,6 +12,7 @@ export const classRoom = types.model({
    background_img: types.maybeNull(types.string),
    logo_img: types.maybeNull(types.string),
    material: types.optional(materialStore, {}),
+   course: types.optional(classRoonCourses, {}),
    classroom_tasks_info: types.optional(classroom_tasks_info, {}),
    student_objects: types.array(User, {}),
    student_requests_objects: types.array(User),

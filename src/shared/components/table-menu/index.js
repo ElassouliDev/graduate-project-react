@@ -10,19 +10,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 
 
-const options = [
-  'None',
-  'delete',
-  // 'Hangouts Call',
-  // 'Luna',
-  // 'Oberon',
-  // 'Phobos',
-  // 'Pyxis',
-  // 'Sedna',
-  // 'Titania',
-  // 'Triton',
-  // 'Umbriel',
-];
 
 const ITEM_HEIGHT = 30;
 
@@ -68,6 +55,14 @@ export default function TableActionMenu(props) {
     setAnchorEl(null);
   };
 
+
+  const handleAction = (action) => {
+   // action();
+   action(props.item_id)
+    //option.action.bind(this,props.item_id)
+    setAnchorEl(null);
+  };
+
   return (
     <div style={props.styles?props.styles:{}}>
       <IconButton
@@ -91,8 +86,8 @@ export default function TableActionMenu(props) {
           },
         }}
       >
-        {props.items.map((option) => (
-          <StyledMenuItem  onClick={option.action.bind(this,props.item_id)}>
+        {props.items.map((option, index) => (
+          <StyledMenuItem key={props.item_id+index}  onClick={handleAction.bind(this,option.action)}>
             <ListItemIcon style={{ minWidth: '22px' }}>
               {/* <SendIcon fontSize="small" /> */}
               {option.icon}

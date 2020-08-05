@@ -17,7 +17,7 @@ const modal = {
    status: types.optional(types.maybeNull(types.string), null),
    validUntill: types.optional(types.boolean, false),
    SubmittedSolutions: types.array(File),
-   accept_solutions: false,
+   accept_solutions: true,
    accept_solutions_due: types.optional(types.maybeNull(types.string), null),
    classroom: 1,
    attachments_info: types.array(attachment)
@@ -57,7 +57,7 @@ const classroom_tasks_info = types.model({
       addNewTask: (payload) => {
          let _newtask = payload;
          let user = payload.user_info
-         user.groups = "" + payload.user_info.groups[0].id
+         user.groups =  payload.user_info.groups//"" + payload.user_info.groups[0].id
          const created_user = User.create(user)
          _newtask.user_info = created_user
          self.tasks.push(
