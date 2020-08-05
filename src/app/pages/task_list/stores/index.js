@@ -5,7 +5,7 @@ import { values } from "mobx";
 import User from '../../auth/stores/User';
 import File from "../../../../shared/store/File"
 import { attachment } from "../../../../shared/store/Models"
-import { classRoom } from '../../courses-dashboard-page/stores/ClassRoomStore';
+import { classRoom } from '../../courses-dashboard-page/stores';
 const modal = {
    id: types.optional(types.identifierNumber, 0),
    taskFile: types.optional(File, {}),

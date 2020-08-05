@@ -4,8 +4,8 @@ import LocalStorage from '../../app/services/LocalStorage';
 import getApiRequests from '../../app/services/apiRequestes';
 import UserStore from "../../app/pages/auth/stores/UserStore";
 import User from "../../app/pages/auth/stores/User";
-import ClassRoomStore from "../../app/pages/courses-dashboard-page/stores/ClassRoomStore";
-import { classRoom } from "../../app/pages/courses-dashboard-page/stores/ClassRoomStore";
+import ClassRoomStore from "../../app/pages/courses-dashboard-page/stores";
+import { classRoom } from "../../app/pages/courses-dashboard-page/stores";
 import materialStore, { material } from "../../app/pages/material/stores"
 import classroom_tasks_info, { task } from "../../app/pages/task_list/stores"
 import File from "../../shared/store/File"
