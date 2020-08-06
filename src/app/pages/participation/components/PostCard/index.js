@@ -34,41 +34,7 @@ function PostCard(props) {
 
       <Divider />
       <CommentList post={post} comments={post.comments} />
-      {/*
-      <div className={"px-10 py-10   "}>
-        <Grid row container className=" mb-10 ">
-          <Grid item md={1}>
-            <Avatar
-              alt={"user image goes here"}
-              src={"post.user.image"}
-            ></Avatar>
-          </Grid>
-          <Grid item md={11}>
-            <Paper elevation={3} className="p-10">
-              <Typography variant="h6" className="!my-2">
-                {post.content}
-              </Typography>
 
-              <CommentForm post_id={1} />
-            </Paper>
-          </Grid>
-        </Grid>
-        <Grid row container className=" mb-10 ">
-          <Grid item md={1}>
-            <Avatar
-              alt={"post.createdBy.username"}
-              src={"post.user.image"}
-            ></Avatar>
-          </Grid>
-          <Grid item md={11}>
-            <Paper elevation={3} className="p-10">
-              <Typography variant="h6" className="!my-2">
-                {post.content}
-              </Typography>
-            </Paper>
-          </Grid>
-        </Grid>
-      </div> */}
 
     </Card>
   );

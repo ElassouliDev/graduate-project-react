@@ -10,10 +10,19 @@ import { Grid } from "@material-ui/core";
 import { inject, observer } from "mobx-react";
 import { ExpandMore } from '@material-ui/icons';
 import { Send } from '@material-ui/icons';
+import MyInput from "../../../../shared/components/formasy-input";
+import Formsy from "formsy-react";
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
+  },
+  inputRoot:{
+    fontSize:'2rem'
+  },
+  large: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
   }
 }));
 const CreateParticipationCard = (props) => {
@@ -29,29 +38,15 @@ const CreateParticipationCard = (props) => {
       <Card className={[classes.root, "px-10 p-5"]}>
         <Grid container className={[classes.root]} spacing={2} onClick={handleShowForm}>
           <Grid item md={1}>
-            <Avatar src={props.store.User.image} />
+            <Avatar src={props.store.User.image} className={classes.large} />
           </Grid>
+          <CreateParticipationForm show={showForm} onClick={handleShowForm} />
 
-          <Grid item md={10}>
-            <Typography
-              variant="h4"
-              className={"leading-10 pt-3 "}
-              color="textSecondary"
-              component="h4"
-            >
-              Share with your friends
-          </Typography>
-          </Grid>
 
-          <Grid item md={1}>
-            <IconButton>
-              <ExpandMore fontSize="large"  onClick={handleShowForm}/>
-            </IconButton>
-          </Grid>
+
 
         </Grid>
       </Card>
-      <CreateParticipationForm show={showForm} onClick={handleShowForm} />
 
     </>
   );
