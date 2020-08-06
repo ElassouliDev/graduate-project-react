@@ -15,7 +15,7 @@ export  const video = types.model({
     description:types.optional(types.string,""),
 
     // path:types.optional(types.maybeNull(types.string),""),
-    media:types.optional(media,{}),
+    media:types.optional(types.array(media),[]),
 }).actions((self)=>({
 setNewData:(payload)=>{
     self[payload.key]= payload.value;
@@ -24,7 +24,7 @@ setNewData:(payload)=>{
 
 
 export const classRoonCourses = types.model({
-    videos :types.optional(types.array(video),[]),
+    videos :types.array(video),
     newVideo :types.optional(video,{}),
 }).actions((self)=>({
     addNewVideo:(payload)=>{

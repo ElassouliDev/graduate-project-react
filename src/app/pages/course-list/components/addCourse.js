@@ -62,7 +62,7 @@ const AddCourse = (props) => {
 
    //     setVideoData(res.data);
        let  preVideoData =res.data;
-           preVideoData['media'] = res1.data;// preVideoData['apiRequests'];
+           preVideoData['media'] = [res1.data];// preVideoData['apiRequests'];
            console.log('all res', preVideoData)
 
          classRoom.course.addNewVideo(preVideoData);

@@ -152,6 +152,9 @@ const setClassRoomF = (cR) => {
    let nmaterial = materialStore.create({
       materials: cR.material
    })
+    let nCourse = classRoonCourses.create({
+      videos: cR.course
+   })
    let nPostStore = PostStore.create({
       Posts: cR.posts
    })
@@ -168,6 +171,7 @@ const setClassRoomF = (cR) => {
       background_img: cR.background_img,
       logo_iog: cR.logo_iog,
       material: nmaterial,
+      course: nCourse,
       student_objects: cR.student_objects,
       student_requests_objects: cR.student_requests_objects,
       created_at: cR.created_at,
