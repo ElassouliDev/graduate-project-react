@@ -143,10 +143,9 @@ function App(props) {
           <Route exact path="/Room/:id/tasks">
             <CustomPageLayout
               aside_show={false}
-              nav_item={true}
+              nav_item={false}
               add_calssroom={false}
               is_teacher={"teacher" == "teacher"} // check if user is tracher
-              nav_action={true}
             >
               <CustomClassroomLayout>
                 <TaskList />
@@ -158,7 +157,7 @@ function App(props) {
               aside_show={false}
               nav_item={true}
               add_calssroom={false}
-              is_teacher={"teacher" == "teacher"} // check if user is tracher
+             // is_teacher={"teacher" == "teacher"} // check if user is tracher
               nav_action={true}
             >
               <CustomClassroomLayout>
@@ -166,14 +165,14 @@ function App(props) {
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
-          <Route exact path="/classroon/:classroom_id/task/:task_id/student">
+          <Route exact path="/Room/:id/task/:tId/student">
             <CustomPageLayout
 
               aside_show={false}
-              nav_item={true}
+              nav_item={false}
               add_calssroom={false}
               is_teacher={"teacher" == "teacher"} // check if user is tracher
-              nav_action={true}
+              nav_action={false}
             >
               <TaskStudentsList />
             </CustomPageLayout>

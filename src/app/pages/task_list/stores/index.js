@@ -6,6 +6,7 @@ import User from '../../auth/stores/User';
 import File from "../../../../shared/store/File"
 import { attachment } from "../../../../shared/store/Models"
 import { classRoom } from '../../courses-dashboard-page/stores';
+import { create } from 'lodash';
 const modal = {
    id: types.optional(types.identifierNumber, 0),
    taskFile: types.optional(File, {}),
@@ -14,6 +15,9 @@ const modal = {
    title: types.optional(types.maybeNull(types.string), null),
    content: types.optional(types.maybeNull(types.string), null),
    user_info: types.optional(User, {}),
+   delivered_students: types.optional(types.array(User), []),
+   undelivered_students: types.optional(types.array(User), []),
+
    status: types.optional(types.maybeNull(types.string), null),
    validUntill: types.optional(types.boolean, false),
    SubmittedSolutions: types.array(File),
@@ -45,6 +49,16 @@ export const task = types.model(modal).views((self) => ({
    }
 })).actions((self) => ({
    setNewData: (payload) => {
+      console.log('payload',payload );
+      console.log('key',payload.key );
+
+      if(payload.key =="undelivered_students" || payload.key =="delivered_students"  ){
+         console.log('update', payload.value.map(user => User.create(user)));
+         self[payload.key] =  payload.value.map(user => User.create(user))
+
+      }
+
+      else
       self[payload.key] = payload.value;
    }
 }));
