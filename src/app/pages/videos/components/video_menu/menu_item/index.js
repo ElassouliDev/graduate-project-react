@@ -3,6 +3,7 @@ import { Typography } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core";
 import React from "react";
+import classNames from 'classnames';
 import { Box } from '@material-ui/core';
 import { CardMedia } from '@material-ui/core';
 
@@ -30,8 +31,8 @@ export default function MenuItem(props) {
 
   return (
 
-          <Box boxShadow={3}>
-          <Grid   container className={[classes.root, "px-2"]} spacing={2}>
+          <Box boxShadow={3} onClick={props.onClick}>
+          <Grid   container className={classNames(classes.root,"mx-2" ,props.classes)} spacing={2}>
             <Grid item xs={12} sm={7} md={7}>
               <Typography variant="h4"  className={[ '!mb-3' ]} color="textSecondary" component="h3">
               {props.title}

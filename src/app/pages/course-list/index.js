@@ -150,7 +150,7 @@ function createData(id, url, title) {
                 <TableCell  className="!text-2xl" component="th" scope="row "  align="center">
                   {row.title}
                 </TableCell>
-                <TableCell className="!text-2xl" align="left">{row.media[0].path}</TableCell>
+                <TableCell className="!text-2xl" align="left">{row.media.length>0?row.media[0].path:"No video exist"}</TableCell>
 
                 <TableCell className="!text-2xl" align="center"><TableActionMenu items={action_menu_items} item_id={row.id} /></TableCell>
               </TableRow>
