@@ -8,6 +8,7 @@ import AddClassRoom from "./component/AddClassRoom";
 import Axios from "axios";
 import LoadingProgressPage from '../../../shared/components/loading-progress-page';
 import EnrollClassRoom from "./component/EnrollClassRoom";
+import { Typography } from '@material-ui/core';
 
 
 const useStyles = makeStyles(theme => ({
@@ -49,12 +50,13 @@ function BlogPost(props) {
             >
                 {isLoading ?
                     <LoadingProgressPage />
-                    :
+                    :props.store.ClassRoomStore.classRooms.length>0?
                     props.store.ClassRoomStore.classRooms.map((classRoom) => {
                         return <Box p={1} >
                             <ClassCard {...classRoom} />
                         </Box>
-                    })
+                    }):  <Typography className={'text-center !text-4xl !my-20 bg-gray-400 !py-10 w-full'}>No class room exists</Typography>
+
                 }
                 {
                     // is teacher
