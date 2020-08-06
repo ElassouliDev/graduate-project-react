@@ -103,12 +103,12 @@ const requests = (localStorage, config) => {
     console.log(baseUrl, 'baseUrl')
     const requestInstance = new Request(localStorage, baseUrl);
     return {
-        getClassRooms: () => requestInstance.get(`${baseUrl}/classrooms/`),
-        getOneClassRoom: (id) => requestInstance.get(`${baseUrl}/classrooms/${id}`),
+        getClassRooms: () => requestInstance.get(`${baseUrl}/unclean_classrooms/`),
+        getOneClassRoom: (id) => requestInstance.get(`${baseUrl}/unclean_classrooms/${id}`),
         registerUser: (payload) => requestInstance.post(`${config.webUrl}/api/users/`, payload),
         loginUser: (payload) => requestInstance.post(`${config.webUrl}/api/login/`, payload),
         addClassRoom: (payload) => requestInstance.post(`${baseUrl}/classrooms/`, payload),
-        editClassRoom: (payload,classRoomId) => requestInstance.patch(`${baseUrl}/classrooms/${classRoomId}`, payload),
+        editClassRoom: (payload, classRoomId) => requestInstance.patch(`${baseUrl}/classrooms/${classRoomId}`, payload),
         addPost: (payload, classRoomId) => requestInstance.post(`${baseUrl}/classrooms/${classRoomId}/posts/`, payload),
         addComment: (payload, postId) => requestInstance.post(`${baseUrl}/posts/${postId}/comments/`, payload),
         getTasksForRoom: (classRoomId) => requestInstance.get(`${baseUrl}/classrooms/${classRoomId}/tasks/`),

@@ -2,7 +2,11 @@ import { flow, getParent, types } from 'mobx-state-tree';
 const Profile = types.model({
    avatar: types.optional(types.maybeNull(types.string), null),
 })
-export default types.model('User', {
+const Group = types.model({
+   id: types.optional(types.maybeNull(types.integer), null),
+   name: types.optional(types.maybeNull(types.string), null)
+})
+const User = types.model('User', {
    password: types.optional(types.maybeNull(types.string), null),
    username: types.optional(types.maybeNull(types.string), null),
    first_name: types.optional(types.maybeNull(types.string), null),
@@ -10,7 +14,7 @@ export default types.model('User', {
    state: types.optional(types.maybeNull(types.string), null),
    responseMessage: types.optional(types.maybeNull(types.string), null),
    profile: types.optional(Profile, {}),
-   groups: types.optional(types.maybeNull(types.string), null),
+   groups: types.array(Group),
    id: types.optional(types.identifierNumber, 0),
    jwtToken: types.optional(types.maybeNull(types.string), null),
 }).views((self) => ({
@@ -25,18 +29,8 @@ export default types.model('User', {
       self[payload.key] = payload.value;
    },
    setUser: (payload) => {
-      Object.keys(payload).forEach(key => {
-         if (key == "user") {
-            if (key == "groups") {
-               self[key] = payload.user.groups[0].id;
-               return
-            }
-            self[key] = payload.user[key];
-            return
-         }
-         self[key] = payload[key];
+      self = User.create(payload);
 
-      });
    },
    login: flow(function* loginUser() {
       try {
@@ -58,3 +52,4 @@ export default types.model('User', {
       }
    })
 }))
+export default User;

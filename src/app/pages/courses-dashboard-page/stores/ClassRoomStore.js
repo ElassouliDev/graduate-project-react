@@ -32,7 +32,7 @@ export const classRoom = types.model({
       return self.posts.Posts.find((p) => {
          return p.id == id;
       })
-   }, deleteStudent: ( stdID) => {
+   }, deleteStudent: (stdID) => {
       let deleted = false;
       console.log('delete fundion ', stdID)
       self.student_objects = self.student_objects.filter((cR) => {
@@ -50,7 +50,7 @@ export const classRoom = types.model({
       });
       return deleted
    }
-   , addStudent: ( user) => {
+   , addStudent: (user) => {
       let nUser = User.create({
          id: user.id,
          username: user.username,

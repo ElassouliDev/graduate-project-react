@@ -7,20 +7,6 @@ import getNextPath from "../../../shared/middleware/getNexPath"
 import { observer, inject } from "mobx-react";
 import AddTask from "./component/AddTask";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  labelRoot: {
-    fontSize: "1.75rem",
-  },
-  inputRoot: {
-    fontSize: "1.75rem",
-  },
-  containedSizeLarge: {
-    fontSize: "1.75rem",
-  },
-}));
 const TaskList = (props) => {
   const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
   React.useEffect(

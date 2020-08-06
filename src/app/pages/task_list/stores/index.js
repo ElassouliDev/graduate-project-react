@@ -29,10 +29,11 @@ const modal = {
 export const task = types.model(modal).views((self) => ({
 
    get getStudentsWhoAnswered() {
-      return self.attachments.map(task => task.user_info).toJSON();
+      // return self.attachments.map(task => task.user_info).toJSON();
+      return []
    },
    get getStudentsWhoDidntAnswered() {
-
+      return []
       let ids = []
       ids = values(self.SubmittedSolutions).map(solution => {
          return solution.createdBy.id

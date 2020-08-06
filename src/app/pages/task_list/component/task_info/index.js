@@ -12,6 +12,8 @@ import { Card } from "@material-ui/core";
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import TaskStudentsList from "../task_students_list"
+import AttachmentIcon from '@material-ui/icons/Attachment';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,14 +67,20 @@ const TaskInfo = (props) => {
             <Divider />
 
             <CardContent className="!mb-2 p-5">
-              <Typography variant="h6" className="!mb-2">
+              <Typography variant="h3" className="!mb-2">
+                {Task.title}
+              </Typography>
+              <Typography variant="p" className="!mb-2">
                 {Task.content}
               </Typography>
-
               <List>
                 {
                   Task.attachments_info.length > 0 ?
-                    Task.attachments_info.map(file => <UploadFileListItem file={Task.attachments_info[0].file} DeleteShow={false} />) :
+                    Task.attachments_info.map(att => <a download href={att.file}>
+                      {att.title}
+                      <AttachmentIcon />
+
+                    </a>) :
                     "there is no attachments"
                 }
               </List>
@@ -87,7 +95,6 @@ const TaskInfo = (props) => {
           <TaskStudentsList></TaskStudentsList>
         </Grid>
       </Grid>
-      taskInfo
     </div>
   );
 }
