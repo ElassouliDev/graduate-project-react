@@ -12,7 +12,8 @@ import DescriptionAlerts from "../../../../../shared/components/alert"
 const keys = {
   groups: 'groups',
   userName: "username",
-  jwtToken: 'jwtToken'
+  jwtToken: 'jwtToken',
+  groupname: 'groupname'
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -44,6 +45,7 @@ const LoginForm = (props) => {
         props.store.User.setUser(res.data)
         window.localStorage.setItem(keys.jwtToken, res.data.auth_token)
         window.localStorage.setItem(keys.groups, res.data.user.groups[0].id)
+        window.localStorage.setItem(keys.groupname, res.data.user.groups[0].name)
         window.localStorage.setItem(keys.userName, res.data.user.username)
         setMessage("You are logged in, you will be redirected in 5 secounds")
         setStatus(1)

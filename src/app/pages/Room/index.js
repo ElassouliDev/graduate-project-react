@@ -11,7 +11,7 @@ import { OndemandVideo } from '@material-ui/icons';
 import { Attachment } from '@material-ui/icons';
 import { Chat } from '@material-ui/icons';
 import { CardActionArea } from "@material-ui/core";
-import { Settings } from "@material-ui/icons";
+import { Settings as SettingsLogo } from "@material-ui/icons";
 const options = {
   "settings": "settings",
   "participations": "participations",
@@ -80,36 +80,33 @@ const Room = (props) => {
     else
       return ""
   }
-  const Settings = () => {
-    return (
-      <Grid item lg={3} md={3} sm={12} spacing={3}>
-        <Card>
-          <Link to={`./${classRoom.id}/settings`}>
-            <CardActionArea className={"!py-6 "} style={classes.root}>
-              <Settings style={classes.chat} />
-              <Typography variant="h4" className={'text-center py-5'}> Room Settings </Typography>
-            </CardActionArea>
-          </Link>
-        </Card>
-      </Grid>)
-  }
-  const Participations = () => {
-    return (<Grid item lg={3} md={3} sm={12} spacing={3}>
-      <Card>
-        <Link to={`./${classRoom.id}/participation`}>
+  const Settings = () => <Grid item lg={3} md={3} sm={12} spacing={3}>
+    <Card>
+      <Link to={`./${classRoom.id}/settings`}>
+        <CardActionArea className={"!py-6 "} style={classes.root}>
+          <SettingsLogo style={classes.chat} />
+          <Typography variant="h4" className={'text-center py-5'}> Room Settings </Typography>
+        </CardActionArea>
+      </Link>
+    </Card>
+  </Grid>
 
-          <CardActionArea className={"!py-6 "} style={classes.root}>
+  const Participations = () => <Grid item lg={3} md={3} sm={12} spacing={3}>
+    <Card>
+      <Link to={`./${classRoom.id}/participation`}>
 
-            <Chat style={classes.chat} />
-            <Typography variant="h4" className={'text-center py-5'}>
+        <CardActionArea className={"!py-6 "} style={classes.root}>
 
-              Room participation space
+          <Chat style={classes.chat} />
+          <Typography variant="h4" className={'text-center py-5'}>
+
+            Room participation space
             </Typography>
-          </CardActionArea>
-        </Link>
-      </Card>
-    </Grid>)
-  }
+        </CardActionArea>
+      </Link>
+    </Card>
+  </Grid>
+
   const Tutorials = () => <Grid item lg={3} md={3} sm={12} spacing={3}>
     <Card>
       <Link to={`./${classRoom.id}/videos/manage`}>
@@ -124,6 +121,7 @@ const Room = (props) => {
       </Link>
     </Card>
   </Grid>
+
   const Materials = () => <Grid item lg={3} md={3} sm={12} spacing={3}>
     <Card>
       <Link to={`./${classRoom.id}/material`}>
@@ -139,6 +137,7 @@ const Room = (props) => {
       </Link>
     </Card>
   </Grid>
+
   const Tasks = () => <Grid item lg={3} md={3} sm={12} spacing={3}>
     <Card>
       <Link to={`./${classRoom.id}/tasks`}>
@@ -153,6 +152,7 @@ const Room = (props) => {
       </Link>
     </Card>
   </Grid>
+
   const Join = () => <Grid item lg={3} md={3} sm={12} spacing={3}>
     <Card>
       <Link to={`./${classRoom.id}/join-request`}>
@@ -167,6 +167,7 @@ const Room = (props) => {
       </Link>
     </Card>
   </Grid>
+
   const Students = () => <Grid item lg={3} md={3} sm={12} spacing={3}>
     <Card>
       <Link to={`./${classRoom.id}/students`}>
@@ -181,11 +182,8 @@ const Room = (props) => {
       </Link>
     </Card>
   </Grid>
-  {/* 
-  "join": "join",
-  "students": "students" */}
-  return (
 
+  return (
     <div>
       {isLoading ? <LoadingProgressPage /> :
         <>
