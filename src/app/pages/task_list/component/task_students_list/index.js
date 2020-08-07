@@ -199,12 +199,13 @@ const TaskStudentsList = (props) => {
             }
           />
         </Typography>
+
         {
-          Task.getStudentsWhoDidntAnswered.map(
+          Task.undelivered_students.map(
             (student) => {
               return <UserItem
                 student={student}
-                key={student.created_at}
+                key={student.id + student.username}
               />
             }
           )
