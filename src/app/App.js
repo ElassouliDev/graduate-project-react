@@ -140,29 +140,30 @@ function App(props) {
               <Chat />
             </CustomPageLayout>
           </Route>
-          <Route exact path="/Room/:id/tasks">
-            <CustomPageLayout
-              aside_show={false}
-              nav_item={true}
-              add_calssroom={false}
-              is_teacher={"teacher" == "teacher"} // check if user is tracher
-              nav_action={true}
-            >
-              <CustomClassroomLayout>
-                <TaskList />
-              </CustomClassroomLayout>
-            </CustomPageLayout>
-          </Route>
           <Route exact path="/Room/:id/tasks/:tId">
             <CustomPageLayout
               aside_show={false}
-              nav_item={true}
+              nav_item={false}
               add_calssroom={false}
               is_teacher={"teacher" == "teacher"} // check if user is tracher
               nav_action={true}
             >
               <CustomClassroomLayout>
                 <TaskInfo />
+              </CustomClassroomLayout>
+            </CustomPageLayout>
+          </Route>
+
+          <Route exact path="/Room/:id/tasks">
+            <CustomPageLayout
+              aside_show={false}
+              nav_item={false}
+              add_calssroom={false}
+              is_teacher={"teacher" == "teacher"} // check if user is tracher
+              nav_action={true}
+            >
+              <CustomClassroomLayout>
+                <TaskList />
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
