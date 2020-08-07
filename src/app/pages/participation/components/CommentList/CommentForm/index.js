@@ -10,6 +10,7 @@ import { Radio, RadioGroup, FormLabel, Button, CardActions, CardContent, FormCon
 import TextField from '@material-ui/core/TextField';
 import { observer, inject } from "mobx-react";
 import { withRouter } from "react-router";
+import { Send } from "@material-ui/icons";
 
 
 const styles = (theme) => ({
@@ -30,8 +31,7 @@ class CommentForm extends React.Component {
     helperText: "",
     isLoggedIn: false,
     newComment: {
-      content: "",
-      post_id: ""
+      content: ""
     }
   }
 
@@ -72,6 +72,9 @@ class CommentForm extends React.Component {
       this.setState({ isLoading: false, helperText: err.message })
     } finally {
       this.setState({ isLoading: false })
+      this.setState({ newComment: {
+        content: ""
+      } });
     }
   };
 
@@ -96,7 +99,7 @@ class CommentForm extends React.Component {
                 src={this.props.store.User.image}
               ></Avatar>
             </Grid>
-            <Grid item xs={8} sm={8} md={9}>
+            <Grid item xs={8} sm={9} md={10}>
               <TextField
                 label=""
                 placeholder="Enter your comment here"
@@ -115,8 +118,8 @@ class CommentForm extends React.Component {
               />
 
             </Grid>
-            <Grid item xs={2} sm={2} md={2}>
-              <Button onClick={this.handelSubmitCommentForm}>comment</Button>
+            <Grid item xs={2} sm={1} md={1}>
+              <Button onClick={this.handelSubmitCommentForm}><Send/></Button>
             </Grid>
           </Grid>
           <Divider />

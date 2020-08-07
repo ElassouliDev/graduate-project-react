@@ -9,6 +9,8 @@ import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
 import MyInput from "../../../../../shared/components/formasy-input"
 import DescriptionAlerts from "../../../../../shared/components/alert";
+import { FormControlLabel } from '@material-ui/core';
+import { Switch } from '@material-ui/core';
 import { Backdrop } from '@material-ui/core';
 import { Modal } from '@material-ui/core';
 import { Fade } from '@material-ui/core';
@@ -51,6 +53,7 @@ const AddMaterial = (props) => {
          const formData = new FormData();
          formData.append('title', task.title)
          formData.append('content', task.content)
+         formData.append('accept_solutions', task.accept_solutions)
          formData.append('attachments', attachments.data.id)
 
          const res = await props.store.apiRequests.addTask(classRoom.id, formData)
@@ -114,13 +117,13 @@ const AddMaterial = (props) => {
          validationError: "This is not a valid",
          required: true
       },
-      // {
-      //    name: "accept_solutions",
-      //    type: "checkbox",
-      //    validations: "isExisty",
-      //    validationError: "This is not a valid",
-      //    required: true
-      // }
+       {
+          name: "accept_solutions",
+          type: "checkbox",
+          validations: "isExisty",
+          validationError: "This is not a valid",
+          required: true
+       }
    ]
 
    function capitalizeFLetter(input) {
@@ -163,7 +166,7 @@ const AddMaterial = (props) => {
          <Formsy className="mb-10" onSubmit={handelSubmit}>
             {
                fields.map((field) =>
-                  <MyInput
+               field.type != "checkbox"  ?<MyInput
                      value={
                         field.name == "taskFile" ? fileTOupload :
                            classRoom.material.newMaterial[field.name]}
@@ -188,7 +191,16 @@ const AddMaterial = (props) => {
                         },
                      }}
                      required
-                  />
+                  />:  <FormControlLabel
+                  control={ <Switch
+                     checked={ classRoom.material.newMaterial[field.name]}
+                    onChange={handleChange(field.name)}
+                    color="primary"
+                    name="checkedB"
+                    inputProps={{ 'aria-label': 'primary checkbox' }}
+                   />}
+                  label={capitalizeFLetter(field.name)}
+                />
                )
             }
             <Typography>

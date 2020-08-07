@@ -9,15 +9,23 @@ import { withRouter } from "react-router";
 import Formsy from "formsy-react";
 import { Post } from "../stores/index"
 import classNames from 'classnames';
+import { Grid } from '@material-ui/core';
 import { Send } from "@material-ui/icons";
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
+  },
+  inputRoot:{
+    fontSize:'2rem'
+  },
+  hide:{
+    display:'none !important'
   }
 }));
 const CreateParticipationForm = (props) => {
   const [isLoading, setLoading] = useState(false);
   const [postData, setPostData] = useState({ ...Post.create({}).toJSON() })
+  const [hide, setHide] = useState(true)
 
   const [content, setContent] = useState("")
   const classes = useStyles();
@@ -31,11 +39,13 @@ const CreateParticipationForm = (props) => {
     try {
       setLoading(true)
       let formData = new FormData();
-      delete postData.id
-      let cRData = (({ content }) => ({ content }))(postData)
-      for (var key in cRData) {
-        formData.append(key, postData[key]);
-      }
+      //delete postData.id
+      // let cRData = (({ content }) => ({ content }))(postData)
+      // for (var key in cRData) {
+      //   formData.append(key, postData[key]);
+      // }
+      formData.append('content',content);
+
       const res = await props.store.apiRequests.addPost(formData, props.match.params.id)
       classRoom.posts.addPost(res.data)
 
@@ -44,29 +54,34 @@ const CreateParticipationForm = (props) => {
       setLoading(false)
     } finally {
       setLoading(false)
-             let prePostData = postData;
-       prePostData['content'] = ''
-       setPostData(prePostData)
+    setHide( true)
+
+    setContent('')
     }
   }
-  const handleChange = (key) => (event) => {
+
+
+ const handleChange = (key) => (event) => {
     const value = event.target.value;
-    let prePostData = postData;
-    prePostData[key] = value
-    setPostData(prePostData)
-    console.log(prePostData);
+    setContent(value)
+    //let prePostData = postData;
+    // prePostData[key] = value
+    // setPostData(prePostData)
+    // console.log(prePostData);
+    // console.log('postData.content==""||!postData.content', postData.content==""||!postData.content)
+     setHide( content=="")
   };
   return (
     <>
-      <Card className={classNames(classes.root,'my-10 ',!props.show?'hidden':"")}>
-        <Formsy onSubmit={handleSubmit}>
-          <CardContent className='mr-5'>
+              <Grid item md={11}>
+
+         <Formsy onSubmit={handleSubmit}>
             <MyInput
-              value={postData.content}
-              name="text"
+              value={content}
+              name="content"
               type="text"
               fullWidth
-              placeholder="Post Content"
+              placeholder="Share with your friends"
               label="Post Content"
               id="content"
               validations="isExisty"
@@ -88,11 +103,8 @@ const CreateParticipationForm = (props) => {
               variant="filled"
               multiline
             />
-          </CardContent>
-          <CardActionArea>
 
-          </CardActionArea>
-          <CardActions className="m-5 mt-0 float-right">
+          <CardActions className={classNames("m-5 mt-0 float-right ",hide?classes.hide:"")}>
             <Button
               size="large"
               variant="contained"
@@ -105,7 +117,9 @@ const CreateParticipationForm = (props) => {
           </CardActions>
 
         </Formsy>
-      </Card>
+        </Grid>
+
+
 
     </>
   );
