@@ -10,7 +10,7 @@ import { withRouter } from 'react-router';
 import { Backdrop } from '@material-ui/core';
 import { Fade } from '@material-ui/core';
 import { Modal } from '@material-ui/core';
-import User from "../../auth/stores/User";
+import { video } from "../store";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,7 +32,8 @@ const AddCourse = (props) => {
 
    const [isLoading, setLoading] = useState(false);
    const [helperText, setHelperText] = useState("");
-   const [userData, setUserData] = useState({ ...User.create({}).toJSON() })
+   const [videoUrl, setVideoUrl] = useState("");
+   const [videoData, setVideoData] = useState({ ...video.create({}).toJSON() })
 
    const handelSubmit = async () => {
       try {
@@ -40,20 +41,32 @@ const AddCourse = (props) => {
 
 
          let  formData = new FormData();
-         let cRData = (({ username}) => ({username}))(User)
-         // for (var key in cRData) {
-            formData.append('student', userData['username']);
-         // }
+         let cRData = (({ title,description}) => ({title , description}))(video)
+          for (var key in cRData) {
+             console.log(key,  videoData[key])
+            formData.append(key, videoData[key]);
+          }
+          formData.append("classroom", props.match.params.id);
 
-         console.log(1);
-         console.log(userData['username']);
-         const res = await props.store.apiRequests.addStudent(formData, props.match.params.id);
+       const res = await props.store.apiRequests.addCourse(formData);
+        console.log('res', res.data)
 
-         console.log(res);
+        formData = new FormData();
+        formData.append('path',videoUrl);
 
+        formData.append('course',res.data.id);
+        formData.append('provider',1);
+      //  console.log('id course', res.data.id)
+        const res1 = await props.store.apiRequests.addMedia(formData);
+        console.log('res1', res1.data)
 
-         if(res.status == 200 && res.data.user )
-         classRoom.addStudent(res.data.user);
+   //     setVideoData(res.data);
+       let  preVideoData =res.data;
+           preVideoData['media'] = [res1.data];// preVideoData['apiRequests'];
+           console.log('all res', preVideoData)
+
+         classRoom.course.addNewVideo(preVideoData);
+
 
       } catch (err) {
 
@@ -71,21 +84,50 @@ const AddCourse = (props) => {
 
    const handleChange = (key) => (event) => {
       const value = event.target.value;
-      let preUserData = userData;
-      if(key == 'file')
-      preUserData[key] = event.target.files[0]
-      else
-      preUserData[key] = value
+      if(key == 'path'){
+         setVideoUrl(value)
 
-      setUserData(preUserData)
+         return ;
+      }
+      let preVideoData = videoData;
+
+     if(key == 'file')
+      videoData[key] = event.target.files[0]
+      else
+      preVideoData[key] = value
+
+      setVideoData(preVideoData)
 
    };
    const classes = useStyles();
    const fields = [
 
        {
-          name: "username",
+        title: "Title",
+          name: "title",
+          value: classRoom.course.newVideo['title'],
           type: "text",
+          validations: "isExisty",
+          validationError: "This is not a valid",
+          required: true
+       },
+        {
+            title: "description",
+
+          name: "description",
+          value: classRoom.course.newVideo['description'],
+
+          type: "text",
+          validations: "isExisty",
+          validationError: "This is not a valid",
+          required: true
+       },
+        {
+          title: "Url",
+          name: "path",
+          value: videoUrl,
+
+          type: "url",
           validations: "isExisty",
           validationError: "This is not a valid",
           required: true
@@ -126,18 +168,19 @@ const AddCourse = (props) => {
             component="h3"
             className="text-center !mt-5 !mb-12"
          >
-            Add  Student
+            Add  Course
         </Typography>
 
          <Formsy className="mb-10" onSubmit={handelSubmit}>
             {
                fields.map((field) =>
                   <MyInput
-                     value={classRoom.material.newMaterial[field.name]}
+                    key={field.name}
+                     value={field.value}
                      name={field.name}
                      type={field.type}
                      fullWidth
-                     placeholder={"Enter " + capitalizeFLetter(field.name)}
+                     placeholder={"Enter " + capitalizeFLetter(field.title)}
                      label={capitalizeFLetter(field.name)}
                      id={field.name}
                      validations={field.validations}
@@ -172,7 +215,7 @@ const AddCourse = (props) => {
                   size="large"
                   type="submit"
                   className={classes.containedSizeLarge}>
-                  Add Student {isLoading && <CircularProgress />}
+                  Save  {isLoading && <CircularProgress />}
                </Button>
                <Button
                               disabled={isLoading}

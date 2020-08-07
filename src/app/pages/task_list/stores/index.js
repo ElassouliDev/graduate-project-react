@@ -5,7 +5,8 @@ import { values } from "mobx";
 import User from '../../auth/stores/User';
 import File from "../../../../shared/store/File"
 import { attachment } from "../../../../shared/store/Models"
-import { classRoom } from '../../courses-dashboard-page/stores/ClassRoomStore';
+import { classRoom } from '../../courses-dashboard-page/stores';
+import { create } from 'lodash';
 const modal = {
    id: types.optional(types.identifierNumber, 0),
    taskFile: types.optional(File, {}),
@@ -14,10 +15,13 @@ const modal = {
    title: types.optional(types.maybeNull(types.string), null),
    content: types.optional(types.maybeNull(types.string), null),
    user_info: types.optional(User, {}),
+   delivered_students: types.optional(types.array(User), []),
+   undelivered_students: types.optional(types.array(User), []),
+
    status: types.optional(types.maybeNull(types.string), null),
    validUntill: types.optional(types.boolean, false),
    SubmittedSolutions: types.array(File),
-   accept_solutions: false,
+   accept_solutions: true,
    accept_solutions_due: types.optional(types.maybeNull(types.string), null),
    classroom: 1,
    attachments_info: types.array(attachment)
@@ -46,6 +50,16 @@ export const task = types.model(modal).views((self) => ({
    }
 })).actions((self) => ({
    setNewData: (payload) => {
+      console.log('payload',payload );
+      console.log('key',payload.key );
+
+      if(payload.key =="undelivered_students" || payload.key =="delivered_students"  ){
+         console.log('update', payload.value.map(user => User.create(user)));
+         self[payload.key] =  payload.value.map(user => User.create(user))
+
+      }
+
+      else
       self[payload.key] = payload.value;
    }
 }));
@@ -58,7 +72,7 @@ const classroom_tasks_info = types.model({
       addNewTask: (payload) => {
          let _newtask = payload;
          let user = payload.user_info
-         user.groups = "" + payload.user_info.groups[0].id
+         user.groups =  payload.user_info.groups//"" + payload.user_info.groups[0].id
          const created_user = User.create(user)
          _newtask.user_info = created_user
          self.tasks.push(

@@ -1,5 +1,6 @@
 import { Card, Divider, CardHeader } from "@material-ui/core";
 import React, { useEffect } from "react";
+import TableActionMenu from '../../../../../shared/components/table-menu';
 import { Chip } from '@material-ui/core';
 import { Typography } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
@@ -8,13 +9,15 @@ import { Avatar } from '@material-ui/core';
 
 
 export default function TaskListItem(props) {
+
+
+
   useEffect(() => {
 
   }, []);
 
   return (
     <Card className="my-20">
-      <CardActionArea href={props.link}>
         <CardHeader
           avatar={
             <Avatar
@@ -29,16 +32,22 @@ export default function TaskListItem(props) {
           }
           subheader={props.taskData.created_at}
 
-          action={<Chip
-            className="mt-5"
+          action={
+          <>
+          <Chip
+            className="mt-5 "
             size="larg"
             color={props.taskData.is_closed ? "secondary" : "primary"}
             label={<Typography variant="h6" >
               {props.taskData.is_closed ? "closed" : "open"}
             </Typography>}
-          />}
+          />
+        <TableActionMenu styles={{ float: 'right',paddingTop: 10, margin: '0px 20px'}} items={props.action_menu_items} item_id={props.taskData.id} />
+          </>
+          }
         />
         <Divider />
+        <CardActionArea href={props.link}>
 
         <CardContent className="!mb-2 p-5">
           <Typography variant="h4" className="!mb-2">

@@ -26,7 +26,7 @@ const User = types.model('User', {
    }
 })).actions((self) => ({
    setUserData: (payload) => {
-      self[payload.key] = payload.value;
+         self[payload.key] = payload.value;
    },
    setUser: (payload) => {
       self = User.create(payload);
@@ -43,7 +43,7 @@ const User = types.model('User', {
             self.jwtToken = res.body.auth_token
             self.state = "loggedIn"
             self.responseMessage = "logged in successfully"
-            self.groups = res.body.groups[0];
+            self.groups = res.body.groups;//[0];
          }
 
       } catch (error) {

@@ -33,6 +33,7 @@ const TaskInfo = (props) => {
           let res = await props.store.apiRequests.getClassRooms();
           console.log("res", res);
           props.store.ClassRoomStore.setClassRooms(res.data);
+
         } catch (error) {
           console.log("mappedClassRooms", error.message);
         }

@@ -6,7 +6,7 @@ import { Button, CircularProgress } from "@material-ui/core";
 import { CardActions } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
 import { inject, observer } from 'mobx-react';
-import { classRoom } from "../stores/ClassRoomStore"
+import { classRoom } from "../stores"
 import { Fab } from '@material-ui/core';
 import { Tooltip } from '@material-ui/core';
 import { Fade } from '@material-ui/core';

@@ -71,7 +71,7 @@ function ClassroomStudentList(props) {
     fetchData();
   }, []);
 if (!classRoom) {
-  return <Typography>class room not found</Typography>;
+  return <Typography className={'text-center !text-4xl !my-20 bg-gray-400 !py-10'}>class room not found</Typography>;
 }
 
 

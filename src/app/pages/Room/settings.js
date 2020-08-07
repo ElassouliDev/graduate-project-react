@@ -29,11 +29,16 @@ const Settings = (props) => {
         fetchData();
       }, []);
 
-   const HandleDeleteClass = () => {
+   const HandleDeleteClass = async () => {
       try {
+         await props.store.apiRequests.deleteClassRoom(id);
+
          const res = props.store.ClassRoomStore.deleteClassRoom(id);
+
          if (res) {
             // process success
+
+
             setDeleted(true)
             setStatus(1)
             setMessage("Class Room Deleted, you will be redirected in 5sec...")
@@ -61,9 +66,8 @@ const Settings = (props) => {
       }
    }
    if (!classRoom) {
-      return <Typography>
-         class room not found
-      </Typography>
+      return <Typography className={'text-center !text-4xl !my-20 bg-gray-400 !py-10'}>class room not found</Typography>;
+
    }
    return (
       <div style={{ padding: "20px", maxWidth: "500px" }}>

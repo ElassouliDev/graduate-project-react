@@ -19,40 +19,20 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-// import Checkbox from "@material-ui/core/Checkbox";
-import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-// import FormControlLabel from "@material-ui/core/FormControlLabel";
-// import Switch from "@material-ui/core/Switch";
-import DeleteIcon from "@material-ui/icons/Delete";
-import FilterListIcon from "@material-ui/icons/FilterList";
+
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import AddMaterial from "./components/AddMaterial"
-import { Fade } from '@material-ui/core';
-import { Backdrop } from '@material-ui/core';
-import { Modal } from '@material-ui/core';
+
 import { Fab } from '@material-ui/core';
-import { Checkbox } from '@material-ui/core'
-// import { Button } from "@material-ui/core";
 
-// function createData({ id, title, file, created_at }) {
-//   return { id, title, file, created_at };
+function createData({ id,attachment_info:{ title, file}, created_at }) {
 
-// }
+ console.log('tag', { id, title, file, created_at })
 
-// function createData({ id, title,file, created_at }) {
-//   //  title =file.split("/").reverse()[0];
-//   return { id, title, file, created_at };
-// }
 
-function createData(m) {
-
-console.log('tag', m)
-  ///title = attachment_info?attachment_info['title']:"";
-  //file = attachment_info?attachment_info['file']:"";
-
-  return m ;// { id: m.id, title:m.attachment_info.title, file:m.attachment_info.file, created_at:m.created_at };
+  return { id, title, file, created_at } ;// { id: m.id, title:m.attachment_info.title, file:m.attachment_info.file, created_at:m.created_at };
 }
 
 
@@ -104,10 +84,6 @@ const headCells = [
     label: "created at",
   },
 
-
-  // { id: "fat", numeric: true, disablePadding: false, label: "Fat (g)" },
-  // { id: "carbs", numeric: true, disablePadding: false, label: "Carbs (g)" },
-  // { id: "protein", numeric: true, disablePadding: false, label: "Protein (g)" },
 ];
 
 function EnhancedTableHead(props) {
@@ -327,9 +303,7 @@ function EnhancedTable(props) {
 
 
   const TableRows = ({ Materials }) => {
-    let Rows = Materials.map((m) => createData(m))
-    console.log("Rows", Rows);
-
+    let Rows =Materials
     return (<TableBody>
       {Rows.length > 0  ? stableSort(Rows, getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -383,23 +357,16 @@ function EnhancedTable(props) {
                 <DropSettingMenu id={row.id} options={
                   [
                     { id: "delete", onClick: handleDelete(row.id) },
-                    // { id: "update", onClick: handleUpdate(row.id) }
                   ]} />
               </TableCell>
-              {/* <TableCell align="right">{row.carbs}</TableCell>
-                        <TableCell align="right">{row.protein}</TableCell> */}
-            </TableRow>
+                </TableRow>
           );
         }):
         <TableRow >
           <TableCell colSpan={4}  align="center" className="!text-2xl">No Data Exists</TableCell>
         </TableRow>
         }
-      {/* {emptyRows > 0 && (
-        <TableRow style={{ height: 53 * emptyRows }}>
-          <TableCell colSpan={6} />
-        </TableRow>
-      )} */}
+
     </TableBody>);
   }
   const isSelected = (name) => selected.indexOf(name) !== -1;
@@ -425,7 +392,7 @@ function EnhancedTable(props) {
       fetchData();
     }, []);
   if (!classRoom) {
-    return <Typography>class room not found</Typography>;
+    return <Typography className={'text-center !text-4xl !my-20 bg-gray-400 !py-10'}>class room not found</Typography>;
   }
 
   return (

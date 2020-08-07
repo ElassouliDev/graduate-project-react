@@ -8,6 +8,6 @@
     "\\src\\app\\pages\\courses-dashboard-page\\stores",
     "\\src\\shared"
   ],
-  "SelectedNode": "\\src\\app\\pages\\courses-dashboard-page\\stores\\ClassRoomStore.js",
+  "SelectedNode": "\\src\\app\\pages\\courses-dashboard-page\\stores\\index.js",
   "PreviewInSolutionExplorer": false
 }
