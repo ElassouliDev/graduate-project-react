@@ -28,7 +28,7 @@ export default types.model('User', {
    }
 })).actions((self) => ({
    setUserData: (payload) => {
-      self[payload.key] = payload.value;
+         self[payload.key] = payload.value;
    },
    setUser: (payload) => {
       Object.keys(payload).forEach(key => {
