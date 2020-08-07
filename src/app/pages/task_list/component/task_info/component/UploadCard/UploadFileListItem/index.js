@@ -18,7 +18,7 @@ import { useEffect } from "react";
 import { Event } from '@material-ui/icons';
 
 export default function UploadFileListItem(props) {
-
+console.log('tag', props.file)
 
 
   return (
@@ -29,11 +29,12 @@ export default function UploadFileListItem(props) {
         </Avatar>
       </ListItemAvatar>
       <a
-        href={props.file.file_path}
-        download={props.file.file_name}
+        href={props.file.file}
+        download={props.file.file}
+        target="_blank"
       >
         <ListItemText
-          primary={props.file.file_name}
+          primary={props.file.title}
           secondary={props.file.created_at}
         />
       </a>

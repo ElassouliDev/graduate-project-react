@@ -127,6 +127,7 @@ const requests = (localStorage, config) => {
         addMedia: (payload) => requestInstance.post(`${baseUrl}/media/`,payload),
         deliveredStudentsAnswerTask: (taskID) => requestInstance.get(`${baseUrl}/tasks/${taskID}/delivered_students`),
         UndeliveredStudentsAnswerTask: (taskID) => requestInstance.get(`${baseUrl}/tasks/${taskID}/undelivered_students`),
+        addSolution: (TaskId,payload) => requestInstance.post(`${baseUrl}/tasks/${TaskId}/submit_solution/`,payload),
 
         requestInstance
     }

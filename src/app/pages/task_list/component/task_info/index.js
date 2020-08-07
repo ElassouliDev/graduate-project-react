@@ -40,6 +40,8 @@ const TaskInfo = (props) => {
       }
       fetchData();
     }, []);
+
+
   if (!classRoom) {
     return <div>
       class room not found
@@ -58,12 +60,18 @@ const TaskInfo = (props) => {
             <CardHeader
               avatar={
                 <Avatar
-                  alt={Task.user_info.fullName}
+                  alt={<Typography variant="h6" className="!mb-2 !text-3xl">
+                  {Task.user_info.fullName }
+              </Typography>}
                   src={Task.user_info.image}
                 ></Avatar>
               }
-              title={Task.user_info.fullName}
-              subheader={Task.created_at}
+              title={<Typography variant="h5" className="!mb-2 !text-3xl">
+              {Task.user_info.fullName }
+          </Typography>}
+              subheader=
+              {Task.created_at }
+
             />
             <Divider />
 
@@ -71,9 +79,10 @@ const TaskInfo = (props) => {
               <Typography variant="h3" className="!mb-2">
                 {Task.title}
               </Typography>
-              <Typography variant="p" className="!mb-2">
+              <Typography variant="p" className="!mb-2 lead !text-3xl">
                 {Task.content}
-              </Typography>
+                </Typography>
+
               <List>
                 {
                   Task.attachments_info.length > 0 ?
@@ -82,6 +91,7 @@ const TaskInfo = (props) => {
                       <AttachmentIcon />
 
                     </a>) :
+                    // Task.attachments_info.map(file => <UploadFileListItem file={file} DeleteShow={false} />) :
                     "there is no attachments"
                 }
               </List>
@@ -93,7 +103,7 @@ const TaskInfo = (props) => {
           <UploadCard files={Task.SubmittedSolutions} />
         </Grid>
         <Grid container xs={12} sm={12} md={12}>
-          <TaskStudentsList></TaskStudentsList>
+          {/* <TaskStudentsList></TaskStudentsList> */}
         </Grid>
       </Grid>
     </div>

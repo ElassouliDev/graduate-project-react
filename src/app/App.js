@@ -155,7 +155,7 @@ function App(props) {
           <Route exact path="/Room/:id/tasks/:tId">
             <CustomPageLayout
               aside_show={false}
-              nav_item={true}
+              nav_item={false}
               add_calssroom={false}
              // is_teacher={"teacher" == "teacher"} // check if user is tracher
               nav_action={true}
