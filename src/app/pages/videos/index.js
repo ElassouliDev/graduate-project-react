@@ -2,7 +2,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import getConfig from "../../config";
-import axios from "axios";
 import Grid from "@material-ui/core/Grid";
 import CustomClassroomLayout from "../../../shared/components/custom-classroom-layout";
 import ShowVideo from './components/show-video';

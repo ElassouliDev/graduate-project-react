@@ -73,6 +73,7 @@ const Room = (props) => {
     }
   };
   const displayedItems = (localStorage.getItem("groups") == 1 ? TeacherRoom : StudentRoom);
+  const isTeacher = localStorage.getItem("groups") == 1 ;
 
   const ConditionaRender = (Arr, Component, SelectedItem) => {
     if (Arr.includes(SelectedItem))
@@ -109,7 +110,7 @@ const Room = (props) => {
 
   const Tutorials = () => <Grid item lg={3} md={3} sm={12} spacing={3}>
     <Card>
-      <Link to={`./${classRoom.id}/videos/manage`}>
+      <Link to={`./${classRoom.id}/videos/`+(isTeacher?`manage`:"")}>
 
         <CardActionArea className={"!py-6 "} style={classes.root}>
 

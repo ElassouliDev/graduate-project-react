@@ -70,7 +70,10 @@ export default function VideoMenu(props) {
 
 title={video.title}
 description= {video.description}
-image= {video.media[0].thumbnail}/>)}
+image= {video.media[0].thumbnail}
+/>
+)
+}
 
       </CardContent>
       {/* <CardActions className="m-5 mt-20 float-right">

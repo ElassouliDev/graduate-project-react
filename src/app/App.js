@@ -56,6 +56,8 @@ function App(props) {
                aside_show={false}
                nav_item={false}
                add_calssroom={false}
+               nav_action={false}
+
               >
                 <Auth tabValue={0} />
               </CustomPageLayout>
@@ -65,6 +67,8 @@ function App(props) {
                aside_show={false}
                nav_item={false}
                add_calssroom={false}
+               nav_action={false}
+
               >
                 <Auth tabValue={1} />
               </CustomPageLayout>
@@ -95,14 +99,14 @@ function App(props) {
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
-          <Route path="/Room/:id/videos/manage">
+          <Route exact  path="/Room/:id/videos/manage">
             <CustomPageLayout>
               <CustomClassroomLayout>
                 <CourseList />
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
-          <Route path="/Room/:id/videos">
+          <Route exact  path="/Room/:id/videos">
             <CustomPageLayout>
               <Videos />
             </CustomPageLayout>
