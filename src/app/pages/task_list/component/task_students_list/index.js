@@ -77,39 +77,7 @@ const TaskStudentsList = (props) => {
 
     });
 
-  // React.useEffect(
-  //   () => {
-  //     async function fetchData1() {
-  //       try {
-  //         console.log('task sl', '111')
-  //        // if (!classRoom ||!classRoom.classroom_tasks_info)
-  //          // return
 
-  //          let task_temp =  classRoom.classroom_tasks_info.get(props.match.params.tId)
-  //           //if (!task_temp)
-  //          // return
-
-
-  //           console.log('task sl', '1112')
-
-  //         let res = await props.store.apiRequests.UndeliveredStudentsAnswerTask(props.match.params.tId);
-  //         let res1 = await props.store.apiRequests.deliveredStudentsAnswerTask(props.match.params.tId);
-  //         console.log("res", res);
-
-  //         task_temp.undelivered_students = res.data;
-  //         task_temp.delivered_students = res1.data;
-
-  //         classRoom.classroom_tasks_info.editTask(task_temp);
-
-
-  //       } catch (error) {
-  //         console.log("mappedClassRoom task 1", error.message);
-  //       }
-  //     }
-
-
-  //     fetchData1();
-  //   }, []);
   if (!classRoom) {
     return <div>
       class room not found
@@ -124,32 +92,6 @@ const TaskStudentsList = (props) => {
 
 
 
-
-  // if (classRoom ){
-  //   // if (!classRoom.classroom_tasks_info)
-  //    //       return
-  //    async function fetchData11() {
-  //    let task_temp =  classRoom.classroom_tasks_info.get(props.match.params.tId)
-  //    // if (!task_temp)
-  //    // return
-
-
-  //    console.log('task sl', '1112')
-
-  //  let undelivered_students = await props.store.apiRequests.UndeliveredStudentsAnswerTask(props.match.params.tId);
-  //  let delivered_students = await props.store.apiRequests.deliveredStudentsAnswerTask(props.match.params.tId);
-  //  console.log("undelivered_students ", undelivered_students);
-  //  console.log("delivered_students  ", delivered_students);
-  //  task_temp.setNewData({'key':'undelivered_students','value':undelivered_students.data})
-  //  task_temp.setNewData({'key':'delivered_students','value':delivered_students.data})
-  // //  task_temp['undelivered_students'] = undelivered_students.data;
-  // //  task_temp['delivered_students'] = delivered_students.data;
-
-  //   console.log('data ', task_temp)
-  //    console.log(classRoom.classroom_tasks_info.editTask(task_temp));
-  //     }
-  //     fetchData11()
-  //   }
 
   const Task = classRoom.classroom_tasks_info.get(props.match.params.tId)
   console.log('task', Task)
@@ -179,7 +121,11 @@ const TaskStudentsList = (props) => {
             (student) => {
               return <UserItem
                 student={student}
-                key={student.id + student.username}
+                key={student.id}
+                hasSolution={true}
+                classroom={classRoom}
+                task={Task}
+
               />
             }
           )
@@ -205,7 +151,9 @@ const TaskStudentsList = (props) => {
             (student) => {
               return <UserItem
                 student={student}
-                key={student.id + student.username}
+                key={student.id}
+                classroom={classRoom}
+                task={Task}
               />
             }
           )

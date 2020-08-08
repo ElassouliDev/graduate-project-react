@@ -7,5 +7,5 @@ export const attachment = types.model({
    title: types.optional(types.maybeNull(types.string), null),
    created_at: types.optional(types.maybeNull(types.string), null),
    modified_at: types.optional(types.maybeNull(types.string), null),
-   createdBy: types.optional(User, {}),
+   //createdBy: types.optional(types.maybeNull(User), {}),
 })

@@ -165,7 +165,7 @@ function App(props) {
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
-          <Route exact path="/Room/:id/task/:tId/student">
+          <Route exact path="/Room/:id/tasks/:tId/student">
             <CustomPageLayout
 
               aside_show={false}

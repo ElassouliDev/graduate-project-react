@@ -2,7 +2,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useState, Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import UploadCard from "./component/UploadCard";
-import UploadFileListItem from "./component/UploadCard/UploadFileListItem";
 import { Avatar } from "@material-ui/core";
 import { CardContent, CardHeader } from "@material-ui/core";
 import { List } from "@material-ui/core";
@@ -10,8 +9,9 @@ import { Divider } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
 import { Card } from "@material-ui/core";
 import { inject, observer } from "mobx-react";
-import { withRouter } from "react-router";
-import TaskStudentsList from "../task_students_list"
+import { withRouter, useLocation } from "react-router";
+import { Link } from '@material-ui/core';
+import { Chip } from '@material-ui/core';
 import AttachmentIcon from '@material-ui/icons/Attachment';
 
 
@@ -20,11 +20,16 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
 }));
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 const TaskInfo = (props) => {
   const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const Task = classRoom ? classRoom.classroom_tasks_info.get(props.match.params.tId) : {}
+  const query  =  useQuery();
 
   useEffect(
     () => {
@@ -41,6 +46,35 @@ const TaskInfo = (props) => {
       fetchData();
     }, []);
 
+    React.useEffect(
+      () => {
+        async function fetchData() {
+          try {
+            if (!classRoom)
+              return
+
+            let task_temp = classRoom.classroom_tasks_info.get(props.match.params.tId)
+
+            if (!task_temp)
+              return
+            if (isLoaded)
+              return
+            if (Task.task_solutions.length>0)
+              return
+            let solutions = await props.store.apiRequests.taskSolution(props.match.params.tId);
+            task_temp.setNewData({ 'key': 'task_solutions', 'value': solutions.data })
+            setIsLoaded(true)
+
+          //  classRoom.classroom_tasks_info.editTask(task_temp)
+            console.log('data ss ', Task.task_solutions.getUserSolution(5))
+
+          } catch (error) {
+            console.log("mappedClassRooms", error.message);
+          }
+        }
+        fetchData();
+
+      });
 
   if (!classRoom) {
     return <div>
@@ -52,10 +86,14 @@ const TaskInfo = (props) => {
       faild to load task
   </div>
   }
+
+
+  const user_id =query.has("user_id")?query.get("user_id"):0;
+  const userSolutions = Task.task_solutions.getUserSolution(5)?Task.task_solutions.getUserSolution(5).solutionInfo:[];
   return (
     <div >
       <Grid container className={["py-12"]} spacing={2}>
-        <Grid item xs={12} sm={8} md={9}>
+        <Grid item xs={12} sm={user_id != 0?8:12} md={user_id != 0?9:12}>
           <Card>
             <CardHeader
               avatar={
@@ -65,6 +103,14 @@ const TaskInfo = (props) => {
               </Typography>}
                   src={Task.user_info.image}
                 ></Avatar>
+              }
+              action={user_id!=0?<Link href={`/Room/${classRoom.id}/tasks/${Task.id}/student` }>
+
+<Chip label={<Typography variant="h6" className="!p-2 !text-3xl">
+                  Show Students
+              </Typography>} color="primary" />
+              </Link>:""
+
               }
               title={<Typography variant="h5" className="!mb-2 !text-3xl">
               {Task.user_info.fullName }
@@ -86,11 +132,13 @@ const TaskInfo = (props) => {
               <List>
                 {
                   Task.attachments_info.length > 0 ?
-                    Task.attachments_info.map(att => <a download href={att.file}>
+                    Task.attachments_info.map(att => <Divider><a download href={att.file} target="_blanck">
                       {att.title}
+
                       <AttachmentIcon />
 
-                    </a>) :
+
+                    </a></Divider>) :
                     // Task.attachments_info.map(file => <UploadFileListItem file={file} DeleteShow={false} />) :
                     "there is no attachments"
                 }
@@ -99,9 +147,11 @@ const TaskInfo = (props) => {
           </Card>
         </Grid>
 
-        <Grid item xs={12} sm={4} md={3}>
-          <UploadCard files={Task.SubmittedSolutions} />
-        </Grid>
+
+      {user_id != 0 ? <Grid item xs={12} sm={4} md={3}>
+          <UploadCard files={userSolutions} />
+        </Grid>:""
+        }
         <Grid container xs={12} sm={12} md={12}>
           {/* <TaskStudentsList></TaskStudentsList> */}
         </Grid>

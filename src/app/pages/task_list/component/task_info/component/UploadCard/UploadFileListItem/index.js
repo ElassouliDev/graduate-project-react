@@ -15,6 +15,7 @@ import { List } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
 import { useEffect } from "react";
+import { Attachment } from '@material-ui/icons';
 import { Event } from '@material-ui/icons';
 
 export default function UploadFileListItem(props) {
@@ -25,7 +26,7 @@ console.log('tag', props.file)
     <ListItem className="w-full" key={props.file.id}>
       <ListItemAvatar>
         <Avatar>
-          <Folder />
+          <Attachment />
         </Avatar>
       </ListItemAvatar>
       <a

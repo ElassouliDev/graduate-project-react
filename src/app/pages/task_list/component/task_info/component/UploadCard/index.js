@@ -41,24 +41,23 @@ export default function UploadCard(props) {
   // }
 
   useEffect(() => {
+    console.log('props.files', props.files)
     setListView(
-      props.files>0?props.files.map(
+      props.files.length>0?props.files.map(
         (file) => {
           return (
             <UploadFileListItem
-              file={file}
+              file={file.attachment_info}
               handDeleteFile={handDeleteFile}
               DeleteShow={true}
             />
           );
         }
 
-        // React.cloneElement(element, {
-        //   key: value,
-        // })
+
       ):"No Solution Exists"
     );
-  }, []);
+  },[props.files]);
 
 
   return (

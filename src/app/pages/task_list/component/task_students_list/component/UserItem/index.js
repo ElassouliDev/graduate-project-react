@@ -1,6 +1,7 @@
 import { Card, Divider, Button, CardHeader } from "@material-ui/core";
 import React from "react";
 import classNames from 'classnames';
+import { Visibility } from '@material-ui/icons';
 import { CloudDownload } from '@material-ui/icons';
 import { Chip } from '@material-ui/core';
 
@@ -30,12 +31,11 @@ export default function UserItem(props) {
         subheader={props.student.created_at}
 
         action={
-          props.student.taskFile ?
+          props.hasSolution ?
             <a
-              href={props.student.taskFile.file_path}
-              download={props.student.taskFile.file_name}
+              href={`/Room/${props.classroom.id}/tasks/${props.task.id}/?user_id=${props.student.id}`}
             >
-              <CloudDownload
+              <Visibility
                 color="primary"
                 size="larg"
                 className="mt-8  mx-20"
