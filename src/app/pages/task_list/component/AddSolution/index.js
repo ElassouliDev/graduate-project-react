@@ -52,13 +52,13 @@ const AddSolution = (props) => {
          const formData = new FormData();
          formData.append('notes', title)
          formData.append('attachment', attachments.data.id)
-         console.log(' solution list bef' , Task.task_solutions.getUserSolution(window.localStorage.getItem('id')).solutionInfo);
+        // console.log(' solution list bef' , Task.task_solutions.getUserSolution(window.localStorage.getItem('id')).solutionInfo);
 
          const res = await props.store.apiRequests.addSolution(props.match.params.tId, formData)
          Task.task_solutions.addSolution(res.data)
-         classRoom.classroom_tasks_info.edit(Task)
-         console.log('add solution ' , res.data);
-         console.log(' solution list' , Task.task_solutions.getUserSolution(window.localStorage.getItem('id')).solutionInfo);
+       //  classRoom.classroom_tasks_info.edit(Task)
+       //  console.log('add solution ' , res.data);
+       //  console.log(' solution list' , Task.task_solutions.getUserSolution(window.localStorage.getItem('id')).solutionInfo);
          setStatus(1)
 
          setMessage("soltion added successully")

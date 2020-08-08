@@ -91,7 +91,7 @@ function UploadCard(props) {
 
       ):"No Solution Exists"
     );
-  },[props.files]);
+  },[props.files.length]);
   console.log('tagttt',   props.task)
 
 
