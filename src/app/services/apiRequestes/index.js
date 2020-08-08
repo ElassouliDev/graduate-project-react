@@ -130,6 +130,7 @@ const requests = (localStorage, config) => {
         addSolution: (TaskId,payload) => requestInstance.post(`${baseUrl}/tasks/${TaskId}/submit_solution/`,payload),
         taskSolution: (TaskId,payload={}) => requestInstance.get(`${baseUrl}/tasks/${TaskId}/solutions/`,payload),
         AcceptOrRejctSolution: (solutionID,payload) => requestInstance.patch(`${baseUrl}/tasks_solution/${solutionID}/`,payload),
+        enrollClassRoom: (classRoomCode) => requestInstance.post(`${baseUrl}/classrooms/${classRoomCode}/enroll`),
 
         requestInstance
     }

@@ -40,6 +40,7 @@ function BlogPost(props) {
         }, []);
     return (
         <div style={{ width: '100%' }}>
+
             <Box
                 display="flex"
                 flexWrap="wrap"

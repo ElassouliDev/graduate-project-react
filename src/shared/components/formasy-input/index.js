@@ -28,7 +28,7 @@ const MyInput = ({ value, isValid, name,label, errorMessage, onChange, ...res })
                 error={error}
                 onChange={onChange}
                 defaultValue={value}
-                value={value}
+              //  value={value}
                 helperText={error ? errorMessage : " "}
                 {...res}
             />

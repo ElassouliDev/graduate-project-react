@@ -7,6 +7,7 @@ import { CardActions } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
 import { inject, observer } from 'mobx-react';
 import { classRoom } from "../stores"
+import { Alert } from '@material-ui/lab';
 import { Fab } from '@material-ui/core';
 import { Tooltip } from '@material-ui/core';
 import { Fade } from '@material-ui/core';
@@ -44,17 +45,22 @@ const EnrollClassroom = (props) => {
    const handleClose = () => {
      setOpen(false);
      setClassRoomCode("")
+     setHelperText("")
    };
 
    const handelSubmitAddClassRoom = async () => {
       try {
          setLoading(true)
-         const res = await props.store.apiRequests.enrollClassRoom(classRoomCode)
+         let res_jpin = await props.store.apiRequests.enrollClassRoom(classRoomCode)
+         let res = await props.store.apiRequests.getClassRooms();
+         console.log("res", res);
+         props.store.ClassRoomStore.setClassRooms(res.data);
+         // if(res.data){
+         //    props.store.ClassRoomStore.addClassRoom(res.data);
 
-         if(res.data){
-            props.store.ClassRoomStore.addClassRoom(res.data);
-
-         }
+         // }
+         setHelperText(res_jpin.data.message)
+         setTimeout(()=> {handleClose()},6000)
 
 
       } catch (err) {
@@ -64,7 +70,6 @@ const EnrollClassroom = (props) => {
 
       } finally {
          setLoading(false)
-         handleClose()
       }
    };
 
@@ -134,10 +139,11 @@ const EnrollClassroom = (props) => {
                required
             />
 
-            <Typography>
-               {helperText}
-            </Typography>
+            {helperText!=""?<Alert severity="success">{helperText}</Alert>:""}
+
+
             <CardActions className="!px-0 !mt-10">
+
             <Button
                disabled={isLoading}
 
@@ -166,6 +172,8 @@ const EnrollClassroom = (props) => {
       </Card>
       </Fade>
       </Modal>
+
+
 
       </>
    );

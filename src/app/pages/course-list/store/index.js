@@ -29,7 +29,6 @@ export const classRoonCourses = types.model({
     newVideo :types.optional(video,{}),
 }).actions((self)=>({
     addNewVideo:(payload)=>{
-        console.log('add course', payload)
         self.videos.push(payload)
     },
     editVideo:(payload)=>{
