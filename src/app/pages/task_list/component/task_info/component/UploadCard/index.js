@@ -18,6 +18,7 @@ import { CheckCircle } from '@material-ui/icons';
 import { useLocation } from "react-router";
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
+import { constant } from "lodash";
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
@@ -47,8 +48,7 @@ function UploadCard(props) {
   try {
      setLoading(true)
      setMessage("")
-     //const payload = props.store.User;
-   //  console.log("handleSubmitTaskStatus", payload);
+
      const formData = new FormData();
      const sol_id = props.files[props.files.length-1].id;
      formData.append('accepted', status)
@@ -60,12 +60,9 @@ function UploadCard(props) {
      const res = await props.store.apiRequests.AcceptOrRejctSolution(sol_id,formData)
 
       const user_id =query.has("user_id")?query.get("user_id"):0;
-     //const res = await props.store.apiRequests.addSolution(props.match.params.tId, formData)
-     Task.task_solutions.getUserSolution(user_id).setData({key:"accepted" ,value:status})
-      console.log(res);
-      //setMessage(res.data.message)
+     const user_task_sol =  Task.task_solutions.getUserSolution(user_id);
+     user_task_sol.setData({key:"accepted" ,value:status==1})
   } catch (err) {
-    // setStatus(2)
     setMessage(err.message)
   } finally {
      setLoading(false)
@@ -102,7 +99,7 @@ function UploadCard(props) {
          action={
           props.files.length>0 ?
             <Chip
-              color={props.accepted==null? 'default' :props.accepted? "primary":"scondary"}
+              color={props.accepted==null? 'default' :props.accepted? "primary":"secondary"}
               label={props.accepted==null? 'Not Review' : props.accepted? "Accepted": "Rejected"}
             ></Chip>
             :""
@@ -125,7 +122,7 @@ function UploadCard(props) {
 
       <CardActions className={'hidden'}>
         {window.localStorage.getItem("groups") != 1 ?
-        props.task.accept_solutions?
+        props.task.accept_solutions  && !props.accepted ?
         <label htmlFor="upload-file"  className="w-full  text-center" onClick={handleOpen}>
           <Fab
             color="primary"
@@ -143,7 +140,7 @@ function UploadCard(props) {
 
 
         :
-             props.files.length>0 && props.accepted ==null ?
+             props.files.length>0 && props.accepted !=true ?
 
         <>
         <label htmlFor="upload-file"  className="w-full  text-center" onClick={handleSubmitTaskStatus.bind(this,1)}>

@@ -25,7 +25,7 @@ const solutionInfo = types
 const SolutionStore = types
   .model({
     id: types.optional(types.identifierNumber, 0),
-   solutionInfo: types.optional(types.array(solutionInfo), []),
+    solutionInfo: types.optional(types.array(solutionInfo), []),
     created_at: types.optional(types.maybeNull(types.string), null),
     modified_at: types.optional(types.maybeNull(types.string), null),
     accepted: types.optional(types.maybeNull(types.boolean), null),
@@ -33,20 +33,14 @@ const SolutionStore = types
   })
   .actions((self) => ({
     setData(payload) {
-      self[payload.key] = payload.value
-
+      self[payload.key] = payload.value;
     },
-    addSolutionFile(payload){
-
-      payload.attachment_info = attachment.create(
-        payload.attachment_info );
-        console.log('add sol1', payload)
-        self.solutionInfo.push(solutionInfo.create(payload));
-        console.log('add sol2', payload)
-
-    }
-
-
+    addSolutionFile(payload) {
+      payload.attachment_info = attachment.create(payload.attachment_info);
+      console.log("add sol1", payload);
+      self.solutionInfo.push(solutionInfo.create(payload));
+      console.log("add sol2", payload);
+    },
   }));
 
 const SolutionListStore = types
@@ -63,27 +57,36 @@ const SolutionListStore = types
         // all user solution  map
         console.log("solution", solution);
 
-         let nSolutionInfo = solution.solutionInfo.map((sol1) => {
-           console.log("sol1", sol1);
-           sol1.attachment_info = attachment.create(
-             sol1.attachment_info );
-           return  solutionInfo.create(sol1);
-         });
-                 console.log("solution 2",  nSolutionInfo);
+        let nSolutionInfo = solution.solutionInfo.map((sol1) => {
+          console.log("sol1", sol1);
+          sol1.attachment_info = attachment.create(sol1.attachment_info);
+          return solutionInfo.create(sol1);
+        });
+        console.log("solution 2", nSolutionInfo);
 
-
-       // let nSolutionInfo = solutionInfo.create(solution.solutionInfo);
+        // let nSolutionInfo = solutionInfo.create(solution.solutionInfo);
 
         return SolutionStore.create({
           ...solution,
-          'solutionInfo': nSolutionInfo
+          solutionInfo: nSolutionInfo,
         });
       });
     },
     addSolution: (payload) => {
-      let user_solution =  self.getUserSolution(window.localStorage.getItem('id'));
-      if(user_solution)
-        user_solution.addSolutionFile(payload)
+      let user_solution = self.getUserSolution(
+        window.localStorage.getItem("id")
+      );
+      if (!user_solution) { // if user not have previuse solution
+        user_solution = SolutionStore.create({
+          id: payload.id,
+          solutionInfo: [],
+          created_at: payload.created_at,
+          modified_at: payload.created_at,
+          user: window.localStorage.getItem("id"),
+        });
+      }
+
+      user_solution.addSolutionFile(payload);
     },
     addNewSolution: (payload) => {
       // let _newSotution = payload;

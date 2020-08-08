@@ -124,7 +124,8 @@ const TaskInfo = (props) => {
           />
               {window.localStorage.getItem("groups") == 1?<Link to={`/Room/${classRoom.id}/tasks/${Task.id}/student` }>
 
-<Chip label={ <Typography variant="h6" className="!p-2 !text-3xl">
+<Chip              className="mt-5 mx-2"
+ label={ <Typography variant="h6" className="!p-2 !text-3xl">
                   Show Students
               </Typography>} color="primary" />
               </Link>:""}

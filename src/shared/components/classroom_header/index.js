@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from 'classnames';
 
 import { Typography } from "@material-ui/core";
 
@@ -26,9 +27,10 @@ export default function ClassRoomHeader(props) {
   return (
     <>
       <div
-        className={["text-white p-20 py-32 ", styles.header_image]}
+        className={classNames("text-white p-20 py-32 ")}
         style={{
-          backgroundImage: 'url("' + image_path + '")'
+          backgroundImage: 'url("' + image_path + '")',
+          ...styles.header_image
         }}
       >
         <Typography variant="h1" component="h2">
