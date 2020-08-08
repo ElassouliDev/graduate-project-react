@@ -26,8 +26,8 @@ export const classRoom = types.model({
    attachments: types.optional(materialStore, {}),
 }).actions((self) => ({
    setClassData: (payload) => {
-      if (payload.key === "background_img" || payload.key === "logo_iog") {
-      }
+      // if (payload.key === "background_img" || payload.key === "logo_iog") {
+      // }
       self[payload.key] = payload.value;
    },
    getPostById: (id) => {

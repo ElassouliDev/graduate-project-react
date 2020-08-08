@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
 const EditClassRoom = (props) => {
    let [isLoading, setLoading] = useState(false);
    let [helperText, setHelperText] = useState("");
+   const [backgroundImg, setBackgroundImg] = useState("");
+   const [logoImg, setLogoImg] = useState("");
+
    let [classRoom, setClassRoom] = useState();
    const handelSubmit = async () => {
       try {
@@ -32,8 +35,20 @@ const EditClassRoom = (props) => {
          for (var key in cRData) {
             formData.append(key, classRoom[key]);
          }
-         const res = await props.store.apiRequests.editClassRoom(formData,classRoom.id)
+         if(backgroundImg != "")
+         formData.append('background_img', backgroundImg);
 
+         if(logoImg != "")
+         formData.append('logo_img', logoImg);
+         console.log('classRoom', classRoom)
+         const res = await props.store.apiRequests.editClassRoom(formData,classRoom.id)
+         //classRoom['logo_img'] =   res.data.logo_img ;
+         //classRoom['background_img'] =   res.data.background_img ;
+         if(logoImg != "")
+         classRoom.setClassData({key:'logo_img', value: res.data.logo_img }) ;
+         if(backgroundImg != "")
+         classRoom.setClassData({key:'background_img', value: res.data.background_img });
+         //console.log('res update', res.data)
          props.store.ClassRoomStore.editClassRoom((classRoom.id, classRoom));
 
       } catch (err) {
@@ -43,6 +58,8 @@ const EditClassRoom = (props) => {
 
       } finally {
          setLoading(false)
+         setLogoImg("")
+         setBackgroundImg("")
       }
    };
 
@@ -53,6 +70,17 @@ const EditClassRoom = (props) => {
    const handleChange = (key) => (event) => {
       setClassRoom({ ...classRoom, [key]: event.target.value })
    };
+   const handleFileChange = (key) => (event) => {
+      if (event.target.files.length > 0) {
+         const value = event.target.files[0];
+         if(key == 'backgroundImg')
+         setBackgroundImg(value)
+         else if(key == 'logoImg')
+         setLogoImg(value)
+
+         console.log('chang '+  key , value)
+      }
+     };
    const handleChangeSwitch =(event) => {
 
       setClassRoom({ ...classRoom, [event.target.name]: event.target.checked  })
@@ -120,6 +148,57 @@ const EditClassRoom = (props) => {
                }}
                required
             />
+            <MyInput
+               value={backgroundImg}
+               name="backgroundImg"
+               type="file"
+               fullWidth
+               placeholder="Enter your background img"
+               label="background image"
+               id="backgroundImg"
+               validations="isExisty"
+               validationError="This is not a valid "
+               onChange={handleFileChange("backgroundImg")}
+               InputProps={{ classes: { root: classes.inputRoot } }}
+               InputLabelProps={{
+                  classes: {
+                     root: classes.labelRoot,
+                     // focused: classes.labelFocused
+                  },
+               }}
+               FormHelperTextProps={{
+                  classes: {
+                     root: classes.labelRoot,
+                     // focused: classes.labelFocused
+                  },
+               }}
+
+            /> <MyInput
+               value={logoImg}
+               name="logoImg"
+               type="file"
+               fullWidth
+               placeholder="Enter your logo img"
+               label="logo"
+               id="logoImg"
+               validations="isExisty"
+               validationError="This is not a valid "
+               onChange={handleFileChange("logoImg")}
+               InputProps={{ classes: { root: classes.inputRoot } }}
+               InputLabelProps={{
+                  classes: {
+                     root: classes.labelRoot,
+                     // focused: classes.labelFocused
+                  },
+               }}
+               FormHelperTextProps={{
+                  classes: {
+                     root: classes.labelRoot,
+                     // focused: classes.labelFocused
+                  },
+               }}
+
+            />
              <Switch
         checked={classRoom.auto_accept_students}
         onChange={handleChangeSwitch}
@@ -134,6 +213,7 @@ const EditClassRoom = (props) => {
             </Typography>
             <CardActions className="!px-0 !mt-10">
                <Button
+                  disabled={isLoading  }
                   variant="contained"
                   color="primary"
                   size="small"
