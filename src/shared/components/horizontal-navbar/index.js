@@ -107,13 +107,8 @@ export default withRouter(function PrimarySearchAppBar({
       onClose={handleMenuClose}
       style={{ top: 30 }}
     >
-      {/* <MenuItem onClick={handleMenuClose}>Profile</MenuItem> */}
-      <MenuItem onClick={handleMenuClose}>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <AccountBox />
-        </IconButton>
-          My account
-        </MenuItem>
+
+     
       <MenuItem onClick={handleLogOut}>
         <IconButton aria-label="show 4 new mails" color="inherit">
           <ExitToApp />
@@ -203,8 +198,9 @@ export default withRouter(function PrimarySearchAppBar({
             <>
               <div className={classes.sectionDesktop}>
 
-
-
+              <Typography className={classes.title} variant="h4" noWrap  className={'!pt-8'}>
+              {window.localStorage.getItem('fullName')}
+              </Typography>
 
                 <IconButton
                   edge="end"
@@ -218,6 +214,7 @@ export default withRouter(function PrimarySearchAppBar({
 
                   <Avatar alt="Yehia Test" src="https://kooledge.com/assets/default_medium_avatar-57d58da4fc778fbd688dcbc4cbc47e14ac79839a9801187e42a796cbd6569847.png"></Avatar>
                 </IconButton>
+
               </div>
               <div className={classes.sectionMobile}>
                 <IconButton

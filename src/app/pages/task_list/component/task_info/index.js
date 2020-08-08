@@ -10,9 +10,9 @@ import { Typography } from "@material-ui/core";
 import { Card } from "@material-ui/core";
 import { inject, observer } from "mobx-react";
 import { withRouter, useLocation } from "react-router";
-import { Link } from '@material-ui/core';
 import { Chip } from '@material-ui/core';
 import AttachmentIcon from '@material-ui/icons/Attachment';
+import { Link } from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,12 +35,14 @@ const TaskInfo = (props) => {
     () => {
       async function fetchData() {
         try {
-          let res = await props.store.apiRequests.getClassRooms();
-          console.log("res", res);
-          props.store.ClassRoomStore.setClassRooms(res.data);
+          if (classRoom)
+          return
+        let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
+        console.log("res", res);
+        props.store.ClassRoomStore.setOneClassRoom(res.data);
 
         } catch (error) {
-          console.log("mappedClassRooms", error.message);
+          console.log("mappedClassRooms 1 ", error.message);
         }
       }
       fetchData();
@@ -69,7 +71,7 @@ const TaskInfo = (props) => {
             console.log('data ss ', Task.task_solutions.getUserSolution(5))
 
           } catch (error) {
-            console.log("mappedClassRooms", error.message);
+            console.log("mappedClassRooms 2", error.message);
           }
         }
         fetchData();
@@ -88,8 +90,15 @@ const TaskInfo = (props) => {
   }
 
 
+
+
+
+
   const user_id =query.has("user_id")?query.get("user_id"):0;
-  const userSolutions = Task.task_solutions.getUserSolution(5)?Task.task_solutions.getUserSolution(5).solutionInfo:[];
+  const userSolutions = Task.task_solutions && Task.task_solutions.getUserSolution(5)?Task.task_solutions.getUserSolution(5).solutionInfo:[];
+  const accepted = Task.task_solutions && Task.task_solutions.getUserSolution(5)?Task.task_solutions.getUserSolution(5).accepted:null;
+
+
   return (
     <div >
       <Grid container className={["py-12"]} spacing={2}>
@@ -104,9 +113,9 @@ const TaskInfo = (props) => {
                   src={Task.user_info.image}
                 ></Avatar>
               }
-              action={user_id!=0?<Link href={`/Room/${classRoom.id}/tasks/${Task.id}/student` }>
+              action={ window.localStorage.getItem("groups") == 1?<Link to={`/Room/${classRoom.id}/tasks/${Task.id}/student` }>
 
-<Chip label={<Typography variant="h6" className="!p-2 !text-3xl">
+<Chip label={ <Typography variant="h6" className="!p-2 !text-3xl">
                   Show Students
               </Typography>} color="primary" />
               </Link>:""
@@ -130,15 +139,15 @@ const TaskInfo = (props) => {
                 </Typography>
 
               <List>
-                {
+                 {
                   Task.attachments_info.length > 0 ?
-                    Task.attachments_info.map(att => <Divider><a download href={att.file} target="_blanck">
-                      {att.title}
+                    Task.attachments_info.map(att =><><a  className={'!py-2 block'} download href={att.file} target="_blanck">
+                                           <AttachmentIcon />
+ {att.title}
 
-                      <AttachmentIcon />
 
 
-                    </a></Divider>) :
+                    </a> <Divider></Divider></>) :
                     // Task.attachments_info.map(file => <UploadFileListItem file={file} DeleteShow={false} />) :
                     "there is no attachments"
                 }
@@ -149,12 +158,12 @@ const TaskInfo = (props) => {
 
 
       {user_id != 0 ? <Grid item xs={12} sm={4} md={3}>
-          <UploadCard files={userSolutions} />
+          <UploadCard files={userSolutions}  accepted={accepted}/>
         </Grid>:""
         }
-        <Grid container xs={12} sm={12} md={12}>
-          {/* <TaskStudentsList></TaskStudentsList> */}
-        </Grid>
+        {/* <Grid container xs={12} sm={12} md={12}>
+           <TaskStudentsList></TaskStudentsList>
+        </Grid> */}
       </Grid>
     </div>
   );

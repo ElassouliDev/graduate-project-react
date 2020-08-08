@@ -53,6 +53,10 @@ class SignUpForm extends React.Component {
         }, 6000);
         this.props.store.UserStore.setNewUser(values)
         window.localStorage.setItem('jwtToken', res.data.token)
+        window.localStorage.setItem('id', res.data.id)
+        window.localStorage.setItem('groups', res.data.groups[0])
+        window.localStorage.setItem('fullName', res.data.first_name +' '+ res.data.last_name )
+
       }
     } catch (err) {
       this.setState({ status: 2, message: err.message })

@@ -1,4 +1,4 @@
-import { Card, Divider, Button, CardHeader } from "@material-ui/core";
+import { Card, Divider, Button, CardHeader, Chip } from "@material-ui/core";
 import React, { useState } from "react";
 import { Fab } from "@material-ui/core";
 import { Add, Send } from "@material-ui/icons";
@@ -12,11 +12,15 @@ import { IconButton } from '@material-ui/core';
 import { Save } from "@material-ui/icons";
 import AddSolution from "../../../AddSolution";
 import classNames from 'classnames';
+import { Close } from '@material-ui/icons';
+import { CheckCircle } from '@material-ui/icons';
 
 export default function UploadCard(props) {
   const [listView, setListView] = useState("no file uploaded");
   const [uploadFile, setUploadFile] = useState(null);
   const [open, setOpen] = React.useState(false);
+  const [message, setMessage] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -32,13 +36,33 @@ export default function UploadCard(props) {
     console.log("delete file ", id);
   }
 
-  // function handleUploadFile(event) {
-  //   event.preventDefault();
+ const handleSubmitTaskStatus = async (status) => {
+  try {
+     setLoading(true)
+     setMessage("")
+     //const payload = props.store.User;
+   //  console.log("handleSubmitTaskStatus", payload);
+     const attachment = new FormData();
+     attachment.append('accepted', status)
+     console.log('status', status)
 
-  //   setUploadFile(event.target.files[0]);
-  //   // setUploadFile( );
-  //   console.log("upload file ", event.target.files[0]);
-  // }
+
+     //const attachments = await props.store.apiRequests.AcceptOrRejctSolution(attachment)
+
+
+     //const res = await props.store.apiRequests.addSolution(props.match.params.tId, formData)
+    // classRoom.classroom_tasks_info.addNewTask(res.data)
+    //  console.log(res);
+    //  setMessage(res.data.message)
+  } catch (err) {
+    // setStatus(2)
+    setMessage(err.message)
+  } finally {
+     setLoading(false)
+
+  }
+};
+
 
   useEffect(() => {
     console.log('props.files', props.files)
@@ -49,7 +73,7 @@ export default function UploadCard(props) {
             <UploadFileListItem
               file={file.attachment_info}
               handDeleteFile={handDeleteFile}
-              DeleteShow={true}
+              DeleteShow={false}
             />
           );
         }
@@ -64,14 +88,15 @@ export default function UploadCard(props) {
     <>
     <Card>
       <CardHeader
-        // action={
-        //   <IconButton color="primary" aria-label="send"
-        //     {...{ 'disabled': (uploadFile != null ? false : true) }}
-        //   >
-        //     <Send />
-        //   </IconButton>
+         action={
+          props.files.length>0 ?
+            <Chip
+              color={props.accepted==null? 'default' :props.accepted? "primary":"scondary"}
+              label={props.accepted==null? 'Not Review' : props.accepted? "Accepted": "Rejected"}
+            ></Chip>
+            :""
 
-        // }
+         }
         title={<Typography variant="h6" className="!mb-2 !text-3xl">
           Solution list
       </Typography>}
@@ -88,15 +113,8 @@ export default function UploadCard(props) {
       <Divider />
 
       <CardActions className={'hidden'}>
+        {window.localStorage.getItem("groups") != 1 ?
         <label htmlFor="upload-file"  className="w-full  text-center" onClick={handleOpen}>
-          {/* <input
-            style={{ display: "none" }}
-            id="upload-file"
-            name="upload-file"
-            type="file"
-            onChange={handleUploadFile}
-          /> */}
-
           <Fab
             color="primary"
             size="small"
@@ -109,7 +127,40 @@ export default function UploadCard(props) {
           </Fab>
           <br />
           <br />
+        </label>:
+             props.files.length>0 && props.accepted ==null ?
+
+        <>
+        <label htmlFor="upload-file"  className="w-full  text-center" onClick={handleSubmitTaskStatus.bind(this,true)}>
+          <Fab
+            color="primary"
+            size="small"
+            component="span"
+            className="w-full !px-10"
+            aria-label="Accept"
+            variant="extended"
+          >
+            <CheckCircle /> Accept
+          </Fab>
+          <br />
+          <br />
+        </label> <label htmlFor="upload-file"  className="w-full  text-center" onClick={handleSubmitTaskStatus.bind(this,false)}>
+          <Fab
+            color="secondary"
+            size="small"
+            component="span"
+            className="w-full !px-10"
+            aria-label="Reject"
+            variant="extended"
+          >
+            <Close /> Reject
+          </Fab>
+          <br />
+          <br />
         </label>
+        </>
+        :""
+      }
 
 
       </CardActions>

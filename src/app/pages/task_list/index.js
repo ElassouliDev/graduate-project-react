@@ -69,19 +69,20 @@ const TaskList = (props) => {
     <div className="container m-auto my-20  ">
       <Typography variant="h2" className="!mb-5">
         Task List
-        <Tooltip title="Add"   className="!mx-4" aria-label="add" onClick={handleOpen}>
+        { window.localStorage.getItem("groups") == 1 ?<Tooltip title="Add"   className="!mx-4" aria-label="add" onClick={handleOpen}>
                 <Fab color="primary" >
                   <Add />
                 </Fab>
-              </Tooltip>
+        </Tooltip>:"" }
+
       </Typography>
       <Divider />
 
       <div className="my-10">
         {   classRoom.classroom_tasks_info.tasks.length> 0?
           classRoom.classroom_tasks_info.tasks.map(
-            (taskData) => (
-              <TaskListItem action_menu_items={action_menu_items} link={getNextPath(props.history.location.pathname, taskData.id)} taskData={taskData} />
+            (taskData , index) => (
+              <TaskListItem key={index} action_menu_items={action_menu_items} link={getNextPath(props.history.location.pathname, taskData.id)} taskData={taskData} />
             )
           ):<Typography variant="h4" className="!mb-5 text-center">
           No Task Exist

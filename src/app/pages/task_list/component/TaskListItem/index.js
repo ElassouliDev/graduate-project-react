@@ -6,6 +6,7 @@ import { Typography } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
 import { CardActionArea } from '@material-ui/core';
 import { Avatar } from '@material-ui/core';
+import { Link } from "react-router-dom";
 
 
 export default function TaskListItem(props) {
@@ -42,12 +43,13 @@ export default function TaskListItem(props) {
               {props.taskData.accept_solutions ? "closed" : "open"}
             </Typography>}
           />
-        <TableActionMenu styles={{ float: 'right',paddingTop: 10, margin: '0px 20px'}} items={props.action_menu_items} item_id={props.taskData.id} />
+             { window.localStorage.getItem("groups") == 1 ? <TableActionMenu styles={{ float: 'right',paddingTop: 10, margin: '0px 20px'}} items={props.action_menu_items} item_id={props.taskData.id} />:""}
           </>
           }
         />
         <Divider />
-        <CardActionArea href={props.link}>
+        <Link to={props.link}>
+        <CardActionArea >
 
         <CardContent className="!mb-2 p-5">
           <Typography variant="h4" className="!mb-2">
@@ -59,6 +61,7 @@ export default function TaskListItem(props) {
           </Typography>
         </CardContent>
       </CardActionArea>
+      </Link>
     </Card>
   );
 }

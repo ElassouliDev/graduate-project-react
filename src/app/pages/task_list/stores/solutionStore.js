@@ -34,10 +34,9 @@ const SolutionStore = types
     user: types.optional(types.maybeNull(types.integer), null),
   })
   .actions((self) => ({
-    setSolutionInfo(solutionsInfoData) {
-      // self.solutionInfo = solutionsInfoData.map(slove=>{
-      //    solutionInfo.create(slove);
-      // })
+    setData(payload) {
+      self[payload.key] = payload.value
+
     },
   }));
 

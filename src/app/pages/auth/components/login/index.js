@@ -13,7 +13,10 @@ const keys = {
   groups: 'groups',
   userName: "username",
   jwtToken: 'jwtToken',
-  groupname: 'groupname'
+  groupname: 'groupname',
+  id: 'id',
+  fullName: 'fullName',
+
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -46,7 +49,8 @@ const LoginForm = (props) => {
         window.localStorage.setItem(keys.jwtToken, res.data.auth_token)
         window.localStorage.setItem(keys.groups, res.data.user.groups[0].id)
         window.localStorage.setItem(keys.groupname, res.data.user.groups[0].name)
-        window.localStorage.setItem(keys.userName, res.data.user.username)
+        window.localStorage.setItem(keys.id, res.data.user.id)
+        window.localStorage.setItem(keys.fullName, res.data.user.first_name +' ' +res.data.user.last_name )
         setMessage("You are logged in, you will be redirected in 5 secounds")
         setStatus(1)
         setTimeout(() => {

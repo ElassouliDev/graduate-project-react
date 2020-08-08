@@ -129,6 +129,7 @@ const requests = (localStorage, config) => {
         UndeliveredStudentsAnswerTask: (taskID) => requestInstance.get(`${baseUrl}/tasks/${taskID}/undelivered_students`),
         addSolution: (TaskId,payload) => requestInstance.post(`${baseUrl}/tasks/${TaskId}/submit_solution/`,payload),
         taskSolution: (TaskId,payload={}) => requestInstance.get(`${baseUrl}/tasks/${TaskId}/solutions/`,payload),
+        AcceptOrRejctSolution: (solutionID,payload={}) => requestInstance.patch(`${baseUrl}/tasks_solution/${solutionID}/`,payload),
 
         requestInstance
     }
