@@ -108,7 +108,7 @@ export default withRouter(function PrimarySearchAppBar({
       style={{ top: 30 }}
     >
 
-     
+
       <MenuItem onClick={handleLogOut}>
         <IconButton aria-label="show 4 new mails" color="inherit">
           <ExitToApp />

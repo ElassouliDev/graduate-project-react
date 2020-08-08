@@ -94,7 +94,7 @@ const TaskInfo = (props) => {
 
 
 
-  const user_id =query.has("user_id")?query.get("user_id"):0;
+  const user_id =window.localStorage.getItem("groups") != 1?window.localStorage.getItem("id")   :  query.has("user_id")?query.get("user_id"):0;
   const userSolutions = Task.task_solutions && Task.task_solutions.getUserSolution(5)?Task.task_solutions.getUserSolution(5).solutionInfo:[];
   const accepted = Task.task_solutions && Task.task_solutions.getUserSolution(5)?Task.task_solutions.getUserSolution(5).accepted:null;
 
@@ -113,13 +113,23 @@ const TaskInfo = (props) => {
                   src={Task.user_info.image}
                 ></Avatar>
               }
-              action={ window.localStorage.getItem("groups") == 1?<Link to={`/Room/${classRoom.id}/tasks/${Task.id}/student` }>
+              action={<>
+                <Chip
+            className="mt-5 "
+            size="larg"
+            color={!Task.accept_solutions ? "secondary" : "primary"}
+            label={<Typography variant="h6" >
+              {!Task.accept_solutions ? "closed" : "open"}
+            </Typography>}
+          />
+              {window.localStorage.getItem("groups") == 1?<Link to={`/Room/${classRoom.id}/tasks/${Task.id}/student` }>
 
 <Chip label={ <Typography variant="h6" className="!p-2 !text-3xl">
                   Show Students
               </Typography>} color="primary" />
-              </Link>:""
+              </Link>:""}
 
+              </>
               }
               title={<Typography variant="h5" className="!mb-2 !text-3xl">
               {Task.user_info.fullName }
@@ -158,7 +168,7 @@ const TaskInfo = (props) => {
 
 
       {user_id != 0 ? <Grid item xs={12} sm={4} md={3}>
-          <UploadCard files={userSolutions}  accepted={accepted}/>
+          <UploadCard files={userSolutions}  accepted={accepted} task={Task}/>
         </Grid>:""
         }
         {/* <Grid container xs={12} sm={12} md={12}>

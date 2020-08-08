@@ -12,15 +12,22 @@ import { IconButton } from '@material-ui/core';
 import { Save } from "@material-ui/icons";
 import AddSolution from "../../../AddSolution";
 import classNames from 'classnames';
+import { CircularProgress } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import { CheckCircle } from '@material-ui/icons';
-
-export default function UploadCard(props) {
+import { useLocation } from "react-router";
+import { inject, observer } from 'mobx-react';
+import { withRouter } from 'react-router';
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+function UploadCard(props) {
   const [listView, setListView] = useState("no file uploaded");
   const [uploadFile, setUploadFile] = useState(null);
   const [open, setOpen] = React.useState(false);
   const [message, setMessage] = React.useState('');
   const [loading, setLoading] = React.useState(false);
+  const query  =  useQuery();
 
   const handleOpen = () => {
     setOpen(true);
@@ -42,18 +49,21 @@ export default function UploadCard(props) {
      setMessage("")
      //const payload = props.store.User;
    //  console.log("handleSubmitTaskStatus", payload);
-     const attachment = new FormData();
-     attachment.append('accepted', status)
+     const formData = new FormData();
+     const sol_id = props.files[props.files.length-1].id;
+     formData.append('accepted', status)
      console.log('status', status)
+     const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
 
+     const Task = classRoom.classroom_tasks_info.get(props.match.params.tId)
 
-     //const attachments = await props.store.apiRequests.AcceptOrRejctSolution(attachment)
+     const res = await props.store.apiRequests.AcceptOrRejctSolution(sol_id,formData)
 
-
+      const user_id =query.has("user_id")?query.get("user_id"):0;
      //const res = await props.store.apiRequests.addSolution(props.match.params.tId, formData)
-    // classRoom.classroom_tasks_info.addNewTask(res.data)
-    //  console.log(res);
-    //  setMessage(res.data.message)
+     Task.task_solutions.getUserSolution(user_id).setData({key:"accepted" ,value:status})
+      console.log(res);
+      //setMessage(res.data.message)
   } catch (err) {
     // setStatus(2)
     setMessage(err.message)
@@ -82,6 +92,7 @@ export default function UploadCard(props) {
       ):"No Solution Exists"
     );
   },[props.files]);
+  console.log('tagttt',   props.task)
 
 
   return (
@@ -114,6 +125,7 @@ export default function UploadCard(props) {
 
       <CardActions className={'hidden'}>
         {window.localStorage.getItem("groups") != 1 ?
+        props.task.accept_solutions?
         <label htmlFor="upload-file"  className="w-full  text-center" onClick={handleOpen}>
           <Fab
             color="primary"
@@ -127,11 +139,14 @@ export default function UploadCard(props) {
           </Fab>
           <br />
           <br />
-        </label>:
+        </label>:""
+
+
+        :
              props.files.length>0 && props.accepted ==null ?
 
         <>
-        <label htmlFor="upload-file"  className="w-full  text-center" onClick={handleSubmitTaskStatus.bind(this,true)}>
+        <label htmlFor="upload-file"  className="w-full  text-center" onClick={handleSubmitTaskStatus.bind(this,1)}>
           <Fab
             color="primary"
             size="small"
@@ -144,7 +159,7 @@ export default function UploadCard(props) {
           </Fab>
           <br />
           <br />
-        </label> <label htmlFor="upload-file"  className="w-full  text-center" onClick={handleSubmitTaskStatus.bind(this,false)}>
+        </label> <label htmlFor="upload-file"  className="w-full  text-center" onClick={handleSubmitTaskStatus.bind(this,0)}>
           <Fab
             color="secondary"
             size="small"
@@ -158,6 +173,7 @@ export default function UploadCard(props) {
           <br />
           <br />
         </label>
+        {loading && <CircularProgress />}
         </>
         :""
       }
@@ -170,3 +186,5 @@ export default function UploadCard(props) {
     </>
   );
 }
+export default inject('store')(withRouter(observer(UploadCard)));
+

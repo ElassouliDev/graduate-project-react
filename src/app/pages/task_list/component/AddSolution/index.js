@@ -39,8 +39,9 @@ const AddSolution = (props) => {
       try {
          setLoading(true)
          setMessage("")
-         const payload = props.store.User;
-         console.log("add task", payload);
+         const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
+
+         const Task = classRoom.classroom_tasks_info.get(props.match.params.tId)
          const attachment = new FormData();
          attachment.append('file', fileTOupload)
          attachment.append('title', title)
@@ -51,17 +52,23 @@ const AddSolution = (props) => {
          const formData = new FormData();
          formData.append('notes', title)
          formData.append('attachment', attachments.data.id)
+         console.log(' solution list bef' , Task.task_solutions.getUserSolution(window.localStorage.getItem('id')).solutionInfo);
 
          const res = await props.store.apiRequests.addSolution(props.match.params.tId, formData)
-        // classRoom.classroom_tasks_info.addNewTask(res.data)
-         console.log(res);
+         Task.task_solutions.addSolution(res.data)
+         classRoom.classroom_tasks_info.edit(Task)
+         console.log('add solution ' , res.data);
+         console.log(' solution list' , Task.task_solutions.getUserSolution(window.localStorage.getItem('id')).solutionInfo);
          setStatus(1)
-         setMessage("task added successully")
+
+         setMessage("soltion added successully")
       } catch (err) {
          setStatus(2)
          setMessage(err.message)
-        props.handleClose();
+        //props.handleClose();
       } finally {
+         setFileToUpload("")
+         setTitle("")
          setLoading(false)
          props.handleClose();
 

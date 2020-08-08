@@ -38,9 +38,9 @@ export default function TaskListItem(props) {
           <Chip
             className="mt-5 "
             size="larg"
-            color={props.taskData.accept_solutions ? "secondary" : "primary"}
+            color={!props.taskData.accept_solutions ? "secondary" : "primary"}
             label={<Typography variant="h6" >
-              {props.taskData.accept_solutions ? "closed" : "open"}
+              {!props.taskData.accept_solutions ? "closed" : "open"}
             </Typography>}
           />
              { window.localStorage.getItem("groups") == 1 ? <TableActionMenu styles={{ float: 'right',paddingTop: 10, margin: '0px 20px'}} items={props.action_menu_items} item_id={props.taskData.id} />:""}

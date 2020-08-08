@@ -11,8 +11,6 @@ import { create } from "lodash";
 const solutionInfo = types
   .model({
     id: types.optional(types.maybeNull(types.number), null),
-   // attachment: types.optional(types.maybeNull(types.number), null),
-   // task: types.optional(types.maybeNull(types.number), null),
     notes: types.optional(types.maybeNull(types.string), null),
     attachment_info: types.optional(attachment, {}),
   })
@@ -38,6 +36,17 @@ const SolutionStore = types
       self[payload.key] = payload.value
 
     },
+    addSolutionFile(payload){
+
+      payload.attachment_info = attachment.create(
+        payload.attachment_info );
+        console.log('add sol1', payload)
+        self.solutionInfo.push(solutionInfo.create(payload));
+        console.log('add sol2', payload)
+
+    }
+
+
   }));
 
 const SolutionListStore = types
@@ -70,6 +79,11 @@ const SolutionListStore = types
           'solutionInfo': nSolutionInfo
         });
       });
+    },
+    addSolution: (payload) => {
+      let user_solution =  self.getUserSolution(window.localStorage.getItem('id'));
+      if(user_solution)
+        user_solution.addSolutionFile(payload)
     },
     addNewSolution: (payload) => {
       // let _newSotution = payload;
