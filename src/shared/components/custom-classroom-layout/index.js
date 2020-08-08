@@ -9,7 +9,7 @@ const CustomClassroomLayout = (props) => {
     <div style={{ paddingTop: "1.5rem" }}>
       <ClassRoomHeader
         Title={classRoom ? classRoom.title : ""}
-        code={"123456"}
+        code={classRoom ? classRoom.promo_code : ""}
         image={classRoom ? classRoom.background_img : ""}
       />
       {props.children}
