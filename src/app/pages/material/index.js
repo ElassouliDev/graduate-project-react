@@ -124,7 +124,7 @@ function EnhancedTableHead(props) {
             </TableSortLabel>
           </TableCell>
         ))}
-        <TableCell
+        {window.localStorage.getItem("groups") == 1?  <TableCell
           key={"Actions"}
           align={"left"}
           padding={"none"}
@@ -135,7 +135,8 @@ function EnhancedTableHead(props) {
             direction={"asc"}>
             Actions
             </TableSortLabel>
-        </TableCell>
+        </TableCell>:""}
+       
       </TableRow>
     </TableHead>
   );
@@ -191,12 +192,13 @@ const EnhancedTableToolbar = (props) => {
               component="div"
             >
             Materials
-
-             <Tooltip title="Add" aria-label="add" onClick={props.onClick}>
+{window.localStorage.getItem("groups") == 1 ?   <Tooltip title="Add" aria-label="add" onClick={props.onClick}>
                 <Fab color="primary" className={classes.fab}>
                   <Add />
                 </Fab>
-              </Tooltip>
+              </Tooltip>:
+''}
+
             </Typography>
     </Toolbar>
   );
@@ -353,17 +355,18 @@ function EnhancedTable(props) {
               >
                 {row.created_at}
               </TableCell>
-              <TableCell align="left">
+              {window.localStorage.getItem("groups") == 1? <TableCell align="left">
                 <DropSettingMenu id={row.id} options={
                   [
                     { id: "delete", onClick: handleDelete(row.id) },
                   ]} />
-              </TableCell>
+              </TableCell>:"" }
+
                 </TableRow>
           );
         }):
         <TableRow >
-          <TableCell colSpan={4}  align="center" className="!text-2xl">No Data Exists</TableCell>
+          <TableCell colSpan={window.localStorage.getItem("groups") == 1?5:4}  align="center" className="!text-2xl">No Data Exists</TableCell>
         </TableRow>
         }
 
