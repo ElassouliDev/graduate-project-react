@@ -4,7 +4,6 @@ import MyInput from "../../../../shared/components/formasy-input";
 import Formsy from "formsy-react";
 import { Button, CircularProgress } from "@material-ui/core";
 import { CardActions } from "@material-ui/core";
-import { CardContent } from "@material-ui/core";
 import { inject, observer } from 'mobx-react';
 import { getSnapshot } from 'mobx-state-tree'
 import { Switch } from '@material-ui/core';

@@ -3,7 +3,6 @@ import { Card, Divider, CardHeader, Paper, Grid } from "@material-ui/core";
 import { CardContent, Typography, Avatar } from "@material-ui/core";
 import CommentList from '../CommentList';
 import { inject, observer } from "mobx-react";
-import CommentForm from "../CommentList/CommentForm";
 
 function PostCard(props) {
   const { post, store } = props

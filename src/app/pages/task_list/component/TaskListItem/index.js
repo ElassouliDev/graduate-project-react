@@ -37,7 +37,7 @@ export default function TaskListItem(props) {
           <>
           <Chip
             className="mt-5 "
-            size="larg"
+            size="medium"
             color={!props.taskData.accept_solutions ? "secondary" : "primary"}
             label={<Typography variant="h6" >
               {!props.taskData.accept_solutions ? "closed" : "open"}

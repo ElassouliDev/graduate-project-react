@@ -27,63 +27,85 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "1.75rem",
    },
 }));
-const AddTask = (props) => {
+const EditTask = (props) => {
 
    const [isLoading, setLoading] = useState(false);
    const [helperText, setHelperText] = useState("");
    let [status, setStatus] = useState(0);
    let [message, setMessage] = useState("");
-   let classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
+   const [open, setOpen] = React.useState(true);
+   let [classRoom, setClassRoom] = useState();
+
+   let [task,setTask] = useState();
    let [fileTOupload, setFileToUpload] = useState(null);
-;
+
+   React.useEffect(() => {
+      setTask(props.task)
+            setClassRoom(props.store.ClassRoomStore.getClassRoom(props.match.params.id))
+            setOpen(true)
+            setMessage("")
+            setHelperText("")
+
+   },[props.task])
+
+
+    const handleClose = () => {
+      setOpen(false);
+    }
    const handelSubmit = async () => {
       try {
          setLoading(true)
          setMessage("")
          const payload = props.store.User;
-         console.log("add task", payload);
-         const task = classRoom.classroom_tasks_info.newTask;
-         const attachment = new FormData();
-         attachment.append('file', fileTOupload)
-         attachment.append('title', task.title)
-         attachment.append('_type', 2)
+         // console.log("add task", payload);
+         // const task = classRoom.classroom_tasks_info.newTask;
+         // const attachment = new FormData();
+         // attachment.append('file', fileTOupload)
+         // attachment.append('title', task.title)
+         // attachment.append('_type', 2)
 
-         const attachments = await props.store.apiRequests.addAttachment(attachment)
+         // const attachments = await props.store.apiRequests.addAttachment(attachment)
+         let cRData = (({ title, content,accept_solutions }) => ({ title, content, accept_solutions }))(task)
+         let formData = new FormData;
+         for (var key in cRData) {
+            formData.append(key, task[key]);
+         }
+         // const formData = new FormData();
+         // formData.append('title', task.title)
+         // formData.append('content', task.content)
+         // formData.append('accept_solutions', task.accept_solutions)
+         // // formData.append('attachments', attachments.data.id)
 
-         const formData = new FormData();
-         formData.append('title', task.title)
-         formData.append('content', task.content)
-         formData.append('accept_solutions', task.accept_solutions)
-         formData.append('attachments', attachments.data.id)
-
-         const res = await props.store.apiRequests.addTask(classRoom.id, formData)
-         classRoom.classroom_tasks_info.addNewTask(res.data)
+         const res = await props.store.apiRequests.editTask(task.id, formData)
+         classRoom.classroom_tasks_info.editTask(task)
          console.log(res);
          setStatus(1)
          setMessage("task added successully")
       } catch (err) {
          setStatus(2)
          setMessage(err.message)
-        props.handleClose();
       } finally {
-         setLoading(false)
-         props.handleClose();
+         setTimeout(()=>{
+            setLoading(false)
+            handleClose();
+         },3000)
+
 
       }
    };
 
    const handleChange = (key) => (event) => {
-      if (key == "taskFile") {
-         setFileToUpload(event.target.files[0])
-         return
-      }
+      let value = event.target.value;
+
+      // if (key == "taskFile") {
+      //    setFileToUpload(event.target.files[0])
+      //    return
+      // }
       if (key == "accept_solutions") {
-         const value = event.target.checked;
-         classRoom.classroom_tasks_info.newTask.setNewData({ key, value })
-         return
+          value = event.target.checked;
       }
-      const value = event.target.value;
-      classRoom.classroom_tasks_info.newTask.setNewData({ key, value })
+
+      setTask({ ...task, [key]: value })
    };
 
    const classes = useStyles();
@@ -103,20 +125,20 @@ const AddTask = (props) => {
          validationError: "This is not a valid",
          required: true
       },
-      {
-         name: "taskFile",
-         type: "file",
-         validations: "isExisty",
-         validationError: "This is not a valid",
-         required: true
-      },
-      {
-         name: "accept_solutions_due",
-         type: "date",
-         validations: "isExisty",
-         validationError: "This is not a valid",
-         required: true
-      },
+      // {
+      //    name: "taskFile",
+      //    type: "file",
+      //    validations: "isExisty",
+      //    validationError: "This is not a valid",
+      //    required: true
+      // },
+      // {
+      //    name: "accept_solutions_due",
+      //    type: "date",
+      //    validations: "isExisty",
+      //    validationError: "This is not a valid",
+      //    required: true
+      // },
        {
           name: "accept_solutions",
           type: "checkbox",
@@ -133,26 +155,27 @@ const AddTask = (props) => {
          input.slice(1);
    }
 
-   if (!classRoom) {
-      return <div>
-         class room not found
-      </div>
+   if (!task) {
+      return <Typography>
+         Task not found
+      </Typography>
    }
+   console.log('task', task)
 
    return (
               <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
-        open={props.open}
-        onClose={props.handleClose}
+        open={open}
+        onClose={handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
           timeout: 500,
         }}
       >
-                <Fade in={props.open}>
+                <Fade in={open}>
       <Card className="w-1/2 mx-auto mt-20">
       <CardContent>
          <Typography
@@ -160,7 +183,7 @@ const AddTask = (props) => {
             component="h3"
             className="text-center !mt-5 !mb-12"
          >
-            Add New Task
+            Edit Task
         </Typography>
 
          <Formsy className="mb-10" onSubmit={handelSubmit}>
@@ -169,7 +192,7 @@ const AddTask = (props) => {
                field.type != "checkbox"  ?<MyInput
                      value={
                         field.name == "taskFile" ? fileTOupload :
-                           classRoom.material.newMaterial[field.name]}
+                           task[field.name]}
                      name={field.name}
                      type={field.type}
                      fullWidth
@@ -193,7 +216,7 @@ const AddTask = (props) => {
                      required
                   />:  <FormControlLabel
                   control={ <Switch
-                     checked={ classRoom.material.newMaterial[field.name]}
+                     checked={ task[field.name]}
                     onChange={handleChange(field.name)}
                     color="primary"
                     name="checkedB"
@@ -217,7 +240,7 @@ const AddTask = (props) => {
                   size="large"
                   type="submit"
                   className={classes.containedSizeLarge}>
-                  Add{isLoading && <CircularProgress />}
+                  Edit {isLoading && <CircularProgress />}
                </Button>
                <Button
                   disabled={isLoading}
@@ -225,7 +248,7 @@ const AddTask = (props) => {
                   color="secondary"
                   size="large"
                   type="button"
-                  onClick={ props.handleClose}
+                  onClick={handleClose}
                   className={classes.containedSizeLarge}>
                   Cancel
                </Button>
@@ -237,15 +260,5 @@ const AddTask = (props) => {
       </Modal>
    );
 }
-export default inject('store')(withRouter(observer(AddTask)));
+export default inject('store')(withRouter(observer(EditTask)));
 
-/**
- * [mobx-state-tree] Error while converting
- *  `{"id":24,"user_info":{"id":3,
- * "username":"amintest123","first_name":"amin",
- * "last_name":"alakhras","groups":[{"id":1,"name":"teachers"}],
- * "profile":{"avatar":null}},
- * "attachments_info":[{"id":14,"attachment_type":"task solution",
- * "created_at":"2020-07-28T17:08:53.973128Z","mo......":[14]}`
- *  to `AnonymousModel`: at path "/user_info/groups" snapshot `[{"id":1,"name":"teachers"}]` is not assignable to type: `(string | null)` (No type is applicable for the union). at path "/user_info/groups" snapshot `[{"id":1,"name":"teachers"}]` is not assignable to type: `(string | null)` (Value is not a string). at path "/user_info/groups" snapshot `[{"id":1,"name":"teachers"}]` is not assignable to type: `(string | null)` (Value is not a null).
- */

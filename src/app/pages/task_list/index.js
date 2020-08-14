@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
 import TaskListItem from "./component/TaskListItem";
@@ -6,13 +6,16 @@ import { Divider, Typography } from "@material-ui/core";
 import getNextPath from "../../../shared/middleware/getNexPath"
 import { observer, inject } from "mobx-react";
 import AddTask from "./component/AddTask";
+import { Edit } from '@material-ui/icons';
 import { Fab } from '@material-ui/core';
 import { Tooltip } from '@material-ui/core';
 import { DeleteForever, Add } from '@material-ui/icons';
+import EditTask from "./component/EditTask";
 
 const TaskList = (props) => {
   const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
   const [open, setOpen] = React.useState(false);
+  const [editTaskForm , setEditTaskForm] = useState("");
 
   const handleOpen = () => {
     setOpen(true);
@@ -57,11 +60,22 @@ const TaskList = (props) => {
 
 
   }
+  const handleEditFunction = async (taskID) => {
+
+    console.log('edit task ', taskID)
+     const task =classRoom.classroom_tasks_info.get(taskID);
+     setEditTaskForm(<EditTask task={task}  /> )
+
+  }
   const  action_menu_items = [
     {
       title:'delete',
       icon:<DeleteForever  fontSize="small"/>,
       action:handleDeleteFunction
+    },{
+      title:'edit',
+      icon:<Edit  fontSize="small"/>,
+      action:handleEditFunction
     }
   ];
 
@@ -93,6 +107,7 @@ const TaskList = (props) => {
       </div>
       <Divider />
       <div className="my-10">
+        {editTaskForm}
         <AddTask handleOpen={handleOpen} handleClose={handleClose} open={open}></AddTask>
       </div>
     </div>
