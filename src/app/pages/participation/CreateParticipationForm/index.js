@@ -48,6 +48,7 @@ const CreateParticipationForm = (props) => {
 
       const res = await props.store.apiRequests.addPost(formData, props.match.params.id)
       classRoom.posts.addPost(res.data)
+      setContent('')
 
     } catch (err) {
 

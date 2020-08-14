@@ -50,7 +50,7 @@ function BlogPost(props) {
           <Grid item xs={12}>
             <CreateParticipationCard />
             {
-              props.store.ClassRoomStore.getClassRoom(props.match.params.id).posts.Posts.map((post) => {
+              props.store.ClassRoomStore.getClassRoom(props.match.params.id).posts.sortDescPosts().map((post) => {
                 return <PostCard post={post} />
               })
             }

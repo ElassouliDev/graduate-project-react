@@ -22,15 +22,18 @@ const MyInput = ({ value, isValid, name,label, errorMessage, onChange, ...res })
             </div>
         );
     }
+    console.log('ress ', res)
     return (
         <div>
             <TextField
                 error={error}
                 onChange={onChange}
-                defaultValue={value}
-              //  value={value}
+               defaultValue={value}
+
                 helperText={error ? errorMessage : " "}
                 {...res}
+               // value={value}
+
             />
         </div>
     );

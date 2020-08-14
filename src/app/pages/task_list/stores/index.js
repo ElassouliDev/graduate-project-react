@@ -111,5 +111,24 @@ const classroom_tasks_info = types
       });
       return deleted;
     },
+    sortDescTask:() =>{
+
+     return self.tasks.sort(compareDesc)
+    }
   }));
 export default classroom_tasks_info;
+
+function compareDesc(tk1, tk2) {
+  // Use toUpperCase() to ignore character casing
+  console.log('task 1', tk1)
+  const id1 = tk1.id;
+  const id2 = tk2.id;
+
+  let comparison = 0;
+  if (id1 > id2) {
+    comparison = -1;
+  } else if (id1 < id2) {
+    comparison = 1;
+  }
+  return comparison;
+}

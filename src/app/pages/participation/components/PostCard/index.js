@@ -33,7 +33,7 @@ function PostCard(props) {
       </CardContent>
 
       <Divider />
-      <CommentList post={post} comments={post.comments} />
+      <CommentList post={post} comments={post.sortDescComments()} />
 
 
     </Card>

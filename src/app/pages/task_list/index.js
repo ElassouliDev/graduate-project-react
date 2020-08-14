@@ -80,7 +80,7 @@ const TaskList = (props) => {
 
       <div className="my-10">
         {   classRoom.classroom_tasks_info.tasks.length> 0?
-          classRoom.classroom_tasks_info.tasks.map(
+          classRoom.classroom_tasks_info.sortDescTask().map(
             (taskData , index) => (
               <TaskListItem key={index} action_menu_items={action_menu_items} link={getNextPath(props.history.location.pathname, taskData.id)} taskData={taskData} />
             )

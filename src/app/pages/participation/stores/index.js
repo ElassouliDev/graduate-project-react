@@ -17,7 +17,10 @@ export const Post = types.model('Post', {
    created_at: types.optional(types.maybeNull(types.string), null),
    comments: types.array(Comment)
 }).views((self) => ({
+   sortDescComments:() =>{
 
+      return self.comments.sort(compareDesc)
+     }
 })).actions((self) => ({
    setData: (payload) => {
       self[payload.key] = payload.value;
@@ -29,7 +32,12 @@ export const Post = types.model('Post', {
 const PostStore = types.model('PostStore', {
    Posts: types.array(Post),
    newPost: types.optional(Post, {})
-}).actions((self) => ({
+}).views((self) => ({
+   sortDescPosts:() =>{
+
+      return self.Posts.sort(compareDesc)
+     }
+})).actions((self) => ({
    setData: (payload) => {
       self.newPost.setData(payload);
    },
@@ -41,6 +49,23 @@ const PostStore = types.model('PostStore', {
          })
       )
    },
+
 }))
 
 export default PostStore;
+
+
+function compareDesc(tk1, tk2) {
+   // Use toUpperCase() to ignore character casing
+   console.log('task 1', tk1)
+   const id1 = tk1.id;
+   const id2 = tk2.id;
+
+   let comparison = 0;
+   if (id1 > id2) {
+     comparison = -1;
+   } else if (id1 < id2) {
+     comparison = 1;
+   }
+   return comparison;
+ }
