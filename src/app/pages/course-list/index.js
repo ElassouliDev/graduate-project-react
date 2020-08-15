@@ -33,14 +33,6 @@ const useStyles = makeStyles({
   },
 });
 
-// function createData(id, name, email_or_user_name, image) {
-//   return { id, name, email_or_user_name, image };
-// }
-
-function createData(id, url, title) {
-  return { id, title, url};
-}
-
 
  function CourseList(props) {
   const classes = useStyles();
@@ -117,14 +109,7 @@ function createData(id, url, title) {
       action:handleDeleteFunction
     },
   ];
-  // const rows = [
-  //   createData(1, "https://www.youtube.com/watch?v=eXqU-HWAMsc", "Donut", '15/2/2020'),
-  //   // createData("1", "https://www.youtube.com/watch?v=eXqU-HWAMsc", "Donut", '15/2/2020'),
-  //   // createData("1", "https://www.youtube.com/watch?v=eXqU-HWAMsc", "Donut", '15/2/2020'),
-  //   // createData("1", "https://www.youtube.com/watch?v=eXqU-HWAMsc", "Donut", '15/2/2020')
 
-
-  // ];
   return (
     <div className="mb-10">
       <Typography
@@ -151,8 +136,7 @@ function createData(id, url, title) {
             </TableRow>
           </TableHead>
           <TableBody>
-          {/* {classRoom.student_requests_objects.length> 0?
-           classRoom.student_requests_objects */}
+
            { classRoom.course.videos.length>0?
            classRoom.course.videos.map((row) => (
               <TableRow key={row.id}>
@@ -161,7 +145,7 @@ function createData(id, url, title) {
                 <TableCell  className="!text-2xl" component="th" scope="row "  align="center">
                   {row.title}
                 </TableCell>
-                <TableCell className="!text-2xl" align="left">{row.media.length>0?row.media[0].path:"No video exist"}</TableCell>
+                <TableCell className="!text-2xl" align="left">{row.description}</TableCell>
 
                 <TableCell className="!text-2xl" align="center"><TableActionMenu items={action_menu_items} item_id={row.id} /></TableCell>
               </TableRow>

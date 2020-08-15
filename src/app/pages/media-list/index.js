@@ -114,7 +114,7 @@ function createData(id, url, title) {
         id="tableTitle"
         component="div"
       >
-       Media List
+       Video List
        <Tooltip title="Add" aria-label="add" className="!mx-4 " onClick={handleOpen}>
                 <Fab color="primary" className={classes.fab}>
                   <Add />
@@ -159,7 +159,7 @@ function createData(id, url, title) {
           </TableBody>
         </Table>
       </TableContainer>
-       <AddMedia handleClose={handleClose} handleOpen ={handleOpen} open={open}/>
+      {classRoom.course.videos.length>0?<AddMedia handleClose={handleClose} handleOpen ={handleOpen} open={open}/>:""}
     </div>
   );
 }

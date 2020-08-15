@@ -55,7 +55,7 @@ const AddTask = (props) => {
          formData.append('content', task.content)
          formData.append('accept_solutions', task.accept_solutions)
          formData.append('attachments', attachments.data.id)
-
+         console.log('accept solution ', task.accept_solutions)
          const res = await props.store.apiRequests.addTask(classRoom.id, formData)
          classRoom.classroom_tasks_info.addNewTask(res.data)
          console.log(res);

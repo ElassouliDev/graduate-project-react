@@ -100,14 +100,14 @@ function App(props) {
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
-          <Route exact  path="/Room/:id/videos/manage">
+          <Route exact  path="/Room/:id/courses/manage">
             <CustomPageLayout>
               <CustomClassroomLayout>
                 <CourseList />
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>
-           <Route exact  path="/Room/:id/media/manage">
+           <Route exact  path="/Room/:id/videos/manage">
             <CustomPageLayout>
               <CustomClassroomLayout>
                 <MediaList />

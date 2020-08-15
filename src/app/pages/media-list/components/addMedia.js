@@ -171,7 +171,7 @@ const AddMedia = (props) => {
               component="h3"
               className="text-center !mt-5 !mb-12"
             >
-              Add Media
+              Add Video
             </Typography>
 
             <Formsy className="mb-10" onSubmit={handelSubmit}>

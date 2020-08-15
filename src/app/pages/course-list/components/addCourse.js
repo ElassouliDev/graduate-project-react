@@ -53,21 +53,10 @@ const AddCourse = (props) => {
        const res = await props.store.apiRequests.addCourse(formData);
         console.log('res', res.data)
 
-        formData = new FormData();
-        formData.append('path',videoUrl);
 
-        formData.append('course',res.data.id);
-        formData.append('provider',1);
-      //  console.log('id course', res.data.id)
-        const res1 = await props.store.apiRequests.addMedia(formData);
-        console.log('res1', res1.data)
 
-   //     setVideoData(res.data);
-       let  preVideoData =res.data;
-           preVideoData['media'] = [res1.data];// preVideoData['apiRequests'];
-           console.log('all res', preVideoData)
 
-         classRoom.course.addNewVideo(preVideoData);
+         classRoom.course.addNewCourse(res.data);
 
 
       } catch (err) {
@@ -129,17 +118,7 @@ const AddCourse = (props) => {
           validations: "isExisty",
           validationError: "This is not a valid",
           required: true
-       },
-        {
-          title: "Url",
-          name: "path",
-          value: videoUrl,
-
-          type: "url",
-          validations: "isExisty",
-          validationError: "This is not a valid",
-          required: true
-       },
+       }
 
 
    ]

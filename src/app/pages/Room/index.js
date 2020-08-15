@@ -4,6 +4,7 @@ import { withRouter } from "react-router";
 import { Typography, Grid, Card, Divider } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import LoadingProgressPage from '../../../shared/components/loading-progress-page';
+import { FlipToFront } from '@material-ui/icons';
 import { Group } from '@material-ui/icons';
 import { GroupAdd } from '@material-ui/icons';
 import { ListAlt } from '@material-ui/icons';
@@ -16,6 +17,7 @@ const options = {
   "settings": "settings",
   "participations": "participations",
   "tutorials": 'tutorials',
+  "courses": 'courses',
   "matrerials": "matrerials",
   "tasks": "tasks",
   "join": "join",
@@ -34,7 +36,8 @@ const TeacherRoom = {
   matrerials: options.matrerials,
   tasks: options.tasks,
   join: options.join,
-  students: options.students
+  students: options.students,
+  courses: options.courses
 }
 const Room = (props) => {
   const [isLoading, setLoading] = React.useState(false);
@@ -122,6 +125,20 @@ const Room = (props) => {
       </Link>
     </Card>
   </Grid>
+   const Courses = () => <Grid item lg={3} md={3} sm={12} spacing={3}>
+    <Card>
+      <Link to={`./${classRoom.id}/courses/manage`}>
+
+        <CardActionArea className={"!py-6 "} style={classes.root}>
+
+          <FlipToFront style={classes.chat} />
+          <Typography variant="h4" className={'text-center py-5'}>
+          Room Courses
+    </Typography>
+        </CardActionArea>
+      </Link>
+    </Card>
+  </Grid>
 
   const Materials = () => <Grid item lg={3} md={3} sm={12} spacing={3}>
     <Card>
@@ -196,6 +213,9 @@ const Room = (props) => {
             }
             {
               displayedItems.participations && <Participations />
+            }
+            {
+              displayedItems.courses && <Courses />
             }
             {
               displayedItems.tutorials && <Tutorials />
