@@ -13,6 +13,7 @@ import { withRouter, useLocation } from "react-router";
 import { Chip } from '@material-ui/core';
 import AttachmentIcon from '@material-ui/icons/Attachment';
 import { Link } from "react-router-dom";
+import LoadingProgressPage from "../../../../../shared/components/loading-progress-page";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -27,6 +28,7 @@ function useQuery() {
 const TaskInfo = (props) => {
   const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   const Task = classRoom ? classRoom.classroom_tasks_info.get(props.match.params.tId) : {}
   const query  =  useQuery();
@@ -35,14 +37,17 @@ const TaskInfo = (props) => {
     () => {
       async function fetchData() {
         try {
-          if (classRoom)
-          return
-        let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
+          if (classRoom) return;
+          setLoading(true);
+          let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
         console.log("res", res);
         props.store.ClassRoomStore.setOneClassRoom(res.data);
 
         } catch (error) {
+          setLoading(false);
           console.log("mappedClassRooms 1 ", error.message);
+        } finally {
+          setLoading(false);
         }
       }
       fetchData();
@@ -54,7 +59,7 @@ const TaskInfo = (props) => {
           try {
             if (!classRoom)
               return
-
+            setLoading(true);
             let task_temp = classRoom.classroom_tasks_info.get(props.match.params.tId)
 
             if (!task_temp)
@@ -71,13 +76,19 @@ const TaskInfo = (props) => {
             console.log('data ss ', Task.task_solutions.getUserSolution(5))
 
           } catch (error) {
+            setLoading(false);
             console.log("mappedClassRooms 2", error.message);
+          } finally {
+            setLoading(false);
           }
         }
         fetchData();
 
       });
 
+  if (isLoading) {
+    return <LoadingProgressPage />
+  }
   if (!classRoom) {
     return <div>
       class room not found

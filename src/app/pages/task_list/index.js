@@ -11,12 +11,14 @@ import { Fab } from '@material-ui/core';
 import { Tooltip } from '@material-ui/core';
 import { DeleteForever, Add } from '@material-ui/icons';
 import EditTask from "./component/EditTask";
+import LoadingProgressPage from "../../../shared/components/loading-progress-page";
 
 const TaskList = (props) => {
   const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
   const [open, setOpen] = React.useState(false);
   const [editForm, setOpenEditForm] = React.useState(false);
   const [task , setTask] = useState(null);
+  const [isLoading, setLoading] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -32,17 +34,25 @@ const TaskList = (props) => {
     () => {
       async function fetchData() {
         try {
-          if (classRoom)
-            return
+          if (classRoom) return;
+          setLoading(true);
           let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
-          console.log("res", res);
+          // console.log("res", res);
           props.store.ClassRoomStore.setOneClassRoom(res.data);
         } catch (error) {
-          console.log("mappedClassRooms", error.message);
+          setLoading(false);
+          // console.log("mappedClassRooms", error.message);
+        } finally {
+          setLoading(false);
         }
       }
       fetchData();
     }, []);
+
+  if (isLoading) {
+    return <LoadingProgressPage />
+  }
+
   if (!classRoom) {
     return <Typography className={'text-center !text-4xl !my-20 bg-gray-400 !py-10'}>class room not found</Typography>;
   }
@@ -112,7 +122,7 @@ const TaskList = (props) => {
       </div>
       <Divider />
       <div className="my-10">
-         <EditTask task={task} onClose={handleCloseEditForm} editFormVisible={editForm} />
+        <EditTask task={task} onClose={handleCloseEditForm} editFormVisible={editForm} />
         <AddTask handleOpen={handleOpen} handleClose={handleClose} open={open} />
       </div>
     </div>

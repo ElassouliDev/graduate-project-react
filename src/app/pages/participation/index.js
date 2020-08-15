@@ -9,6 +9,7 @@ import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import { useEffect } from "react"
 import { Typography } from "@material-ui/core";
+import LoadingProgressPage from "../../../shared/components/loading-progress-page";
 
 
 const useStyles = makeStyles(theme => ({
@@ -18,6 +19,8 @@ const useStyles = makeStyles(theme => ({
 }));
 function BlogPost(props) {
   const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id)
+  const [isLoading, setLoading] = React.useState(false);
+
   let { slug } = useParams();
   // const [data, setData] = useState({ post: {} });
   const classes = useStyles();
@@ -27,16 +30,23 @@ function BlogPost(props) {
         try {
           if (classRoom)
             return
+          setLoading(true);
           let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
           console.log("res", res);
 
           props.store.ClassRoomStore.setOneClassRoom(res.data);
         } catch (error) {
           console.log("mappedClassRooms", error.message);
+          setLoading(false);
+        } finally {
+          setLoading(false);
         }
       }
       fetchData();
     }, []);
+  if (isLoading) {
+    return <LoadingProgressPage />
+  }
   if (!classRoom) {
     return <Typography className={'text-center !text-4xl !my-20 bg-gray-400 !py-10'}>class room not found</Typography>;
 

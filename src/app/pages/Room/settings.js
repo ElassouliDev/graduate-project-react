@@ -6,24 +6,31 @@ import DescriptionAlerts from "../../../shared/components/alert"
 import EditClassRoom from '../courses-dashboard-page/component/EditClassRoom';
 import { getSnapshot } from 'mobx-state-tree';
 import { red } from "@material-ui/core/colors";
+import LoadingProgressPage from "../../../shared/components/loading-progress-page";
 const Settings = (props) => {
    let { id } = useParams();
    const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
    let [deleted, setDeleted] = useState(false);
    let [status, setStatus] = useState(0);
    let [message, setMessage] = useState("");
-   useEffect(
+   const [isLoading, setLoading] = React.useState(false);
+
+    useEffect(
       () => {
         async function fetchData() {
           try {
             if (classRoom)
               return
-            let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
+              setLoading(true);
+              let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
             console.log("res", res);
 
             props.store.ClassRoomStore.setOneClassRoom(res.data);
           } catch (error) {
-            console.log("mappedClassRooms", error.message);
+              setLoading(false);
+              console.log("mappedClassRooms", error.message);
+          } finally {
+              setLoading(false);
           }
         }
         fetchData();
@@ -31,6 +38,7 @@ const Settings = (props) => {
 
    const HandleDeleteClass = async () => {
       try {
+
          await props.store.apiRequests.deleteClassRoom(id);
 
          const res = props.store.ClassRoomStore.deleteClassRoom(id);
@@ -65,6 +73,11 @@ const Settings = (props) => {
          }, 5000);
       }
    }
+
+    if (isLoading) {
+        return <LoadingProgressPage />
+    }
+
    if (!classRoom) {
       return <Typography className={'text-center !text-4xl !my-20 bg-gray-400 !py-10'}>class room not found</Typography>;
 
