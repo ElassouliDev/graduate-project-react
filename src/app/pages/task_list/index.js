@@ -15,7 +15,8 @@ import EditTask from "./component/EditTask";
 const TaskList = (props) => {
   const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
   const [open, setOpen] = React.useState(false);
-  const [editTaskForm , setEditTaskForm] = useState("");
+  const [editForm, setOpenEditForm] = React.useState(false);
+  const [task , setTask] = useState(null);
 
   const handleOpen = () => {
     setOpen(true);
@@ -23,6 +24,9 @@ const TaskList = (props) => {
 
   const handleClose = () => {
     setOpen(false);
+  }
+  const handleCloseEditForm = () => {
+    setOpenEditForm(false);
   }
   React.useEffect(
     () => {
@@ -63,8 +67,9 @@ const TaskList = (props) => {
   const handleEditFunction = async (taskID) => {
 
     console.log('edit task ', taskID)
-     const task =classRoom.classroom_tasks_info.get(taskID);
-     setEditTaskForm(<EditTask task={task}  /> )
+      setOpenEditForm(true);
+      const task =classRoom.classroom_tasks_info.get(taskID);
+      setTask(task)
 
   }
   const  action_menu_items = [
@@ -107,8 +112,8 @@ const TaskList = (props) => {
       </div>
       <Divider />
       <div className="my-10">
-        {editTaskForm}
-        <AddTask handleOpen={handleOpen} handleClose={handleClose} open={open}></AddTask>
+         <EditTask task={task} onClose={handleCloseEditForm} editFormVisible={editForm} />
+        <AddTask handleOpen={handleOpen} handleClose={handleClose} open={open} />
       </div>
     </div>
   );

@@ -33,7 +33,7 @@ const EditTask = (props) => {
    const [helperText, setHelperText] = useState("");
    let [status, setStatus] = useState(0);
    let [message, setMessage] = useState("");
-   const [open, setOpen] = React.useState(true);
+   // const [open, setOpen] = React.useState(true);
    let [classRoom, setClassRoom] = useState();
 
    let [task,setTask] = useState();
@@ -42,16 +42,16 @@ const EditTask = (props) => {
    React.useEffect(() => {
       setTask(props.task)
             setClassRoom(props.store.ClassRoomStore.getClassRoom(props.match.params.id))
-            setOpen(true)
+            // setOpen(true)
             setMessage("")
             setHelperText("")
 
    },[props.task])
 
 
-    const handleClose = () => {
-      setOpen(false);
-    }
+    // const handleClose = () => {
+    //   setOpen(false);
+    // }
    const handelSubmit = async () => {
       try {
          setLoading(true)
@@ -87,7 +87,7 @@ const EditTask = (props) => {
       } finally {
          setTimeout(()=>{
             setLoading(false)
-            handleClose();
+            props.onClose();
          },3000)
 
 
@@ -167,15 +167,15 @@ const EditTask = (props) => {
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
-        open={open}
-        onClose={handleClose}
+        open={props.editFormVisible}
+        onClose={props.onClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
           timeout: 500,
         }}
       >
-                <Fade in={open}>
+                <Fade in={props.editFormVisible}>
       <Card className="w-1/2 mx-auto mt-20">
       <CardContent>
          <Typography
@@ -248,7 +248,7 @@ const EditTask = (props) => {
                   color="secondary"
                   size="large"
                   type="button"
-                  onClick={handleClose}
+                  onClick={props.onClose}
                   className={classes.containedSizeLarge}>
                   Cancel
                </Button>

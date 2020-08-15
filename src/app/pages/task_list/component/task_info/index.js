@@ -94,9 +94,9 @@ const TaskInfo = (props) => {
 
 
 
-  const user_id =window.localStorage.getItem("groups") != 1?window.localStorage.getItem("id")   :  query.has("user_id")?query.get("user_id"):0;
-  const userSolutions = Task.task_solutions && Task.task_solutions.getUserSolution(5)?Task.task_solutions.getUserSolution(5).solutionInfo:[];
-  const accepted = Task.task_solutions && Task.task_solutions.getUserSolution(5)?Task.task_solutions.getUserSolution(5).accepted:null;
+  const user_id =window.localStorage.getItem("groups") != 1?parseInt(window.localStorage.getItem("id") )  :  query.has("user_id")?parseInt(query.get("user_id")):0;
+  const userSolutions = Task.task_solutions && Task.task_solutions.getUserSolution(user_id)?Task.task_solutions.getUserSolution(user_id).solutionInfo:[];
+  const accepted = Task.task_solutions && Task.task_solutions.getUserSolution(user_id)?Task.task_solutions.getUserSolution(user_id).accepted:null;
 
 
   return (
