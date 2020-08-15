@@ -44,9 +44,13 @@ const EditClassRoom = (props) => {
          //classRoom['logo_img'] =   res.data.logo_img ;
          //classRoom['background_img'] =   res.data.background_img ;
          if(logoImg != "")
-         classRoom.setClassData({key:'logo_img', value: res.data.logo_img }) ;
+         setClassRoom({ ...classRoom, ['logo_img']: res.data.logo_img })
+
+        // classRoom.setClassData({key:'logo_img', value: res.data.logo_img }) ;
          if(backgroundImg != "")
-         classRoom.setClassData({key:'background_img', value: res.data.background_img });
+         setClassRoom({ ...classRoom, ['background_img']: res.data.background_img })
+
+         //classRoom.setClassData({key:'background_img', value: res.data.background_img });
          //console.log('res update', res.data)
          props.store.ClassRoomStore.editClassRoom((classRoom.id, classRoom));
 
