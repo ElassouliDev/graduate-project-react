@@ -10,6 +10,7 @@ import { Divider } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
 
 import { inject, observer } from "mobx-react";
+import LoadingProgressPage from "../../../../../shared/components/loading-progress-page";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,22 +23,25 @@ const TaskStudentsList = (props) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [studentType, setStudentType] = useState("1");
   const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
+  const [isLoading, setLoading] = useState(false);
 
   React.useEffect(
     () => {
-      if (classRoom)
-        return
+      if (classRoom) return;
 
       async function fetchData() {
         try {
           if (!classRoom) {
+            setLoading(true);
             let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
             console.log("res", res);
             props.store.ClassRoomStore.setOneClassRoom(res.data);
           }
         }
-        catch{
-
+        catch {
+          setLoading(false);
+        } finally {
+          setLoading(false);
         }
       }
       fetchData()
@@ -46,9 +50,8 @@ const TaskStudentsList = (props) => {
     () => {
       async function fetchData() {
         try {
-          if (!classRoom)
-            return
-
+          if (!classRoom) return;
+          setLoading(true);
           let task_temp = classRoom.classroom_tasks_info.get(props.match.params.tId)
 
           if (!task_temp)
@@ -70,13 +73,19 @@ const TaskStudentsList = (props) => {
 
 
         } catch (error) {
+          setLoading(false);
           console.log("mappedClassRooms", error.message);
+        } finally {
+          setLoading(false);
         }
       }
       fetchData();
 
     });
 
+  if (isLoading) {
+    return <LoadingProgressPage />
+  }
 
   if (!classRoom) {
     return <div>

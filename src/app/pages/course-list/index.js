@@ -19,6 +19,7 @@ import { Tooltip } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 import { Sync } from '@material-ui/icons';
 import AddCourse from "./components/addCourse";
+import LoadingProgressPage from "../../../shared/components/loading-progress-page";
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
@@ -45,6 +46,7 @@ function createData(id, url, title) {
   const classes = useStyles();
   const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
   const [open, setOpen] = React.useState(false);
+  const [isLoading, setLoading] = React.useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -60,18 +62,27 @@ function createData(id, url, title) {
         try {
           if (classRoom)
             return
-          let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
+            setLoading(true);
+            let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
           console.log("res", res);
           props.store.ClassRoomStore.setOneClassRoom(res.data);
         } catch (error) {
-          console.log("mappedClassRooms", error.message);
+            setLoading(true);
+            console.log("mappedClassRooms", error.message);
+        } finally {
+            setLoading(false);
         }
       }
       fetchData();
     }, []);
-  if (!classRoom) {
-    return <Typography className={'text-center !text-4xl !my-20 bg-gray-400 !py-10'}>class room not found</Typography>;
-  }
+
+     if (isLoading) {
+         return <LoadingProgressPage />
+     }
+
+      if (!classRoom) {
+        return <Typography className={'text-center !text-4xl !my-20 bg-gray-400 !py-10'}>class room not found</Typography>;
+      }
 
 
 

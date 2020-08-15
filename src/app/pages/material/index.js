@@ -26,6 +26,7 @@ import { withRouter } from "react-router";
 import AddMaterial from "./components/AddMaterial"
 
 import { Fab } from '@material-ui/core';
+import LoadingProgressPage from "../../../shared/components/loading-progress-page";
 
 function createData({ id,attachment_info:{ title, file}, created_at }) {
 
@@ -249,6 +250,7 @@ function EnhancedTable(props) {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState([]);
   const [open, setOpen] = React.useState(false);
+  const [isLoading, setLoading] = React.useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -381,19 +383,25 @@ function EnhancedTable(props) {
     () => {
       async function fetchData() {
         try {
-          if (classRoom)
-            return
+          if (classRoom) return;
+          setLoading(true);
           let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
           console.log("res", res);
           props.store.ClassRoomStore.setOneClassRoom(res.data);
         } catch (error) {
+          setLoading(false);
           console.log("mappedClassRooms", error.message);
         }finally{
-
+          setLoading(false);
         }
       }
       fetchData();
     }, []);
+
+  if (isLoading) {
+    return <LoadingProgressPage />
+  }
+
   if (!classRoom) {
     return <Typography className={'text-center !text-4xl !my-20 bg-gray-400 !py-10'}>class room not found</Typography>;
   }

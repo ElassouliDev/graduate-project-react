@@ -7,6 +7,7 @@ import { CardActions } from "@material-ui/core";
 import { CardContent } from "@material-ui/core";
 import { inject, observer } from 'mobx-react';
 import { withRouter } from "react-router";
+import LoadingProgressPage from "../../../../shared/components/loading-progress-page";
 
 const useStyles = makeStyles((theme) => ({
    labelRoot: {
@@ -20,7 +21,8 @@ const useStyles = makeStyles((theme) => ({
    },
 }));
 const UpdateMaterial = (props) => {
-   let [isLoading, setLoading] = useState(false);
+   const [isLoading, setLoading] = useState(false);
+   const [isLoadingCircle, setLoadingCircle] = useState(false);
    let [helperText, setHelperText] = useState("");
    let [material, setMaterial] = useState();
    let [file, setFile] = useState();
@@ -28,7 +30,7 @@ const UpdateMaterial = (props) => {
 
    const handelSubmit = async () => {
       try {
-         setLoading(true)
+         setLoadingCircle(true)
          let formData = new FormData();
          Object.keys(material).forEach(key => {
             formData.append(key, material.key)
@@ -38,22 +40,23 @@ const UpdateMaterial = (props) => {
 
       } catch (err) {
 
-         setLoading(false)
+         setLoadingCircle(false)
          setHelperText(err.message)
 
       } finally {
-         setLoading(false)
+         setLoadingCircle(false)
       }
    };
    useEffect(() => {
       try {
-
          const materialRes = classRoom.material.get(props.match.params.mId)
          setMaterial(materialRes)
+         setLoading(true);
       } catch (error) {
          console.log("err message", error.message);
-
-
+         setLoading(false);
+      } finally {
+         setLoading(false);
       }
    }, [])
    const handleChange = (key) => (event) => {
@@ -94,17 +97,24 @@ const UpdateMaterial = (props) => {
       }
 
    ]
+
    function capitalizeFLetter(input) {
       if (input.length == 0)
          return ""
       return input[0].toUpperCase() +
          input.slice(1);
    }
+
+   if (isLoading) {
+      return <LoadingProgressPage />
+   }
+
    if (!classRoom) {
       return <div>
          class room not found
       </div>
    }
+
    if (!material) {
       return <div>
          material not found
@@ -162,7 +172,7 @@ const UpdateMaterial = (props) => {
                   size="large"
                   type="submit"
                   className={classes.containedSizeLarge}>
-                  Edit Material {isLoading && <CircularProgress />}
+                  Edit Material {isLoadingCircle && <CircularProgress />}
                </Button>
             </CardActions>
          </Formsy>

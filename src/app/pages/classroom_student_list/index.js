@@ -22,6 +22,7 @@ import { withRouter } from "react-router";
 import AddStudent from "./components/addStudent";
 import { AlertTitle } from '@material-ui/lab';
 import { Alert } from '@material-ui/lab';
+import LoadingProgressPage from "../../../shared/components/loading-progress-page";
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
@@ -45,6 +46,7 @@ function ClassroomStudentList(props) {
   const classes = useStyles();
   const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
   const [open, setOpen] = React.useState(false);
+  const [isLoading, setLoading] = React.useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -59,20 +61,27 @@ function ClassroomStudentList(props) {
   () => {
     async function fetchData() {
       try {
-        if (classRoom)
-          return
+        if (classRoom) return;
+        setLoading(true);
         let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
         console.log("res", res);
         props.store.ClassRoomStore.setOneClassRoom(res.data);
       } catch (error) {
         console.log("mappedClassRooms", error.message);
+        setLoading(false);
+      } finally {
+        setLoading(false);
       }
     }
     fetchData();
   }, []);
-if (!classRoom) {
-  return <Typography className={'text-center !text-4xl !my-20 bg-gray-400 !py-10'}>class room not found</Typography>;
-}
+
+  if (isLoading) {
+    return <LoadingProgressPage />
+  }
+  if (!classRoom) {
+    return <Typography className={'text-center !text-4xl !my-20 bg-gray-400 !py-10'}>class room not found</Typography>;
+  }
 
 
 
@@ -140,7 +149,7 @@ if (!classRoom) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {classRoom.student_objects.length> 0 ?
+            {classRoom.student_objects.length > 0 ?
             classRoom.student_objects.map((row) => (
               <TableRow key={row.id}>
                 <TableCell align="left">

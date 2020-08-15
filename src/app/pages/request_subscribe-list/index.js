@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import classNames from "classnames";
 import TableActionMenu from '../../../shared/components/table-menu';
 import { Done } from '@material-ui/icons';
@@ -17,6 +17,7 @@ import { Typography, Avatar } from "@material-ui/core";
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import { Sync } from '@material-ui/icons';
+import LoadingProgressPage from "../../../shared/components/loading-progress-page";
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
@@ -37,28 +38,35 @@ function createData(id, name, email_or_user_name, image) {
  function RequestSubscribeToClassRoom(props) {
   const classes = useStyles();
   const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
+  const [isLoading, setLoading] = useState(false);
 
 
   React.useEffect(
     () => {
       async function fetchData() {
         try {
-          if (classRoom)
-            return
+          if (classRoom) return;
+            setLoading(true);
           let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
-          console.log("res", res);
+          // console.log("res", res);
           props.store.ClassRoomStore.setOneClassRoom(res.data);
         } catch (error) {
-          console.log("mappedClassRooms", error.message);
+            setLoading(false);
+            // console.log("mappedClassRooms", error.message);
+        } finally {
+            setLoading(false);
         }
       }
       fetchData();
     }, []);
+
+  if (isLoading) {
+     return <LoadingProgressPage />
+  }
+
   if (!classRoom) {
     return <Typography className={'text-center !text-4xl !my-20 bg-gray-400 !py-10'}>class room not found</Typography>;
   }
-
-
 
   const handleOnAcceptFunction = (std_id)=> async (event) => {
 
@@ -81,9 +89,8 @@ function createData(id, name, email_or_user_name, image) {
       console.log('finally');
 
     }
-
-
   };
+
    const handleOnRejectFunction = (std_id)=> async (event) => {
 
     try {

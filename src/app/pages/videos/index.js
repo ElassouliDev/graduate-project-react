@@ -9,6 +9,7 @@ import VideoMenu from './components/video_menu';
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import { Typography } from '@material-ui/core';
+import LoadingProgressPage from "../../../shared/components/loading-progress-page";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,6 +23,7 @@ const useStyles = makeStyles(theme => ({
   const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
   const [openVideoId, setOpenVideoId] = React.useState(0);
   const [activeVideo, setActiveVideo] = React.useState({});
+  const [isLoading, setLoading] = React.useState(false);
 
   const handleOpenVideo = (id) => {
     console.log('openVideoId  fun ', id)
@@ -35,23 +37,30 @@ const useStyles = makeStyles(theme => ({
     () => {
       async function fetchData() {
         try {
-          if (classRoom)
-            return
-          let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
+          if (classRoom) return;
+            setLoading(true);
+            let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
           console.log("res", res);
           props.store.ClassRoomStore.setOneClassRoom(res.data);
 
         } catch (error) {
-          console.log("mappedClassRooms", error.message);
+            setLoading(false);
+            console.log("mappedClassRooms", error.message);
+        } finally {
+            setLoading(false);
         }
       }
       fetchData();
     }, []);
+
+   if (isLoading) {
+     return <LoadingProgressPage />
+   }
+
   if (!classRoom) {
      return <Typography className={'text-center !text-4xl !my-20 bg-gray-400 !py-10'}>class room not found</Typography>;
-  }else if(classRoom.course.videos==0){
-    return <Typography className={'text-center !text-4xl !my-20 bg-gray-400 !py-10'}>No Video Exist</Typography>;
-
+  } else if(classRoom.course.videos==0){
+     return <Typography className={'text-center !text-4xl !my-20 bg-gray-400 !py-10'}>No Video Exist</Typography>;
   }
   else{
     if(openVideoId && openVideoId != 0 && openVideoId!=activeVideo.id ){

@@ -77,17 +77,18 @@ const SolutionListStore = types
         window.localStorage.getItem("id")
       );
       if (!user_solution) { // if user not have previuse solution
-        user_solution = SolutionStore.create({
+         user_solution = SolutionStore.create({
           id: payload.id,
           solutionInfo: [],
-          created_at: payload.created_at,
-          modified_at: payload.created_at,
-          user: window.localStorage.getItem("id"),
+          created_at: payload.attachment_info.created_at,
+          modified_at: payload.attachment_info.modified_at,
+          user: parseInt(window.localStorage.getItem("id")),
         });
+        self.solutions.push(user_solution);
       }
 
       user_solution.addSolutionFile(payload);
-    },
+      },
     addNewSolution: (payload) => {
       // let _newSotution = payload;
       // let user = payload.user_info
