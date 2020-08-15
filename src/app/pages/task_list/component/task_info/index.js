@@ -55,7 +55,7 @@ const TaskInfo = (props) => {
             if (!classRoom)
               return
 
-            let task_temp = classRoom.classroom_tasks_info.get(props.match.params.tId)
+            const task_temp = classRoom.classroom_tasks_info.get(props.match.params.tId)
 
             if (!task_temp)
               return
@@ -97,7 +97,7 @@ const TaskInfo = (props) => {
   const user_id =window.localStorage.getItem("groups") != 1?window.localStorage.getItem("id")   :  query.has("user_id")?query.get("user_id"):0;
   const userSolutions = Task.task_solutions && Task.task_solutions.getUserSolution(5)?Task.task_solutions.getUserSolution(5).solutionInfo:[];
   const accepted = Task.task_solutions && Task.task_solutions.getUserSolution(5)?Task.task_solutions.getUserSolution(5).accepted:null;
-
+console.log('userSolutions', userSolutions)
 
   return (
     <div >

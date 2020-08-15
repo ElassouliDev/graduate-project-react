@@ -65,7 +65,7 @@ const EditTask = (props) => {
          // attachment.append('_type', 2)
 
          // const attachments = await props.store.apiRequests.addAttachment(attachment)
-         let cRData = (({ title, content,accept_solutions }) => ({ title, content, accept_solutions }))(task)
+         let cRData = (({ title, content,accept_solutions ,accept_solutions_due}) => ({ title, content, accept_solutions,accept_solutions_due }))(task)
          let formData = new FormData;
          for (var key in cRData) {
             formData.append(key, task[key]);
@@ -132,13 +132,13 @@ const EditTask = (props) => {
       //    validationError: "This is not a valid",
       //    required: true
       // },
-      // {
-      //    name: "accept_solutions_due",
-      //    type: "date",
-      //    validations: "isExisty",
-      //    validationError: "This is not a valid",
-      //    required: true
-      // },
+      {
+         name: "accept_solutions_due",
+         type: "datetime-local",
+         validations: "isExisty",
+         validationError: "This is not a valid",
+         required: true
+      },
        {
           name: "accept_solutions",
           type: "checkbox",
