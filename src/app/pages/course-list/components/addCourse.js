@@ -33,6 +33,8 @@ const AddCourse = (props) => {
    const [isLoading, setLoading] = useState(false);
    const [helperText, setHelperText] = useState("");
    const [videoUrl, setVideoUrl] = useState("");
+   const [title, setTitle] = useState("");
+   const [description, setDescription] = useState("");
    const [videoData, setVideoData] = useState({ ...video.create({}).toJSON() })
 
    const handelSubmit = async () => {
@@ -89,6 +91,12 @@ const AddCourse = (props) => {
 
          return ;
       }
+      if (key === 'title') {
+          setTitle(value)
+      }
+       if (key === 'description') {
+           setDescription(value)
+       }
       let preVideoData = videoData;
 
      if(key == 'file')
@@ -105,7 +113,7 @@ const AddCourse = (props) => {
        {
         title: "Title",
           name: "title",
-          value: classRoom.course.newVideo['title'],
+          value: title,
           type: "text",
           validations: "isExisty",
           validationError: "This is not a valid",
@@ -115,7 +123,7 @@ const AddCourse = (props) => {
             title: "description",
 
           name: "description",
-          value: classRoom.course.newVideo['description'],
+          value: description,
 
           type: "text",
           validations: "isExisty",

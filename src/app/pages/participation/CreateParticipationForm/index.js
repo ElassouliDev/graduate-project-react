@@ -64,6 +64,7 @@ const CreateParticipationForm = (props) => {
 
  const handleChange = (key) => (event) => {
     const value = event.target.value;
+     // console.log(value, 'value')
     setContent(value)
     //let prePostData = postData;
     // prePostData[key] = value
