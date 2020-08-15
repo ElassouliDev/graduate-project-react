@@ -47,32 +47,20 @@ export default function VideoMenu(props) {
 
       </Typography>
       <CardHeader
-        /*action={
 
-          <FormControlLabel
-            value="Auto Play"
-            control={<Switch
-              color="primary"
-              checked={state.checkedA}
-              onChange={handleChange}
-            />}
-            label="auto-play"
-            labelPlacement="start"
-          />
-        }*/
         title={props.videos.length + " Video"}
       />
       <Divider></Divider>
 
       <CardContent className={classes.root}>
-        {props.videos.map(video => <MenuItem onClick={props.handleOpenVideo.bind(this, video.id)} key={video.id}
+        {props.videos.map(course=>course.media.map(video=> <MenuItem onClick={props.handleOpenVideo.bind(this, video.id)} key={video.id}
         classes={video.id==props.activeVideoID?classes.active:""}
 
 title={video.title}
 description= {video.description}
-image= {video.media[0].thumbnail}
+image= {video.thumbnail}
 />
-)
+))
 }
 
       </CardContent>

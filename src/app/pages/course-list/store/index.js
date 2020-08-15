@@ -38,6 +38,11 @@ delete:($id) =>{
     })
     return deleted
 
+    },get:($id) =>{
+        return self.media.find((cR)=>{
+            return cR.id == $id;
+        })
+
     }
 }));
 
@@ -76,13 +81,24 @@ export const classRoonCourses = types.model({
     })
     return deleted
 
-    },deleteMedia:($id) =>{
+    }
+    ,deleteMedia:($id) =>{
     let deleted =false ;
     self.videos = self.videos.find((cR)=>{
 
         return  cR.delete($id);
     })
     return deleted
+
+    }
+    ,getMedia:($id) =>{
+    let mediaData ='' ;
+
+     self.videos.find((cR)=>{
+        mediaData= cR.get($id);
+        return  cR.get($id) != null;
+    })
+    return mediaData
 
     }
 }));

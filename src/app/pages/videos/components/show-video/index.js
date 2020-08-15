@@ -23,7 +23,7 @@ const ShowVideo = (props) => {
           id="video"
           width="100%"
           // heigh="1000"
-          src={props.video.media[0].path /*"https://www.youtube.com/embed/" + "?autoplay=1"*/}
+          src={props.video.path /*"https://www.youtube.com/embed/" + "?autoplay=1"*/}
           style={{ height: "400px" }}
           frameBorder="1"
           allow="accelerometer, autoplay; encrypted-media; gyroscope; picture-in-picture"

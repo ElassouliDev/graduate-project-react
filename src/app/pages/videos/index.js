@@ -64,19 +64,21 @@ const useStyles = makeStyles(theme => ({
   }
   else{
     if(openVideoId && openVideoId != 0 && openVideoId!=activeVideo.id ){
-      console.log('openVideoId', openVideoId)
-     setActiveVideo(classRoom.course.get(openVideoId))
+     // console.log('openVideoId', openVideoId)
+     setActiveVideo(classRoom.course.getMedia(openVideoId))
 
     }
     else if( openVideoId!=activeVideo.id){
 
-     setActiveVideo(classRoom.course.videos[0]);
-      console.log('course', classRoom.course.videos[0])
+     setActiveVideo(classRoom.course.videos[0].media[0]);
+    //  console.log('course', classRoom.course.videos[0].media[0])
 
       setOpenVideoId(activeVideo.id);
 
     }
+ // console.log('media ', '')
   }
+
 
   return (
     <div>
