@@ -18,7 +18,7 @@ import { Fab } from '@material-ui/core';
 import { Tooltip } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 import { Sync } from '@material-ui/icons';
-import AddCourse from "./components/addCourse";
+ import AddMedia from "./components/addMedia";
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
@@ -41,7 +41,7 @@ function createData(id, url, title) {
 }
 
 
- function CourseList(props) {
+ function MediaList(props) {
   const classes = useStyles();
   const classRoom = props.store.ClassRoomStore.getClassRoom(props.match.params.id);
   const [open, setOpen] = React.useState(false);
@@ -82,7 +82,7 @@ function createData(id, url, title) {
       console.log(1);
 
 
-      const res = await props.store.apiRequests.deleteCourse(crs_id);
+      const res = await props.store.apiRequests.deleteMedia(crs_id);
       console.log("delete ", crs_id);
 
        // if (res.status == 204) {
@@ -106,14 +106,7 @@ function createData(id, url, title) {
       action:handleDeleteFunction
     },
   ];
-  // const rows = [
-  //   createData(1, "https://www.youtube.com/watch?v=eXqU-HWAMsc", "Donut", '15/2/2020'),
-  //   // createData("1", "https://www.youtube.com/watch?v=eXqU-HWAMsc", "Donut", '15/2/2020'),
-  //   // createData("1", "https://www.youtube.com/watch?v=eXqU-HWAMsc", "Donut", '15/2/2020'),
-  //   // createData("1", "https://www.youtube.com/watch?v=eXqU-HWAMsc", "Donut", '15/2/2020')
 
-
-  // ];
   return (
     <div className="mb-10">
       <Typography
@@ -122,7 +115,7 @@ function createData(id, url, title) {
         id="tableTitle"
         component="div"
       >
-       Course List
+       Media List
        <Tooltip title="Add" aria-label="add" className="!mx-4 " onClick={handleOpen}>
                 <Fab color="primary" className={classes.fab}>
                   <Add />
@@ -144,16 +137,19 @@ function createData(id, url, title) {
            classRoom.student_requests_objects */}
            { classRoom.course.videos.length>0?
            classRoom.course.videos.map((row) => (
-              <TableRow key={row.id}>
+             row.media.map((med)=>(
+             <TableRow key={med.id}>
 
 
-                <TableCell  className="!text-2xl" component="th" scope="row "  align="center">
-                  {row.title}
-                </TableCell>
-                <TableCell className="!text-2xl" align="left">{row.media.length>0?row.media[0].path:"No video exist"}</TableCell>
+              <TableCell  className="!text-2xl" component="th" scope="row "  align="center">
+                {med.title}
+              </TableCell>
+              <TableCell className="!text-2xl" align="left">{med.path}</TableCell>
 
-                <TableCell className="!text-2xl" align="center"><TableActionMenu items={action_menu_items} item_id={row.id} /></TableCell>
-              </TableRow>
+              <TableCell className="!text-2xl" align="center"><TableActionMenu items={action_menu_items} item_id={med.id} /></TableCell>
+            </TableRow>))
+
+
             )) :
             <TableRow >
             <TableCell align="center" colSpan={4} className='!text-2xl'>
@@ -164,9 +160,9 @@ function createData(id, url, title) {
           </TableBody>
         </Table>
       </TableContainer>
-      <AddCourse handleClose={handleClose} handleOpen ={handleOpen} open={open}/>
+       <AddMedia handleClose={handleClose} handleOpen ={handleOpen} open={open}/>
     </div>
   );
 }
-export default inject('store')(withRouter(observer(CourseList)))
+export default inject('store')(withRouter(observer(MediaList)))
 

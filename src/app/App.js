@@ -22,6 +22,7 @@ import Chat from './pages/chat';
 import RequestSubscribeToClassRoom from './pages/request_subscribe-list';
 import ClassroomStudentList from './pages/classroom_student_list';
 import { inject, observer } from "mobx-react";
+import MediaList from "./pages/media-list";
 
 const keys = {
   groups: 'groups',
@@ -103,6 +104,13 @@ function App(props) {
             <CustomPageLayout>
               <CustomClassroomLayout>
                 <CourseList />
+              </CustomClassroomLayout>
+            </CustomPageLayout>
+          </Route>
+           <Route exact  path="/Room/:id/media/manage">
+            <CustomPageLayout>
+              <CustomClassroomLayout>
+                <MediaList />
               </CustomClassroomLayout>
             </CustomPageLayout>
           </Route>

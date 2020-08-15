@@ -10,7 +10,7 @@ import { withRouter } from 'react-router';
 import { Backdrop } from '@material-ui/core';
 import { Fade } from '@material-ui/core';
 import { Modal } from '@material-ui/core';
-import { video } from "../store";
+import { media } from "../../course-list/store";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "1.75rem",
    },
 }));
-const AddCourse = (props) => {
+const addMedia = (props) => {
    const { store: {
       ClassRoomStore: { getClassRoom },
    } } = props;
@@ -32,8 +32,9 @@ const AddCourse = (props) => {
 
    const [isLoading, setLoading] = useState(false);
    const [helperText, setHelperText] = useState("");
+   const [courseId, setCourseId] = useState(0);
    const [videoUrl, setVideoUrl] = useState("");
-   const [videoData, setVideoData] = useState({ ...video.create({}).toJSON() })
+   const [videoData, setVideoData] = useState({ ...media.create({}).toJSON() })
 
    const handelSubmit = async () => {
       try {
@@ -41,18 +42,18 @@ const AddCourse = (props) => {
 
 
          let  formData = new FormData();
-         let cRData = (({ title,description}) => ({title , description}))(video)
-          for (var key in cRData) {
-             console.log(key,  videoData[key])
-            formData.append(key, videoData[key]);
-          }
-          formData.append("classroom", props.match.params.id);
+         // let cRData = (({ title,description}) => ({title , description}))(video)
+         //  for (var key in cRData) {
+         //     console.log(key,  videoData[key])
+         //    formData.append(key, videoData[key]);
+         //  }
+      //     formData.append("classroom", props.match.params.id);
 
-       const res = await props.store.apiRequests.addCourse(formData);
-        console.log('res', res.data)
+      //  const res = await props.store.apiRequests.addCourse(formData);
+      //   console.log('res', res.data)
 
-        formData = new FormData();
-        formData.append('path',videoUrl);
+        //formData = new FormData();
+        //formData.append('path',videoUrl);
 
         formData.append('course',res.data.id);
         formData.append('provider',1);
@@ -61,11 +62,11 @@ const AddCourse = (props) => {
         console.log('res1', res1.data)
 
    //     setVideoData(res.data);
-       let  preVideoData =res.data;
-           preVideoData['media'] = [res1.data];// preVideoData['apiRequests'];
-           console.log('all res', preVideoData)
+      //  let  preVideoData =res.data;
+      //      preVideoData['media'] = [res1.data];// preVideoData['apiRequests'];
+      //      console.log('all res', preVideoData)
 
-         classRoom.course.addNewVideo(preVideoData);
+       //  classRoom.course.addNewMedia(preVideoData);
 
 
       } catch (err) {
@@ -239,4 +240,4 @@ const AddCourse = (props) => {
 
    );
 }
-export default inject('store')(withRouter(observer(AddCourse)));
+export default inject('store')(withRouter(observer(addMedia)));
