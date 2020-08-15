@@ -126,6 +126,7 @@ const requests = (localStorage, config) => {
         addCourse: (payload) => requestInstance.post(`${baseUrl}/course/`,payload),
         deleteCourse: (courseId) => requestInstance.del(`${baseUrl}/course/${courseId}/`),
         addMedia: (payload) => requestInstance.post(`${baseUrl}/media/`,payload),
+        deleteMedia: (mediaID) => requestInstance.del(`${baseUrl}/media/${mediaID}/`),
         deliveredStudentsAnswerTask: (taskID) => requestInstance.get(`${baseUrl}/tasks/${taskID}/delivered_students`),
         UndeliveredStudentsAnswerTask: (taskID) => requestInstance.get(`${baseUrl}/tasks/${taskID}/undelivered_students`),
         addSolution: (TaskId,payload) => requestInstance.post(`${baseUrl}/tasks/${TaskId}/submit_solution/`,payload),

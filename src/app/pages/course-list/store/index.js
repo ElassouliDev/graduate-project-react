@@ -24,9 +24,21 @@ setNewData:(payload)=>{
     self[payload.key]= payload.value;
 },
 addMedia:(payload) => {
-    self.media.push(payload)
+    self.media.push( media.create(payload))
 
-}
+},
+delete:($id) =>{
+    let deleted =false ;
+    console.log('deletec couese',$id)
+    self.media = self.media.filter((cR)=>{
+        if(cR.id == $id)
+            deleted = true ;
+            return cR.id != $id;
+
+    })
+    return deleted
+
+    }
 }));
 
 
@@ -61,6 +73,14 @@ export const classRoonCourses = types.model({
             deleted = true ;
             return cR.id != $id;
 
+    })
+    return deleted
+
+    },deleteMedia:($id) =>{
+    let deleted =false ;
+    self.videos = self.videos.find((cR)=>{
+
+        return  cR.delete($id);
     })
     return deleted
 

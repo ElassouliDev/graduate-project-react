@@ -79,14 +79,13 @@ function createData(id, url, title) {
    const handleDeleteFunction = async(crs_id)=> {
 
     try {
-      console.log(1);
 
 
       const res = await props.store.apiRequests.deleteMedia(crs_id);
       console.log("delete ", crs_id);
 
        // if (res.status == 204) {
-          classRoom.course.delete(crs_id);
+          classRoom.course.deleteMedia(crs_id);
 
      // }
     } catch (error) {
