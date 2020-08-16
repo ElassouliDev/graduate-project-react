@@ -23,6 +23,8 @@ function BlogPost(props) {
         () => {
             async function fetchData() {
                 try {
+                    if(props.store.ClassRoomStore.classRooms.length>1)
+                    return;
                     setLoading(true)
 
                     let res = await props.store.apiRequests.getClassRooms();
