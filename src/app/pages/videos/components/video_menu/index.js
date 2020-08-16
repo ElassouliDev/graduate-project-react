@@ -56,9 +56,9 @@ export default function VideoMenu(props) {
         {props.videos.map(course=>course.media.map(video=> <MenuItem onClick={props.handleOpenVideo.bind(this, video.id)} key={video.id}
         classes={video.id==props.activeVideoID?classes.active:""}
 
-title={video.title}
-description= {video.description}
-image= {video.thumbnail}
+      title={video.title}
+      description= {video.description}
+      image= {video.thumbnail}
 />
 ))
 }

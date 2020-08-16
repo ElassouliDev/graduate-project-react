@@ -70,16 +70,18 @@ const useStyles = makeStyles(theme => ({
     }
     else if( openVideoId!=activeVideo.id){
 
-     setActiveVideo(classRoom.course.videos[0].media[0]);
+     setActiveVideo(classRoom.course.getFirstMedia());
     //  console.log('course', classRoom.course.videos[0].media[0])
-
-      setOpenVideoId(activeVideo.id);
+      console.log('find video', classRoom.course.videos[0])
+          setOpenVideoId(activeVideo?activeVideo.id:0);
 
     }
  // console.log('media ', '')
   }
 
-
+  if (!activeVideo) {
+    return <Typography className={'text-center !text-4xl !my-20 bg-gray-400 !py-10'}>No Video Exist</Typography>;
+ }
   return (
     <div>
       <CustomClassroomLayout>

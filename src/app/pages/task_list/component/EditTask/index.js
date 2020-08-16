@@ -179,7 +179,7 @@ const EditTask = (props) => {
                field.type != "checkbox"  ?<MyInput
                      value={
                         field.name == "taskFile" ? fileTOupload :
-                        (field.type !='datetime-local'?   task[field.name]: task[field.name].substring(0,16))}
+                        (field.type =='datetime-local' && task[field.name]?    task[field.name].substring(0,16):task[field.name])}
                      name={field.name}
                      type={field.type}
                      fullWidth

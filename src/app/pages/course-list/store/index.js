@@ -100,5 +100,14 @@ export const classRoonCourses = types.model({
     })
     return mediaData
 
+    },getFirstMedia:() =>{
+    let mediaData =null ;
+
+     self.videos.find((cR)=>{
+        mediaData= cR.media[0];
+        return  mediaData != null;
+    })
+    return mediaData
+
     }
 }));

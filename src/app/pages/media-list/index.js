@@ -134,7 +134,7 @@ function createData(id, url, title) {
           <TableBody>
           {/* {classRoom.student_requests_objects.length> 0?
            classRoom.student_requests_objects */}
-           { classRoom.course.videos.length>0?
+           { classRoom.course.videos.length>0 && classRoom.course.getFirstMedia()?
            classRoom.course.videos.map((row) => (
              row.media.map((med)=>(
              <TableRow key={med.id}>
