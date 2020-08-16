@@ -53,7 +53,9 @@ const AddTask = (props) => {
          const formData = new FormData();
          formData.append('title', task.title)
          formData.append('content', task.content)
+         formData.append('content', task.content)
          formData.append('accept_solutions', task.accept_solutions)
+         formData.append('accept_solutions_due', task.accept_solutions_due)
          formData.append('attachments', attachments.data.id)
          console.log('accept solution ', task.accept_solutions)
          const res = await props.store.apiRequests.addTask(classRoom.id, formData)
@@ -112,7 +114,7 @@ const AddTask = (props) => {
       },
       {
          name: "accept_solutions_due",
-         type: "date",
+         type: "datetime-local",
          validations: "isExisty",
          validationError: "This is not a valid",
          required: true

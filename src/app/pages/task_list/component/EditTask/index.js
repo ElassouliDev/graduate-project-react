@@ -48,7 +48,6 @@ const EditTask = (props) => {
 
    },[props.task])
 
-
     // const handleClose = () => {
     //   setOpen(false);
     // }
@@ -57,30 +56,19 @@ const EditTask = (props) => {
          setLoading(true)
          setMessage("")
          const payload = props.store.User;
-         // console.log("add task", payload);
-         // const task = classRoom.classroom_tasks_info.newTask;
-         // const attachment = new FormData();
-         // attachment.append('file', fileTOupload)
-         // attachment.append('title', task.title)
-         // attachment.append('_type', 2)
 
-         // const attachments = await props.store.apiRequests.addAttachment(attachment)
          let cRData = (({ title, content,accept_solutions ,accept_solutions_due}) => ({ title, content, accept_solutions,accept_solutions_due }))(task)
          let formData = new FormData;
          for (var key in cRData) {
             formData.append(key, task[key]);
          }
-         // const formData = new FormData();
-         // formData.append('title', task.title)
-         // formData.append('content', task.content)
-         // formData.append('accept_solutions', task.accept_solutions)
-         // // formData.append('attachments', attachments.data.id)
+
 
          const res = await props.store.apiRequests.editTask(task.id, formData)
          classRoom.classroom_tasks_info.editTask(task)
          console.log(res);
          setStatus(1)
-         setMessage("task added successully")
+         setMessage("task updated successully")
       } catch (err) {
          setStatus(2)
          setMessage(err.message)
@@ -88,6 +76,8 @@ const EditTask = (props) => {
          setTimeout(()=>{
             setLoading(false)
             props.onClose();
+            setMessage("")
+
          },3000)
 
 
@@ -97,10 +87,7 @@ const EditTask = (props) => {
    const handleChange = (key) => (event) => {
       let value = event.target.value;
 
-      // if (key == "taskFile") {
-      //    setFileToUpload(event.target.files[0])
-      //    return
-      // }
+
       if (key == "accept_solutions") {
           value = event.target.checked;
       }
@@ -147,7 +134,6 @@ const EditTask = (props) => {
           required: true
        }
    ]
-
    function capitalizeFLetter(input) {
       if (input.length == 0)
          return ""
@@ -161,6 +147,7 @@ const EditTask = (props) => {
       </Typography>
    }
    console.log('task', task)
+   console.log('due date', task['accept_solutions_due'])
 
    return (
               <Modal
@@ -192,7 +179,7 @@ const EditTask = (props) => {
                field.type != "checkbox"  ?<MyInput
                      value={
                         field.name == "taskFile" ? fileTOupload :
-                           task[field.name]}
+                        (field.type !='datetime-local'?   task[field.name]: task[field.name].substring(0,16))}
                      name={field.name}
                      type={field.type}
                      fullWidth
@@ -213,7 +200,7 @@ const EditTask = (props) => {
                            root: classes.labelRoot,
                         },
                      }}
-                     required
+                     required={field.required}
                   />:  <FormControlLabel
                   control={ <Switch
                      checked={ task[field.name]}
@@ -229,7 +216,8 @@ const EditTask = (props) => {
             <Typography>
                {helperText}
             </Typography>
-            <DescriptionAlerts status={status} message={message} />
+            {message!="" ?     <DescriptionAlerts status={status} message={message} />:"" }
+
 
             <CardActions className="!px-0 !mt-10">
                <Button
