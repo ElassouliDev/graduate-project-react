@@ -57,7 +57,7 @@ export default function VideoMenu(props) {
         classes={video.id==props.activeVideoID?classes.active:""}
 
       title={video.title}
-      description= {video.description}
+      description= {video.description?video.description.substring(0,50):""}
       image= {video.thumbnail}
 />
 ))
