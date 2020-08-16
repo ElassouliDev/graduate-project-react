@@ -56,7 +56,16 @@ delete:($id) =>{
 export const classRoonCourses = types.model({
     videos :types.array(video),
     newVideo :types.optional(video,{}),
-}).actions((self)=>({
+}).views((self) => ({
+    getMediaCount:() =>{
+        let count = 0;
+        self.videos.forEach((cR)=>{
+            count += cR.media.length
+
+        });
+        return count;
+      }
+ })).actions((self)=>({
     addNewCourse:(payload)=>{
         self.videos.push(payload)
     },

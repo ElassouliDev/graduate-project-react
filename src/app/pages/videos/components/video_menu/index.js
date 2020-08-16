@@ -48,7 +48,7 @@ export default function VideoMenu(props) {
       </Typography>
       <CardHeader
 
-        title={props.videos.length + " Video"}
+        title={props.videoCount + " Video"}
       />
       <Divider></Divider>
 

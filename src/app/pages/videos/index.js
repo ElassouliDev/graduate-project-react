@@ -87,7 +87,7 @@ const useStyles = makeStyles(theme => ({
       <CustomClassroomLayout>
         <Grid container className={[classes.root, "pt-12"]} spacing={2}>
         <Grid item xs={12} sm={5} md={4}>
-            <VideoMenu videos={classRoom.course.videos}   activeVideoID={openVideoId} handleOpenVideo={handleOpenVideo}/>
+            <VideoMenu videos={classRoom.course.videos} videoCount={classRoom.course.getMediaCount()}  activeVideoID={openVideoId} handleOpenVideo={handleOpenVideo}/>
 
           </Grid>
           <Grid item xs={12} sm={7} md={8}>
