@@ -15,31 +15,31 @@ const Settings = (props) => {
    let [message, setMessage] = useState("");
    const [isLoading, setLoading] = React.useState(false);
 
-    useEffect(
+   useEffect(
       () => {
-        async function fetchData() {
-          try {
-            if (classRoom)
-              return
-              setLoading(true);
-              let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
-            console.log("res", res);
+         async function fetchData() {
+            try {
+               if (classRoom)
+                  return
+               setLoading(true);
+               let res = await props.store.apiRequests.getOneClassRoom(props.match.params.id);
+               console.log("res", res);
 
-            props.store.ClassRoomStore.setOneClassRoom(res.data);
-          } catch (error) {
-              setLoading(false);
-              console.log("mappedClassRooms", error.message);
-          } finally {
-              setLoading(false);
-          }
-        }
-        fetchData();
+               props.store.ClassRoomStore.setOneClassRoom(res.data);
+            } catch (error) {
+               setLoading(false);
+               console.log("mappedClassRooms", error.message);
+            } finally {
+               setLoading(false);
+            }
+         }
+         fetchData();
       }, []);
 
    const HandleDeleteClass = async () => {
       try {
 
-         await props.store.apiRequests.deleteClassRoom(id);
+         await props.store.apiRequests.deleteCourse(id);
 
          const res = props.store.ClassRoomStore.deleteClassRoom(id);
 
@@ -74,9 +74,9 @@ const Settings = (props) => {
       }
    }
 
-    if (isLoading) {
-        return <LoadingProgressPage />
-    }
+   if (isLoading) {
+      return <LoadingProgressPage />
+   }
 
    if (!classRoom) {
       return <Typography className={'text-center !text-4xl !my-20 bg-gray-400 !py-10'}>class room not found</Typography>;

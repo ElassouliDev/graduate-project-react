@@ -34,12 +34,13 @@ const LoginForm = (props) => {
   const [isLoading, setLoading] = useState(false);
   let [status, setStatus] = useState(0);
   let [message, setMessage] = useState("");
+  const [creditiona, setCreditoal] = useState({ username: "teacher2", password: "amintestpassword123$%" })
 
   const handelSubmitLoginForm = async () => {
     try {
       setLoading(true)
       setMessage("")
-      const payload = props.store.User;
+      const payload = creditiona;
       console.log("login", payload);
       const res = await props.store.apiRequests.loginUser({ username: payload.username, password: payload.password })
       console.log(res);
@@ -50,7 +51,7 @@ const LoginForm = (props) => {
         window.localStorage.setItem(keys.groups, res.data.user.groups[0].id)
         window.localStorage.setItem(keys.groupname, res.data.user.groups[0].name)
         window.localStorage.setItem(keys.id, res.data.user.id)
-        window.localStorage.setItem(keys.fullName, res.data.user.first_name +' ' +res.data.user.last_name )
+        window.localStorage.setItem(keys.fullName, res.data.user.first_name + ' ' + res.data.user.last_name)
         setMessage("You are logged in, you will be redirected in 5 secounds")
         setStatus(1)
         setTimeout(() => {
@@ -82,7 +83,7 @@ const LoginForm = (props) => {
   };
 
   const handleChange = (key) => (event) => {
-    props.store.User.setUserData({ key, value: event.target.value })
+    setCreditoal({ ...creditiona, [key]: event.target.value })
   };
 
   const classes = useStyles();
@@ -99,7 +100,7 @@ const LoginForm = (props) => {
 
       <Formsy className="mb-10" onSubmit={handelSubmitLoginForm}>
         <MyInput
-          value={props.store.User.email}
+          value={creditiona.username}
           name="text"
           type="text"
           fullWidth
@@ -126,7 +127,7 @@ const LoginForm = (props) => {
         />
 
         <MyInput
-          value={props.store.User.password}
+          value={creditiona.password}
           name="password"
           type="password"
           fullWidth

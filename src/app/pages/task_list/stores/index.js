@@ -61,11 +61,11 @@ export const task = types
         self[payload.key] = payload.value.map((user) => User.create(user));
         return;
       }
-       else if (payload.key == "task_solutions") {
-         console.log('task_solutions sasdas ', payload.value)
-         let  nSolutionListStore =SolutionListStore.create();
-         nSolutionListStore.setSolutions(payload.value);
-        self[payload.key] = nSolutionListStore ;// SolutionListStore.create({solutions:payload.value});
+      else if (payload.key == "task_solutions") {
+        console.log('task_solutions sasdas ', payload.value)
+        let nSolutionListStore = SolutionListStore.create();
+        nSolutionListStore.setSolutions(payload.value);
+        self[payload.key] = nSolutionListStore;// SolutionListStore.create({solutions:payload.value});
         return;
       }
       else self[payload.key] = payload.value;
@@ -111,9 +111,9 @@ const classroom_tasks_info = types
       });
       return deleted;
     },
-    sortDescTask:() =>{
+    sortDescTask: () => {
 
-     return self.tasks.sort(compareDesc)
+      return self.tasks.sort(compareDesc)
     }
   }));
 export default classroom_tasks_info;

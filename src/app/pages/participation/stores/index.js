@@ -17,10 +17,10 @@ export const Post = types.model('Post', {
    created_at: types.optional(types.maybeNull(types.string), null),
    comments: types.array(Comment)
 }).views((self) => ({
-   sortDescComments:() =>{
+   sortDescComments: () => {
 
       return self.comments.sort(compareDesc)
-     }
+   }
 })).actions((self) => ({
    setData: (payload) => {
       self[payload.key] = payload.value;
@@ -33,10 +33,10 @@ const PostStore = types.model('PostStore', {
    Posts: types.array(Post),
    newPost: types.optional(Post, {})
 }).views((self) => ({
-   sortDescPosts:() =>{
+   sortDescPosts: () => {
 
       return self.Posts.sort(compareDesc)
-     }
+   }
 })).actions((self) => ({
    setData: (payload) => {
       self.newPost.setData(payload);
@@ -63,9 +63,9 @@ function compareDesc(tk1, tk2) {
 
    let comparison = 0;
    if (id1 > id2) {
-     comparison = -1;
+      comparison = -1;
    } else if (id1 < id2) {
-     comparison = 1;
+      comparison = 1;
    }
    return comparison;
- }
+}
